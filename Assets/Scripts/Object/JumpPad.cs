@@ -6,12 +6,12 @@ public class JumpPad : MonoBehaviour
 {
     public Transform target;
     public float timeToPoint;
-    public bool useOnlyVerticalMovement;
+    public bool useOnlyVertically;
 
-    private PlatformEffector2D m_PlatformEffector;
     private Vector2 m_TargetPosition;
     private Animator m_Animator;
     private bool m_EventFired;
+    private Collider2D padCollider;
 
     public Vector2 targetPosition { get { return m_TargetPosition; } }
     public bool EventFired { get { return m_EventFired; } }
@@ -21,7 +21,7 @@ public class JumpPad : MonoBehaviour
 
     void Awake()
     {
-        m_PlatformEffector = GetComponent<PlatformEffector2D>();
+        padCollider = GetComponent<Collider2D>();
         m_Animator = GetComponentInChildren<Animator>();
     }
 
@@ -29,37 +29,32 @@ public class JumpPad : MonoBehaviour
     {
         m_TargetPosition = target.position;
 
-        if (useOnlyVerticalMovement)
+        if (useOnlyVertically)
         {
             m_TargetPosition.x = 0;
         }
     }
 
-    public void OnLaunch()
+    public void OnLaunch(Collider2D collider)
     {
         m_EventFired = true;
-        m_Animator.Play(m_HashJumpPadState, -1, 0);
+        //m_Animator.Play(m_HashJumpPadState, -1, 0);
 
         //if (m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         //{
         //    m_Animator.SetBool(m_HashPushingPara, false);
         //}
 
-        StartCoroutine(StartLaunch());
+        StartCoroutine(StartLaunch(collider));
     }
 
-    IEnumerator StartLaunch()
+    IEnumerator StartLaunch(Collider2D collider)
     {
-        int playerLayerMask = 1 << LayerMask.NameToLayer("Player");
-        m_PlatformEffector.colliderMask &= ~playerLayerMask;
-
-        gameObject.layer = LayerMask.NameToLayer("Default");
+        Physics2D.IgnoreCollision(collider, padCollider, true);
 
         yield return new WaitForSeconds(0.5f);
 
+        Physics2D.IgnoreCollision(collider, padCollider, false);
         m_EventFired = false;
-        m_PlatformEffector.colliderMask |= playerLayerMask;
-        gameObject.layer = LayerMask.NameToLayer("Platform");
-
     }
 }

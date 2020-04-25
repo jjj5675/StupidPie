@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class LocomotionSMB : SceneLinkedSMB<PlayerCharacter>
+public class LocomotionSMB : SceneLinkedSMB<PlayerBehaviour>
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -10,14 +10,17 @@ public class LocomotionSMB : SceneLinkedSMB<PlayerCharacter>
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        m_MonoBehaviour.UpdateFacing();
+        if (m_MonoBehaviour.CheckForUseableXAxis())
+        {
+            m_MonoBehaviour.UpdateFacing();
+        }
         m_MonoBehaviour.GroundedHorizontalMovement();
         m_MonoBehaviour.GroundedVerticalMovement();
         if (m_MonoBehaviour.CheckForGrounded())
         {
             m_MonoBehaviour.ResetDashState();
         }
-        if (m_MonoBehaviour.CheckForJumpInput())
+        if (m_MonoBehaviour.CheckForJumpInput() && m_MonoBehaviour.CheckForCurrentGravity())
         {
             m_MonoBehaviour.SetVerticalMovement(m_MonoBehaviour.JumpVelocity);
         }

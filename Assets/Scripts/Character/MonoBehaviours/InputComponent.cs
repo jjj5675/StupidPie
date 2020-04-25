@@ -90,6 +90,7 @@ public abstract class InputComponent : MonoBehaviour
         public KeyCode negative;
         public float Value { get; protected set; }
         public bool ReceivingInput { get; protected set; }
+        public bool GettingInput { get { return m_GettingInput; } }
 
         protected bool m_GettingInput = true;
 

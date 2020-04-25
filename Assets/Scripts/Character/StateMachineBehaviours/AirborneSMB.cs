@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class AirborneSMB : SceneLinkedSMB<PlayerCharacter>
+public class AirborneSMB : SceneLinkedSMB<PlayerBehaviour>
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -11,14 +11,23 @@ public class AirborneSMB : SceneLinkedSMB<PlayerCharacter>
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        m_MonoBehaviour.UpdateFacing();
-        m_MonoBehaviour.AirborneHorizontalMovement();
+        if (m_MonoBehaviour.CheckForUseableXAxis())
+        {
+            m_MonoBehaviour.UpdateFacing();
+            m_MonoBehaviour.AirborneHorizontalMovement();
+        }
         m_MonoBehaviour.AirborneVerticalMovement();
         if(m_MonoBehaviour.CheckForGrounded())
         {
             m_MonoBehaviour.ResetDashState();
-            m_MonoBehaviour.SetVerticalMovement(0);     //플랫폼 캐처용도
+            //m_MonoBehaviour.SetVerticalMovement(0);     //플랫폼 캐처용도였으나 무빙플랫폼이 아래로 향할때 속도를 없애 버리면 문제가 생깁니다
         }
+
+        if(m_MonoBehaviour.CheckForJumpInput() && m_MonoBehaviour.CheckForSide())
+        {
+            m_MonoBehaviour.WallLeapMovement();
+        }
+
         m_MonoBehaviour.CheckForDashInput();
         m_MonoBehaviour.CheckForGrabbingWall();
         m_MonoBehaviour.CheckForJumpPadCollisionEnter();

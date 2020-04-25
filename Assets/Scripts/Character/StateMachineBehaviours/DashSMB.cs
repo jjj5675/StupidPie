@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DashSMB : SceneLinkedSMB<PlayerCharacter>
+public class DashSMB : SceneLinkedSMB<PlayerBehaviour>
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -12,7 +12,6 @@ public class DashSMB : SceneLinkedSMB<PlayerCharacter>
     {
         m_MonoBehaviour.DashDecelMovement();
         m_MonoBehaviour.CheckForGrounded();
-        m_MonoBehaviour.CheckForGrabbingWall();
         if (!m_MonoBehaviour.CheckForDashing())
         {
             m_MonoBehaviour.SetMoveVector(Vector2.zero);

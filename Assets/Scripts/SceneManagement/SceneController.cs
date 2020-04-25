@@ -77,10 +77,10 @@ public class SceneController : MonoBehaviour
 
     public static void RestartZone(bool resetHealth = true)
     {
-        if(resetHealth && PlayerCharacter.PlayerInstance != null)
-        {
-            //체력 회복
-        }
+        //if(resetHealth && PlayerBehaviour.PlayerInstance != null)
+        //{
+        //    //체력 회복
+        //}
 
         Instance.StartCoroutine(Instance.Transition(Instance.m_ZoneRestartDestinationTag));
     }
@@ -88,12 +88,12 @@ public class SceneController : MonoBehaviour
     private IEnumerator Transition(SceneTransitionDestination.DestinationTag destinationTag)
     {
         m_IsTransitioning = true;
-        PlayerInput.Instance.ReleaseControl();
+        //PlayerInput.Instance.ReleaseControl();
         yield return ScreenFader.FadeSceneOut();
         SceneTransitionDestination entrance = GetDestination(destinationTag);
         SetEnteringGameObjectLocation(entrance);
         yield return ScreenFader.FadeSceneIn();
-        PlayerInput.Instance.GainControl();
+        //PlayerInput.Instance.GainControl();
         m_IsTransitioning = false;
     }
 

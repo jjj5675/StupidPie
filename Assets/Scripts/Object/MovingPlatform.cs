@@ -1,0 +1,176 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[SelectionBase]
+[RequireComponent(typeof(Rigidbody2D))]
+public class MovingPlatform : MonoBehaviour
+{
+    public enum MovingPlatformType
+    { 
+        ONCE, BACK_FORTH, LOOP
+    }
+
+    public PlatformCatcher platformCatcher;
+    public float speed = 1.0f;
+    public MovingPlatformType platformType;
+
+    public bool isMovingAtStart = true;
+
+    public Vector3[] localNodes = new Vector3[3];
+    public float[] waitTimes = new float[1];
+
+    public Vector3[] worldNode { get { return m_WorldNode; } }
+    protected Vector3[] m_WorldNode;
+
+    protected int m_Current = 0;
+    protected int m_Next = 0;
+    protected int m_Dir = 1;    //노드 진행 방향 
+
+    protected float m_WaitTime = -1.0f;
+
+    protected Rigidbody2D m_Rigidbody2D;
+    protected Vector2 m_Velocity;
+
+    protected bool m_Started = false;
+
+    public Vector2 Velocity { get { return m_Velocity; } }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        m_Rigidbody2D.isKinematic = true;
+
+        if(platformCatcher == null)
+        {
+            platformCatcher = GetComponent<PlatformCatcher>();
+        }
+
+        m_WorldNode = new Vector3[localNodes.Length];
+        for(int i=0; i<m_WorldNode.Length; i++)
+        {
+            m_WorldNode[i] = transform.TransformPoint(localNodes[i]);
+        }
+
+        m_WorldNode[0] = transform.position;
+
+        Initialise();
+    }
+
+    protected void Initialise()
+    {
+        m_Current = 0;
+        m_Dir = 1;
+        m_Next = localNodes.Length > 1 ? 1 : 0;
+
+        m_WaitTime = waitTimes[0];
+
+        if(isMovingAtStart)
+        {
+            m_Started = true;
+        }
+        else
+        {
+            m_Started = false;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (!platformCatcher.CaughtIresCharacter)
+        {
+            return;
+        }
+
+        if (!m_Started)
+        {
+            return;
+        }
+
+        //single node라면 이동할 곳이 없으므로
+        if(m_Current == m_Next)
+        {
+            return;
+        }
+
+        if(m_WaitTime > 0)
+        {
+            m_WaitTime -= Time.deltaTime;
+            return;
+        }
+
+        float distanceToGo = speed * Time.deltaTime;
+
+        while(distanceToGo > 0)
+        {
+            Vector2 direction = m_WorldNode[m_Next] - transform.position;
+            float dist = distanceToGo;
+
+            //목표점에 도달했을 때
+            if(direction.sqrMagnitude < dist * dist)
+            {
+                //속도를 줄이고 현재 노드와 wait시간을 다음 노드로 설정합니다.
+                dist = direction.magnitude;
+                m_Current = m_Next;
+                m_WaitTime = waitTimes[m_Current];
+
+                if(m_Dir > 0)
+                {
+                    m_Next += 1;
+
+                    //마지막 노드까지 도달했다면
+                    if(m_Next >= m_WorldNode.Length)
+                    {
+                        switch(platformType)
+                        {
+                            case MovingPlatformType.BACK_FORTH:
+                                //도달한 노드의 이전 노드설정, 노드 방향 설정
+                                m_Next -= 2;
+                                m_Dir = -1;
+                                break;
+                            case MovingPlatformType.ONCE:
+                                m_Next -= 1;
+                                //stop
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    m_Next -= 1;
+
+                    //처음 위치로 도달 했다면
+                    if(m_Next < 0)
+                    {
+                        switch(platformType)
+                        {
+                            case MovingPlatformType.BACK_FORTH:
+                                m_Next = 1;
+                                m_Dir = 1;
+                                break;
+                            case MovingPlatformType.ONCE:
+                                m_Next += 1;
+                                //stop
+                                break;
+                        }
+                    }
+                }
+            }
+
+            m_Velocity = direction.normalized * dist;
+
+            m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
+            platformCatcher.MoveCaughtObjects(m_Velocity);
+
+            //현재 프레임의 속도 제거
+            distanceToGo -= dist;
+
+            //
+            if(m_WaitTime > 0.001f)
+            {
+                break;
+            }
+        }
+    }
+}
