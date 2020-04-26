@@ -17,8 +17,8 @@ public class MovingPlatform : MonoBehaviour
 
     public bool isMovingAtStart = true;
 
-    public Vector3[] localNodes = new Vector3[3];
-    public float[] waitTimes = new float[1];
+    public Vector3[] localNodes = new Vector3[2];
+    public float[] waitTimes = new float[2];
 
     public Vector3[] worldNode { get { return m_WorldNode; } }
     protected Vector3[] m_WorldNode;
@@ -78,12 +78,7 @@ public class MovingPlatform : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!platformCatcher.CaughtIresCharacter)
-        {
-            return;
-        }
-
-        if (!m_Started)
+        if (!m_Started && !platformCatcher.CaughtIresCharacter)
         {
             return;
         }
@@ -131,7 +126,7 @@ public class MovingPlatform : MonoBehaviour
                                 break;
                             case MovingPlatformType.ONCE:
                                 m_Next -= 1;
-                                //stop
+                                StopMoving();
                                 break;
                         }
                     }
@@ -151,7 +146,7 @@ public class MovingPlatform : MonoBehaviour
                                 break;
                             case MovingPlatformType.ONCE:
                                 m_Next += 1;
-                                //stop
+                                StopMoving();
                                 break;
                         }
                     }
@@ -172,5 +167,15 @@ public class MovingPlatform : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void StartMoving()
+    {
+        m_Started = true;
+    }
+
+    public void StopMoving()
+    {
+        m_Started = false;
     }
 }

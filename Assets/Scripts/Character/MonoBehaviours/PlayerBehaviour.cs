@@ -85,7 +85,7 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         SceneLinkedSMB<PlayerBehaviour>.Initialise(m_Animator, this);
-        //PlayableCharacterFactory.Initialise(this, GetComponent<PlayerInput>());
+        PlayableCharacterFactory.Initialise(this, GetComponent<PlayerInput>(), m_Box);
 
         m_PlayerController2D.SetBoxOffset();
 
@@ -581,7 +581,7 @@ public class PlayerBehaviour : MonoBehaviour
             airborneAccelProportion = 0.01f;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         airborneAccelProportion = m_OriginallyAirborneAccelProp;
     }

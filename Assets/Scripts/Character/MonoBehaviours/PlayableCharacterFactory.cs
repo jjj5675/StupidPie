@@ -42,6 +42,7 @@ public class PlayableCharacterFactory : MonoBehaviour
     {
         public PlayerBehaviour playerBehaviour;
         public PlayerInput playerInput;
+        public Collider2D playerCollider;
     }
 
     Dictionary<PlayerBehaviour.PlayableCharacter, Character> m_PlayableCharacterCache = new Dictionary<PlayerBehaviour.PlayableCharacter, Character>();
@@ -55,12 +56,13 @@ public class PlayableCharacterFactory : MonoBehaviour
         }
     }
 
-    public static void Initialise(PlayerBehaviour newBehaviour, PlayerInput newInput)
+    public static void Initialise(PlayerBehaviour newBehaviour, PlayerInput newInput, Collider2D collider)
     {
         Character newCharacter = new Character
         {
             playerBehaviour = newBehaviour,
-            playerInput = newInput
+            playerInput = newInput,
+            playerCollider = collider
         };
 
         Instance.m_PlayableCharacterCache.Add(newBehaviour.playableCharacter, newCharacter);
@@ -78,5 +80,11 @@ public class PlayableCharacterFactory : MonoBehaviour
         Character character;
         Instance.m_PlayableCharacterCache.TryGetValue(playableCharacter, out character);
         return character.playerInput;
+    }
+    public static Collider2D TryGetCollider(PlayerBehaviour.PlayableCharacter playableCharacter)
+    {
+        Character character;
+        Instance.m_PlayableCharacterCache.TryGetValue(playableCharacter, out character);
+        return character.playerCollider;
     }
 }

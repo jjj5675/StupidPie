@@ -5,29 +5,53 @@ using UnityEngine.Events;
 
 public class LightingPlatform : MonoBehaviour
 {
+    public bool isMovingAtStart;
     public PlatformCatcher platformCatcher;
     public UnityEvent Caughted;
     public UnityEvent UnCaughted;
 
-    protected bool m_EventFired = false;
+    protected bool m_Started = false;
 
-    void FixedUpdate()
+    void Start()
     {
-        if (platformCatcher.CaughtIresCharacter)
+        if (platformCatcher == null)
         {
-            if (!m_EventFired)
-            {
-                Caughted.Invoke();
-                m_EventFired = true;
-            }
+            platformCatcher = GetComponent<PlatformCatcher>();
+        }
+
+        Initialise();
+    }
+
+    protected void Initialise()
+    {
+        if (isMovingAtStart)
+        {
+            m_Started = true;
         }
         else
         {
-            if(m_EventFired)
-            {
-                UnCaughted.Invoke();
-                m_EventFired = false;
-            }
+            m_Started = false;
         }
+    }
+
+    void FixedUpdate()
+    {
+        if(!m_Started && !platformCatcher.CaughtIresCharacter)
+        {
+            UnCaughted.Invoke();
+            return;
+        }
+
+        Caughted.Invoke();
+    }
+
+    public void StartMoving()
+    {
+        m_Started = true;
+    }
+
+    public void StopMoving()
+    {
+        m_Started = false;
     }
 }

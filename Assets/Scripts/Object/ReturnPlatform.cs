@@ -20,8 +20,9 @@ public class ReturnPlatform : MonoBehaviour
     protected Vector2 m_Velocity;
 
     protected bool m_Started = false;
+    protected bool m_Returnable;
 
-    public Vector2 Velocity {  get { return m_Velocity; } }
+    public Vector2 Velocity { get { return m_Velocity; } }
 
 
 
@@ -31,7 +32,7 @@ public class ReturnPlatform : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_Rigidbody2D.isKinematic = true;
 
-        if(platformCatcher == null)
+        if (platformCatcher == null)
         {
             platformCatcher = GetComponent<PlatformCatcher>();
         }
@@ -52,54 +53,54 @@ public class ReturnPlatform : MonoBehaviour
         {
             m_Started = false;
         }
+
+        m_Returnable = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(platformCatcher.CaughtIresCharacter)
+        if (m_Returnable && !m_Started && !platformCatcher.CaughtIresCharacter)
         {
-            m_Started = true;
-        }
+            float distanceToGo = speed * Time.deltaTime;
 
-        if(!m_Started)
-        {
-            return;
-        }
-
-        float distanceToGo = speed * Time.deltaTime;
-
-        while(distanceToGo > 0)
-        {
-            Vector2 direction;
-            float dist = distanceToGo;
-
-            if (platformCatcher.CaughtIresCharacter)
+            while (distanceToGo > 0)
             {
-                direction = m_WorldNodeDirection;
-            }
-            else
-            {
-                direction = m_OriginNode - transform.position;
+                Vector2 direction = m_OriginNode - transform.position;
+                float squaredDirection = direction.sqrMagnitude;
+                float dist = distanceToGo;
 
-                if(direction.sqrMagnitude < dist * dist)
+                if (squaredDirection < dist * dist)
                 {
                     dist = direction.magnitude;
-                    StopMoving();
+                    m_Returnable = false;
                 }
+
+                m_Velocity = direction.normalized * dist;
+                m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
+                distanceToGo -= dist;
             }
 
-            m_Velocity = direction.normalized * dist;
+            return;
+        }
+        else if (m_Started || platformCatcher.CaughtIresCharacter)
+        {
+            m_Returnable = true;
+            m_Velocity = m_WorldNodeDirection.normalized * speed * Time.deltaTime;
 
             m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
             platformCatcher.MoveCaughtObjects(m_Velocity);
-
-            distanceToGo -= dist;
         }
+    }
+
+    public void StartMoving()
+    {
+        m_Started = true;
     }
 
     public void StopMoving()
     {
         m_Started = false;
     }
+
 }
