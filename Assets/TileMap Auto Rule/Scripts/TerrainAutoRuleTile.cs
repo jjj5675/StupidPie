@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
+#endif 
 using UnityEngine;
 using System.Linq;
 
@@ -7,7 +9,7 @@ using System.Linq;
 // https://brullalex.itch.io/
 // ----------------------------------------------------------------------------
 
-#if (UNITY_EDITOR)
+#if UNITY_EDITOR
 
 [ExecuteInEditMode]
 [CreateAssetMenu(fileName = "New Terrain Auto Rule Tile", menuName = "Tiles/Terrain Auto Rule Tile")]
@@ -57,7 +59,7 @@ public class TerrainAutoRuleTile : ScriptableObject
         AssetDatabase.CreateAsset(_new, AssetDatabase.GetAssetPath(this));
     }
 
-#endif
 
 }
+#endif
 

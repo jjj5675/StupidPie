@@ -44,6 +44,9 @@ public class PlatformCatcher : MonoBehaviour
 
     private const float epsilon = 0.01f;
 
+    public ContactPoint2D[] ContactPoints { get { return m_ContactPoints; } }
+
+
     public int CaughtObjectCount
     {
         get

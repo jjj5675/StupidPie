@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ReturnPlatform : MonoBehaviour
@@ -72,8 +71,14 @@ public class ReturnPlatform : MonoBehaviour
 
                 if (squaredDirection < dist * dist)
                 {
-                    dist = direction.magnitude;
                     m_Returnable = false;
+
+                    if(Mathf.Approximately(squaredDirection,0))
+                    {
+                        return;
+                    }
+
+                    dist = direction.magnitude;
                 }
 
                 m_Velocity = direction.normalized * dist;
