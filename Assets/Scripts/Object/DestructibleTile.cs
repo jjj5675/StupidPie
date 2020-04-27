@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityScript.Scripting.Pipeline;
 
 public class DestructibleTile : MonoBehaviour
 {
