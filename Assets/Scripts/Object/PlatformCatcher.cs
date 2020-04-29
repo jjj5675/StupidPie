@@ -46,7 +46,6 @@ public class PlatformCatcher : MonoBehaviour
 
     public ContactPoint2D[] ContactPoints { get { return m_ContactPoints; } }
 
-
     public int CaughtObjectCount
     {
         get

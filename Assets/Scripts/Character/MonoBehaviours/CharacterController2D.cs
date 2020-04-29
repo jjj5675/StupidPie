@@ -116,17 +116,17 @@ public abstract class CharacterController2D : MonoBehaviour
                 if (m_FoundHitList[m_FirstHitIndex].collider != null)
                 {
                     float middleHitHeight = m_FoundHitList[m_FirstHitIndex].point.y;
-                    float capsuleHeight = m_Rigidbody2D.position.y + m_Box.offset.y;
-                    capsuleHeight = bottom ? capsuleHeight - m_Box.size.y * 0.5f : capsuleHeight + m_Box.size.y * 0.5f;
+                    float colliderHeight = m_Rigidbody2D.position.y + m_Box.offset.y;
+                    colliderHeight = bottom ? colliderHeight - m_Box.size.y * 0.5f : colliderHeight + m_Box.size.y * 0.5f;
 
                     if (bottom)
                     {
                         collisionFlags.IsGrounded = m_Velocity.y <= 0;
-                        collisionFlags.IsGrounded &= middleHitHeight < capsuleHeight + groundedRaycastDistance;
+                        collisionFlags.IsGrounded &= middleHitHeight < colliderHeight + groundedRaycastDistance;
                     }
                     else
                     {
-                        collisionFlags.IsCeilinged = capsuleHeight + groundedRaycastDistance < middleHitHeight;
+                        collisionFlags.IsCeilinged = colliderHeight + groundedRaycastDistance < middleHitHeight;
                     }
                 }
             }
