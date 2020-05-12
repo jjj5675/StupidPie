@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ReturnPlatform : MonoBehaviour
+public class ReturningPlatform : Platform
 {
     public PlatformCatcher platformCatcher;
     public float speed = 1.0f;
-
-    public bool isMovingAtStart = true;
 
     public Vector3 localNode;
 
@@ -18,15 +14,11 @@ public class ReturnPlatform : MonoBehaviour
     protected Rigidbody2D m_Rigidbody2D;
     protected Vector2 m_Velocity;
 
-    protected bool m_Started = false;
     protected bool m_Returnable;
 
     public Vector2 Velocity { get { return m_Velocity; } }
 
-
-
-    // Start is called before the first frame update
-    void Start()
+    protected override void Initialise()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_Rigidbody2D.isKinematic = true;
@@ -40,10 +32,7 @@ public class ReturnPlatform : MonoBehaviour
         m_OriginallyWorldNodeDirection = m_WorldNodeDirection;
 
         m_OriginNode = transform.position;
-    }
 
-    protected void Initialise()
-    {
         if (isMovingAtStart)
         {
             m_Started = true;
@@ -54,6 +43,7 @@ public class ReturnPlatform : MonoBehaviour
         }
 
         m_Returnable = false;
+        m_PlatformType = PlatformType.RETURN;
     }
 
     // Update is called once per frame
@@ -97,15 +87,4 @@ public class ReturnPlatform : MonoBehaviour
             platformCatcher.MoveCaughtObjects(m_Velocity);
         }
     }
-
-    public void StartMoving()
-    {
-        m_Started = true;
-    }
-
-    public void StopMoving()
-    {
-        m_Started = false;
-    }
-
 }

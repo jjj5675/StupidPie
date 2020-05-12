@@ -1,21 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [SelectionBase]
 [RequireComponent(typeof(Rigidbody2D))]
-public class MovingPlatform : MonoBehaviour
+public class LiftPlatform : Platform
 {
-    public enum MovingPlatformType
+    public enum LiftPlatformType
     { 
-        ONCE, BACK_FORTH, LOOP
+        ONCE, BACK_FORTH/*, LOOP*/
     }
 
     public PlatformCatcher platformCatcher;
     public float speed = 1.0f;
-    public MovingPlatformType platformType;
-
-    public bool isMovingAtStart = true;
+    public LiftPlatformType liftType;
 
     public Vector3[] localNodes = new Vector3[2];
     public float[] waitTimes = new float[2];
@@ -32,34 +28,26 @@ public class MovingPlatform : MonoBehaviour
     protected Rigidbody2D m_Rigidbody2D;
     protected Vector2 m_Velocity;
 
-    protected bool m_Started = false;
-
     public Vector2 Velocity { get { return m_Velocity; } }
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Initialise()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_Rigidbody2D.isKinematic = true;
 
-        if(platformCatcher == null)
+        if (platformCatcher == null)
         {
             platformCatcher = GetComponent<PlatformCatcher>();
         }
 
         m_WorldNode = new Vector3[localNodes.Length];
-        for(int i=0; i<m_WorldNode.Length; i++)
+        for (int i = 0; i < m_WorldNode.Length; i++)
         {
             m_WorldNode[i] = transform.TransformPoint(localNodes[i]);
         }
 
         m_WorldNode[0] = transform.position;
 
-        Initialise();
-    }
-
-    protected void Initialise()
-    {
         m_Current = 0;
         m_Dir = 1;
         m_Next = localNodes.Length > 1 ? 1 : 0;
@@ -74,6 +62,8 @@ public class MovingPlatform : MonoBehaviour
         {
             m_Started = false;
         }
+
+        m_PlatformType = PlatformType.MOVING;
     }
 
     void FixedUpdate()
@@ -117,14 +107,14 @@ public class MovingPlatform : MonoBehaviour
                     //마지막 노드까지 도달했다면
                     if(m_Next >= m_WorldNode.Length)
                     {
-                        switch(platformType)
+                        switch(liftType)
                         {
-                            case MovingPlatformType.BACK_FORTH:
+                            case LiftPlatformType.BACK_FORTH:
                                 //도달한 노드의 이전 노드설정, 노드 방향 설정
                                 m_Next -= 2;
                                 m_Dir = -1;
                                 break;
-                            case MovingPlatformType.ONCE:
+                            case LiftPlatformType.ONCE:
                                 m_Next -= 1;
                                 StopMoving();
                                 break;
@@ -138,13 +128,13 @@ public class MovingPlatform : MonoBehaviour
                     //처음 위치로 도달 했다면
                     if(m_Next < 0)
                     {
-                        switch(platformType)
+                        switch(liftType)
                         {
-                            case MovingPlatformType.BACK_FORTH:
+                            case LiftPlatformType.BACK_FORTH:
                                 m_Next = 1;
                                 m_Dir = 1;
                                 break;
-                            case MovingPlatformType.ONCE:
+                            case LiftPlatformType.ONCE:
                                 m_Next += 1;
                                 StopMoving();
                                 break;
@@ -167,15 +157,5 @@ public class MovingPlatform : MonoBehaviour
                 break;
             }
         }
-    }
-
-    public void StartMoving()
-    {
-        m_Started = true;
-    }
-
-    public void StopMoving()
-    {
-        m_Started = false;
     }
 }

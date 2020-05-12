@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SwitchPlatform : MonoBehaviour
+public class SwitchPlatform : Platform
 {
     public Damager damager;
     public float toggletime;
@@ -13,8 +11,7 @@ public class SwitchPlatform : MonoBehaviour
     protected bool m_OnTrigger = true;
     protected Collider2D[] m_FoundCollider = new Collider2D[5]; 
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Initialise()
     {
         if (damager == null)
         {
@@ -24,6 +21,7 @@ public class SwitchPlatform : MonoBehaviour
         m_Collider = GetComponent<Collider2D>();
 
         damager.enabled = false;
+        m_PlatformType = PlatformType.SWITCH;
     }
 
     // Update is called once per frame

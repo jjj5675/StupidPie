@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class FallingPlatform : MonoBehaviour
+public class FallingPlatform : Platform
 {
     public PlatformCatcher platformCatcher;
     public float speed = 1.0f;
@@ -20,15 +18,9 @@ public class FallingPlatform : MonoBehaviour
     protected Collider2D m_Collider;
     protected float m_CurrentDuration = 0;
 
-    // Start is called before the first frame update
-
-    void Awake()
+    protected override void Initialise()
     {
         m_Collider = GetComponent<Collider2D>();
-    }
-
-    void Start()
-    {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
 
@@ -36,6 +28,8 @@ public class FallingPlatform : MonoBehaviour
         {
             platformCatcher = GetComponent<PlatformCatcher>();
         }
+
+        m_PlatformType = PlatformType.FALLING;
     }
 
     // Update is called once per frame

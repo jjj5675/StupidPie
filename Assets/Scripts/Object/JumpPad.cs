@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-
-public class JumpPad : MonoBehaviour
+public class JumpPad : Platform
 {
     public Transform target;
     public float timeToPoint;
@@ -25,7 +24,7 @@ public class JumpPad : MonoBehaviour
         m_Animator = GetComponentInChildren<Animator>();
     }
 
-    void Start()
+    protected override void Initialise()
     {
         m_TargetPosition = target.position;
 
@@ -33,6 +32,8 @@ public class JumpPad : MonoBehaviour
         {
             m_TargetPosition.x = 0;
         }
+
+        m_PlatformType = PlatformType.JUMPING;
     }
 
     public void OnLaunch(Collider2D collider)

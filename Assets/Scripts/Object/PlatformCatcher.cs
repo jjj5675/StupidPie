@@ -88,7 +88,7 @@ public class PlatformCatcher : MonoBehaviour
         {
             for (int i = 0; i < m_CaughtObjects.Count; i++)
             {
-                if (m_CaughtObjects[i].inContact && m_CaughtObjects[i].playableCharacter == PlayerBehaviour.PlayableCharacter.Ires)
+                if (m_CaughtObjects[i].inContact && m_CaughtObjects[i].playableCharacter == PlayerBehaviour.PlayableCharacter.IRES)
                 {
                     return true;
                 }

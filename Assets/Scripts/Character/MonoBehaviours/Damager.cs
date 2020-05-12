@@ -21,12 +21,12 @@ public class Damager : MonoBehaviour
         m_HitContactFilter.useTriggers = false;
     }
 
-    void EnableOnDamage()
+    public void EnableOnDamage()
     {
         m_CanDamage = true;
     }
 
-    void DisableOnDamage()
+    public void DisableOnDamage()
     {
         m_CanDamage = false;
     }

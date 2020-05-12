@@ -33,10 +33,9 @@ public class SceneController : MonoBehaviour
         return instance;
     }
 
-    public SceneTransitionDestination initalSceneTransitionDestination;
+    public CellTransitionDestination.DestinationTag initalCellTransitionDestinationTag;
 
     private Scene m_CurrentZoneScene;
-    private SceneTransitionDestination.DestinationTag m_ZoneRestartDestinationTag;
     private bool m_IsTransitioning;
 
     void Awake()
@@ -49,65 +48,37 @@ public class SceneController : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        if(initalSceneTransitionDestination != null)
-        {
-            SetEnteringGameObjectLocation(initalSceneTransitionDestination);
-        }
-        else
-        {
-            m_CurrentZoneScene = SceneManager.GetActiveScene();
-            m_ZoneRestartDestinationTag = SceneTransitionDestination.DestinationTag.A;
-        }
-            
+        CellTransitionDestination entrance;
+        CellController.Instance.CurrentCell.GetCellDestination(initalCellTransitionDestinationTag, out entrance);
+        SetEnteringGameObjectLocation(entrance);
     }
 
-    private void SetEnteringGameObjectLocation(SceneTransitionDestination entrance)
+    private void SetEnteringGameObjectLocation(CellTransitionDestination entrance)
     {
-        if(entrance == null)
-        {
-            Debug.LogWarning("이동시킬 위치 입력이 설정되지 않았습니다.");
-            return;
-        }
+        Transform entranceSeriLocation = entrance.seriLocation.transform;
+        Transform entranceIresLocation = entrance.iresLocation.transform;
 
-        Transform entranceLocation = entrance.transform;
-        Transform enteringTransform = entrance.transitioningGameObject.transform;
-        enteringTransform.position = entranceLocation.position;
-        enteringTransform.rotation = entranceLocation.rotation;
+        Transform enteringSeriTransform = CellController.Instance.transitioningSeri.transform;
+        Transform enteringIresTransform = CellController.Instance.transitioningIres.transform;
+
+        enteringSeriTransform.position = entranceSeriLocation.position;
+        enteringIresTransform.position = entranceIresLocation.position;
+        enteringSeriTransform.rotation = entranceSeriLocation.rotation;
+        enteringIresTransform.rotation = entranceIresLocation.rotation;
     }
 
-    public static void RestartZone(bool resetHealth = true)
-    {
-        //if(resetHealth && PlayerBehaviour.PlayerInstance != null)
-        //{
-        //    //체력 회복
-        //}
-
-        Instance.StartCoroutine(Instance.Transition(Instance.m_ZoneRestartDestinationTag));
-    }
-
-    private IEnumerator Transition(SceneTransitionDestination.DestinationTag destinationTag)
+    private IEnumerator Transition(CellTransitionDestination.DestinationTag destinationTag)
     {
         m_IsTransitioning = true;
         //PlayerInput.Instance.ReleaseControl();
         yield return ScreenFader.FadeSceneOut();
-        SceneTransitionDestination entrance = GetDestination(destinationTag);
+
+        CellTransitionDestination entrance;
+        CellController.Instance.CurrentCell.GetCellDestination(destinationTag, out entrance);
         SetEnteringGameObjectLocation(entrance);
+
         yield return ScreenFader.FadeSceneIn();
         //PlayerInput.Instance.GainControl();
         m_IsTransitioning = false;
-    }
-
-    private SceneTransitionDestination GetDestination(SceneTransitionDestination.DestinationTag destinationTag)
-    {
-        SceneTransitionDestination[] entrances = FindObjectsOfType<SceneTransitionDestination>();
-
-        for(int i=0; i<entrances.Length; i++)
-        {
-            if (entrances[i].destinationTag == destinationTag)
-                return entrances[i];
-        }
-
-        Debug.LogWarning("전이 시킬 " + destinationTag + " 태그가 없습니다.");
-        return null;
     }
 }

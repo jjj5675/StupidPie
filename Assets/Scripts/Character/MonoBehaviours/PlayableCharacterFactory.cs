@@ -54,6 +54,8 @@ public class PlayableCharacterFactory : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        DontDestroyOnLoad(this);
     }
 
     public static void Initialise(PlayerBehaviour newBehaviour, PlayerInput newInput, Collider2D collider)

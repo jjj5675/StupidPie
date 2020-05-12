@@ -17,7 +17,7 @@ public class ConductorTrigger2D : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.Ires) == collision)
+        if(PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES) == collision)
         {
             OnEnter.Invoke();
         }
@@ -25,7 +25,7 @@ public class ConductorTrigger2D : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.Ires) == collision)
+        if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES) == collision)
         {
             OnExit.Invoke();
         }

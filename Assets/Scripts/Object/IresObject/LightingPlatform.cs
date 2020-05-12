@@ -1,29 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class LightingPlatform : MonoBehaviour
+public class LightingPlatform : Platform
 {
-    public bool isMovingAtStart;
     public PlatformCatcher platformCatcher;
     public UnityEvent Caughted;
     public UnityEvent UnCaughted;
 
-    protected bool m_Started = false;
-
-    void Start()
+    protected override void Initialise()
     {
         if (platformCatcher == null)
         {
             platformCatcher = GetComponent<PlatformCatcher>();
         }
 
-        Initialise();
-    }
-
-    protected void Initialise()
-    {
         if (isMovingAtStart)
         {
             m_Started = true;
@@ -32,6 +22,8 @@ public class LightingPlatform : MonoBehaviour
         {
             m_Started = false;
         }
+
+        m_PlatformType = PlatformType.LIGHTING;
     }
 
     void FixedUpdate()
@@ -43,15 +35,5 @@ public class LightingPlatform : MonoBehaviour
         }
 
         Caughted.Invoke();
-    }
-
-    public void StartMoving()
-    {
-        m_Started = true;
-    }
-
-    public void StopMoving()
-    {
-        m_Started = false;
     }
 }

@@ -7,7 +7,7 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public enum PlayableCharacter
     {
-        Seri, Ires
+        SERI, IRES
     }
 
     public SpriteRenderer spriteRenderer;
@@ -503,7 +503,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         m_Animator.SetTrigger(m_HashRespawnPara);
 
-        GameObjectTeleporter.Teleport(gameObject, Vector2.zero);
+        //두캐릭터 모두 리스폰
+        //GameObjectTeleporter.Teleport(gameObject, Vector2.zero);
 
         if (resetHealth)
         {

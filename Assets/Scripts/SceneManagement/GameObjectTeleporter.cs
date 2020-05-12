@@ -36,6 +36,12 @@ public class GameObjectTeleporter : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public static void Teleport(GameObject transitioningGameObject, CellTransitionDestination.DestinationTag destinationTag)
+    {
+        Transform destinationTransform = CellController.Instance.GetCharacterLocation(transitioningGameObject, destinationTag);
+        Instance.StartCoroutine(Instance.Transition(transitioningGameObject, destinationTransform.position, false));
+    }
+
     public static void Teleport(GameObject transitioningGameObject, Vector3 destinationPosition)
     {
         Instance.StartCoroutine(Instance.Transition(transitioningGameObject, destinationPosition, false));
