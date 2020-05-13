@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 645923446436617755}
   - component: {fileID: 645923446436617754}
   - component: {fileID: 645923446436617752}
-  - component: {fileID: 645923446436617753}
   - component: {fileID: 645923446436617751}
   m_Layer: 8
   m_Name: 'SwitchPlatform '
@@ -97,38 +96,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMovingAtStart: 1
-  damager: {fileID: 0}
   toggletime: 1.5
-  contactFilter:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 512
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
---- !u!114 &645923446436617753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645923446436617750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 834568a9e8914dc478e4a1b57ecdae48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  offset: {x: 0.002480356, y: 0}
-  size: {x: 0.066777855, y: 0.08}
-  hitLayerMask:
+  edgeCollider: {fileID: 0}
+  overlapColliderMask:
     serializedVersion: 2
     m_Bits: 512
 --- !u!61 &645923446436617751

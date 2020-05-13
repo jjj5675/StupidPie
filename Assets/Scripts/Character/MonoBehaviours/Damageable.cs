@@ -8,7 +8,7 @@ public class Damageable : MonoBehaviour
     public class DamageEvent : UnityEvent<Damageable, Damager> { }
 
     public int startingHealth;
-    public float invulnerabilityDuration; 
+    public float invulnerabilityDuration;
     public DamageEvent OnTakeDamage;
     public DamageEvent OnDie;
 
@@ -26,11 +26,11 @@ public class Damageable : MonoBehaviour
 
     void Update()
     {
-        if(m_InvuInerable)
+        if (m_InvuInerable)
         {
             m_InvuInerabilityTimer -= Time.deltaTime;
 
-            if(m_InvuInerabilityTimer <=0)
+            if (m_InvuInerabilityTimer <= 0)
             {
                 m_InvuInerable = false;
             }
@@ -50,7 +50,7 @@ public class Damageable : MonoBehaviour
 
     public void TakeDamage(Damager damager)
     {
-        if(m_InvuInerable || m_CurrentHealth <= 0)
+        if (m_InvuInerable || m_CurrentHealth <= 0)
         {
             return;
         }
@@ -60,11 +60,24 @@ public class Damageable : MonoBehaviour
 
         Debug.Log(m_CurrentHealth);
 
-        if(m_CurrentHealth <=0)
+        if (m_CurrentHealth <= 0)
         {
             OnDie.Invoke(this, damager);
             EnableInvulnerability();
         }
+    }
+
+    public void TakeDamage()
+    {
+        if (m_InvuInerable || m_CurrentHealth <= 0)
+        {
+            return;
+        }
+
+        m_CurrentHealth = 0;
+
+        OnDie.Invoke(this, null);
+        EnableInvulnerability();
     }
 
     public void SetHealth(int amount)

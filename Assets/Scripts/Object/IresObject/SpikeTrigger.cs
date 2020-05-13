@@ -24,7 +24,7 @@ public class SpikeTrigger : Platform
             damager = GetComponent<Damager>();
         }
 
-        SearchOverlapPlatforms(m_Box, out m_SpikeTriggers, true);
+        SearchOverlapPlatforms(m_Box, out m_SpikeTriggers, 30);
 
         if(isMovingAtStart)
         {

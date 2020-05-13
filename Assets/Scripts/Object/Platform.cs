@@ -19,7 +19,6 @@ public abstract class Platform : MonoBehaviour
     protected PlatformType m_PlatformType;
     protected TriggerState m_CurrentTriggerState;
     protected bool m_Started = false;
-    protected const int m_SearchObjectCount = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -29,15 +28,14 @@ public abstract class Platform : MonoBehaviour
 
     protected abstract void Initialise();
 
-    protected void SearchOverlapPlatforms<TComponent>(Collider2D rootCollider, out TComponent[] copyArray, bool useTrigger, bool addRootCollider = true)
+    protected void SearchOverlapPlatforms<TComponent>(Collider2D rootCollider, out TComponent[] copyArray, int resultCount, bool addRootCollider = true)
         where TComponent : Platform
     {
-        Queue<Collider2D> queue = new Queue<Collider2D>(m_SearchObjectCount);
-        List<TComponent> searchList = new List<TComponent>(m_SearchObjectCount);
-        Collider2D[] colliderResults = new Collider2D[m_SearchObjectCount];
+        Queue<Collider2D> queue = new Queue<Collider2D>(resultCount);
+        List<TComponent> searchList = new List<TComponent>(resultCount);
+        Collider2D[] colliderResults = new Collider2D[resultCount];
         ContactFilter2D contactFilter = new ContactFilter2D();
-        contactFilter.layerMask = LayerMask.NameToLayer("Platform");
-        contactFilter.useTriggers = useTrigger;
+        contactFilter.useTriggers = true;
 
         queue.Enqueue(rootCollider);
 
@@ -69,26 +67,31 @@ public abstract class Platform : MonoBehaviour
         copyArray = searchList.ToArray();
     }
 
-    protected void SearchOverlapObject<TComponent>(Collider2D rootCollider, out TComponent copyObject)
-    where TComponent : Component
+    protected void SearchOverlapCharacter(Collider2D collider, ContactFilter2D contactFilter2D, int ressultCount)
     {
-        Collider2D[] colliderResults = new Collider2D[5];
-        ContactFilter2D contactFilter = new ContactFilter2D();
+        collider.enabled = true;
+        Collider2D[] colliderResults = new Collider2D[ressultCount];
+        PlayerBehaviour playerBehaviour;
 
-        int count = rootCollider.OverlapCollider(contactFilter, colliderResults);
+        int count = collider.OverlapCollider(contactFilter2D, colliderResults);
 
         for (int i = 0; i < count; i++)
         {
-            TComponent component = colliderResults[i].GetComponent<TComponent>();
-
-            if (component != null)
+            if(colliderResults[i] == PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
             {
-                copyObject = component;
-                return;
+                playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.IRES);
+                playerBehaviour.damageable.TakeDamage();
+                break;
+            }
+            else if (colliderResults[i] == PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.SERI))
+            {
+                playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.SERI);
+                playerBehaviour.damageable.TakeDamage();
+                break;
             }
         }
 
-        copyObject = null;
+        collider.enabled = false;
     }
 
     public virtual void StartMoving()

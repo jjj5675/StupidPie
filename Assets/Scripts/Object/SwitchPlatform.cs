@@ -2,31 +2,53 @@
 
 public class SwitchPlatform : Platform
 {
-    public Damager damager;
     public float toggletime;
-    public ContactFilter2D contactFilter;
+    public EdgeCollider2D edgeCollider;
+    public LayerMask overlapColliderMask;
 
+    protected ContactFilter2D m_OverlapCharacterContactFilter;
     protected Collider2D m_Collider;
     protected float m_CurrentTime = 0;
     protected bool m_OnTrigger = true;
-    protected Collider2D[] m_FoundCollider = new Collider2D[5]; 
+    protected bool m_CanChangeSwitch = true;
+
+    void Awake()
+    {
+    }
 
     protected override void Initialise()
     {
-        if (damager == null)
+        if(edgeCollider == null)
         {
-            damager = GetComponent<Damager>();
+            edgeCollider = GetComponent<EdgeCollider2D>();
         }
 
-        m_Collider = GetComponent<Collider2D>();
-
-        damager.enabled = false;
         m_PlatformType = PlatformType.SWITCH;
+        edgeCollider.enabled = false;
+
+        m_OverlapCharacterContactFilter.layerMask = overlapColliderMask;
+        m_OverlapCharacterContactFilter.useLayerMask = true;
+        m_OverlapCharacterContactFilter.useTriggers = false;
+    }
+
+    public void EnableOnSwitch()
+    {
+        m_CanChangeSwitch = true;
+    }
+
+    public void DisableOnSwitch()
+    {
+        m_CanChangeSwitch = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!m_CanChangeSwitch)
+        {
+            return;
+        }
+
         m_CurrentTime += Time.deltaTime;
 
         //swtich On Off
@@ -34,21 +56,11 @@ public class SwitchPlatform : Platform
         {
             m_OnTrigger = !m_OnTrigger;
             m_CurrentTime = 0;
-            damager.enabled = false;
-            m_Collider.isTrigger = false;
 
             if (m_OnTrigger)
             {
-                Vector2 rayStart = (Vector2)transform.position + m_Collider.offset;
-                Vector3 scaledSize = Vector2.Scale(damager.size, transform.lossyScale);
-
-                int hitCount = Physics2D.OverlapBox(rayStart, scaledSize, 0, contactFilter, m_FoundCollider);
-
-                if (hitCount != 0)
-                {
-                    damager.enabled = true;
-                    m_Collider.isTrigger = true;
-                }
+                SearchOverlapCharacter(edgeCollider, m_OverlapCharacterContactFilter, 5);
+                m_Collider.isTrigger = false;
             }
             else
             {

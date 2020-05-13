@@ -4,9 +4,10 @@ public class TriggerPlatform : Platform
 {
     public CompositeCollider2D compositeCollider;
     public EdgeCollider2D edgeCollider;
+    public LayerMask overlapColliderMask;
 
+    protected ContactFilter2D m_OverlapCharacterContactFilter;
     protected SpikeTrigger[] m_SpikeTriggers;
-    protected bool m_IgnoreTrigger = false;
 
     protected override void Initialise()
     {
@@ -20,9 +21,9 @@ public class TriggerPlatform : Platform
             edgeCollider = GetComponent<EdgeCollider2D>();
         }
 
-        edgeCollider.enabled = false;
 
-        SearchOverlapPlatforms(compositeCollider, out m_SpikeTriggers, true, false);
+        edgeCollider.enabled = false;
+        SearchOverlapPlatforms(compositeCollider, out m_SpikeTriggers, 30, false);
 
         if (isMovingAtStart)
         {
@@ -34,18 +35,20 @@ public class TriggerPlatform : Platform
             m_Started = false;
             compositeCollider.isTrigger = true;
         }
+
+        m_OverlapCharacterContactFilter.layerMask = overlapColliderMask;
+        m_OverlapCharacterContactFilter.useLayerMask = true;
+        m_OverlapCharacterContactFilter.useTriggers = false;
     }
 
     public override void StartMoving()
     {
         EnableOverlapSpikeTriggers();
-        //m_IgnoreTrigger = true;
     }
 
     public override void StopMoving()
     {
         DisableOverlapSpikeTriggers();
-        //m_IgnoreTrigger = false;
     }
 
     void EnableOverlapSpikeTriggers()
@@ -59,7 +62,7 @@ public class TriggerPlatform : Platform
             compositeCollider.isTrigger = false;
         }
 
-        if (m_SpikeTriggers != null)
+        if (m_SpikeTriggers.Length != 0)
         {
             for (int i = 0; i < m_SpikeTriggers.Length; i++)
             {
@@ -79,7 +82,7 @@ public class TriggerPlatform : Platform
             compositeCollider.isTrigger = true;
         }
 
-        if (m_SpikeTriggers != null)
+        if (m_SpikeTriggers.Length != 0)
         {
             m_SpikeTriggers[0].ChangeOnce = false;
 
@@ -119,19 +122,7 @@ public class TriggerPlatform : Platform
         }
 
         //데미지
-        Damageable damageable;
-        edgeCollider.enabled = true;
-        SearchOverlapObject(edgeCollider, out damageable);
-
-        if(damageable != null)
-        {
-            damageable.TakeDamage(null);
-            edgeCollider.enabled = false;
-            return;
-        }
-
-        edgeCollider.enabled = false;
-
+        SearchOverlapCharacter(edgeCollider, m_OverlapCharacterContactFilter, 5);
         DisableOverlapSpikeTriggers();
     }
 
@@ -149,19 +140,7 @@ public class TriggerPlatform : Platform
         }
 
         //데미지
-        Damageable damageable;
-        edgeCollider.enabled = true;
-        SearchOverlapObject(edgeCollider, out damageable);
-
-        if (damageable != null)
-        {
-            damageable.TakeDamage(null);
-            edgeCollider.enabled = false;
-            return;
-        }
-
-        edgeCollider.enabled = false;
-
+        SearchOverlapCharacter(edgeCollider, m_OverlapCharacterContactFilter, 5);
         EnableOverlapSpikeTriggers();
     }
 

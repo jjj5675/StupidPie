@@ -47,7 +47,10 @@ public class SceneController : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
 
+    void Start()
+    {
         CellTransitionDestination entrance;
         CellController.Instance.CurrentCell.GetCellDestination(initalCellTransitionDestinationTag, out entrance);
         SetEnteringGameObjectLocation(entrance);
