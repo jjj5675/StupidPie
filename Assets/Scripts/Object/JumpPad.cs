@@ -36,6 +36,10 @@ public class JumpPad : Platform
         m_PlatformType = PlatformType.JUMPING;
     }
 
+    public override void ResetPlatform()
+    {
+    }
+
     public void OnLaunch(Collider2D collider)
     {
         m_EventFired = true;

@@ -236,10 +236,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a4adfdd2403ee41bddef4e85e0b5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMovingAtStart: 1
   platformCatcher: {fileID: 0}
   destroyed: {fileID: 1763693132740936043, guid: a1f6e9d829873174baacab35eea07ccd,
     type: 3}
   waitBreakDuration: 3
+  refreshTile: {fileID: 11400000, guid: 03d300f7387b21147a93150802302c48, type: 2}
 --- !u!66 &5402036534043705974
 CompositeCollider2D:
   m_ObjectHideFlags: 0

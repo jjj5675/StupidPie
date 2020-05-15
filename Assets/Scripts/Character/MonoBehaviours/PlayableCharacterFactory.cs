@@ -89,4 +89,37 @@ public class PlayableCharacterFactory : MonoBehaviour
         Instance.m_PlayableCharacterCache.TryGetValue(playableCharacter, out character);
         return character.playerCollider;
     }
+
+    public static void AllCharacterReleaseControl(bool resetValuse = true)
+    {
+        Character character;
+        for (int i = 0; i < Instance.m_PlayableCharacterCache.Count; i++)
+        {
+            Instance.m_PlayableCharacterCache.TryGetValue((PlayerBehaviour.PlayableCharacter)i, out character);
+            character.playerInput.ReleaseControl(resetValuse);
+        }
+    }
+
+    public static void AllCharacterGainControl()
+    {
+        Character character;
+        for(int i=0; i<Instance.m_PlayableCharacterCache.Count; i++)
+        {
+            Instance.m_PlayableCharacterCache.TryGetValue((PlayerBehaviour.PlayableCharacter)i, out character);
+            character.playerInput.GainControl();
+        }
+    }
+
+    public static void AllCharacterTeleport()
+    {
+        Character character;
+        Vector3 seriLocation = CellController.Instance.lastEnteringDestination.seriLocation.transform.position;
+        Vector3 iresLocation = CellController.Instance.lastEnteringDestination.iresLocation.transform.position;
+
+        Instance.m_PlayableCharacterCache.TryGetValue(PlayerBehaviour.PlayableCharacter.SERI, out character);
+        GameObjectTeleporter.Teleport(character.playerBehaviour.gameObject, seriLocation);
+
+        Instance.m_PlayableCharacterCache.TryGetValue(PlayerBehaviour.PlayableCharacter.IRES, out character);
+        GameObjectTeleporter.Teleport(character.playerBehaviour.gameObject, iresLocation);
+    }
 }

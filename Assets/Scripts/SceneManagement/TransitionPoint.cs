@@ -38,7 +38,7 @@ public class TransitionPoint : MonoBehaviour
 
         if(m_TransitioningIresPresent && m_TransitioningSeriPresent && transitionWhen == TransitionWhen.OnTriggerEnter)
         {
-            CellController.Instance.SetCells(transitionCell);
+            CellController.Instance.SetCells(transitionCell, transitionDestinationTag);
             TransitionInternal();
         }
     }
@@ -59,9 +59,7 @@ public class TransitionPoint : MonoBehaviour
     {
         if(transitionType == TransitionType.SameScene)
         {
-            GameObjectTeleporter.Teleport(transitioningSeri, transitionDestinationTag);
-            GameObjectTeleporter.Teleport(transitioningIres, transitionDestinationTag);
+            PlayableCharacterFactory.AllCharacterTeleport();
         }
     }
-
 }

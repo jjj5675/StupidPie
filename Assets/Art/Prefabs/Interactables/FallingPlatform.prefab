@@ -130,18 +130,18 @@ MonoBehaviour:
   - {x: -1, y: 0}
   contactFilter:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
-    useNormalAngle: 0
+    useNormalAngle: 1
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 768
+      m_Bits: 512
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
-    maxNormalAngle: 0
+    maxNormalAngle: 360
 --- !u!50 &5522182142564360962
 Rigidbody2D:
   serializedVersion: 4
@@ -180,4 +180,3 @@ MonoBehaviour:
   speed: 1
   maxSpeed: 0
   waitFallingTime: 2
-  raycastDistance: 0.1

@@ -10,15 +10,13 @@ public class CellController : MonoBehaviour
     public Cell rootCell;
     public GameObject transitioningSeri;
     public GameObject transitioningIres;
+    public CellTransitionDestination lastEnteringDestination;
 
     List<Cell> m_CellCache = new List<Cell>();
     Cell m_CurrentCell;
     Cell m_PreviousCell;
 
     public Cell CurrentCell { get { return m_CurrentCell; } }
-
-    CellTransitionDestination.DestinationTag m_FirstEnteringTag;
-
 
     void Awake()
     {
@@ -30,7 +28,6 @@ public class CellController : MonoBehaviour
         }
 
         m_CurrentCell = rootCell;
-
         PopulateCellList(ref m_CellCache);
     }
 
@@ -50,22 +47,7 @@ public class CellController : MonoBehaviour
         }
     }
 
-    public Transform GetCharacterLocation(GameObject character, CellTransitionDestination.DestinationTag destinationTag)
-    {
-        CellTransitionDestination entrance;
-        CurrentCell.GetCellDestination(destinationTag, out entrance);
-
-        if(character == transitioningSeri)
-        {
-            return entrance.seriLocation.transform;
-        }
-        else
-        {
-            return entrance.iresLocation.transform;
-        }
-    }
-
-    public void SetCells(Cell newCell)
+    public void SetCells(Cell newCell, CellTransitionDestination.DestinationTag destinationTag)
     {
         if(newCell == null || !m_CellCache.Contains(newCell))
         {
@@ -76,12 +58,17 @@ public class CellController : MonoBehaviour
         m_PreviousCell = m_CurrentCell;
         m_CurrentCell = newCell;
         m_CurrentCell.gameObject.SetActive(true);
+        m_CurrentCell.GetCellDestination(destinationTag, out lastEnteringDestination);
 
         AutoCameraSetup.Instance.SwapVirtualCamera(newCell.confinerCollider);
     }
 
     public void OnDisabledPreviousCell()
     {
-        m_PreviousCell.gameObject.SetActive(false);
+        if (m_PreviousCell != null)
+        {
+            m_PreviousCell.ResetPlatformInCell();
+            m_PreviousCell.gameObject.SetActive(false);
+        }
     }
 }

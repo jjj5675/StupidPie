@@ -14,6 +14,7 @@ public class SwitchPlatform : Platform
 
     void Awake()
     {
+        m_Collider = GetComponent<BoxCollider2D>();
     }
 
     protected override void Initialise()
@@ -29,6 +30,10 @@ public class SwitchPlatform : Platform
         m_OverlapCharacterContactFilter.layerMask = overlapColliderMask;
         m_OverlapCharacterContactFilter.useLayerMask = true;
         m_OverlapCharacterContactFilter.useTriggers = false;
+    }
+
+    public override void ResetPlatform()
+    {
     }
 
     public void EnableOnSwitch()

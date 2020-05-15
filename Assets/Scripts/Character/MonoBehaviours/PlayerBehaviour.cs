@@ -501,15 +501,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Respawn(bool resetHealth)
     {
-        m_Animator.SetTrigger(m_HashRespawnPara);
-
-        //두캐릭터 모두 리스폰
-        //GameObjectTeleporter.Teleport(gameObject, Vector2.zero);
-
         if (resetHealth)
         {
             damageable.SetHealth(damageable.startingHealth);
         }
+
+        m_Animator.SetTrigger(m_HashRespawnPara);
+
+        CellController.Instance.CurrentCell.ResetPlatformInCell();
+        PlayableCharacterFactory.AllCharacterTeleport();
     }
 
     public void OnHurt(Damageable damageable, Damager damager)
@@ -524,18 +524,20 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void OnDie()
     {
-        m_Animator.SetTrigger(m_HashDeadPara);
+        //m_Animator.SetTrigger(m_HashDeadPara);
         StartCoroutine(DieRespawnCoroutine(true));
     }
 
     // fadeduration * 2 < invulnerabilityDuration
     IEnumerator DieRespawnCoroutine(bool resetHealth)
     {
-        playerInput.ReleaseControl();
-        yield return ScreenFader.FadeSceneOut();
+        PlayableCharacterFactory.AllCharacterReleaseControl(true);
+        yield return new WaitForSeconds(1.0f);
+        yield return StartCoroutine(ScreenFader.FadeSceneOut());
         Respawn(resetHealth);
-        yield return ScreenFader.FadeSceneIn();
-        playerInput.GainControl();
+        yield return new WaitForEndOfFrame();
+        yield return StartCoroutine(ScreenFader.FadeSceneIn());
+        PlayableCharacterFactory.AllCharacterGainControl();
     }
 
     public bool CheckForJumpPadCollisionEnter()

@@ -42,6 +42,10 @@ public class SpikeTrigger : Platform
         m_Box.isTrigger = true;
     }
 
+    public override void ResetPlatform()
+    {
+    }
+
     public bool Resettable
     {
         get

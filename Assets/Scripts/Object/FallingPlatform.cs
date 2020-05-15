@@ -7,16 +7,13 @@ public class FallingPlatform : Platform
     public float speed = 1.0f;
     public float maxSpeed = 0;
     public float waitFallingTime;
-    public float raycastDistance = 0.1f;
 
     protected Rigidbody2D m_Rigidbody2D;
     protected bool m_CanFall = true;
     protected Vector2 m_Velocity;
-    protected bool m_IsStaticObject = false;
-    protected RaycastHit2D[] m_GroundHit = new RaycastHit2D[3];
-    protected Vector2[] m_RaycastPositions = new Vector2[3];
     protected Collider2D m_Collider;
     protected float m_CurrentDuration = 0;
+    protected Vector3 m_StartingPosition;
 
     protected override void Initialise()
     {
@@ -30,6 +27,16 @@ public class FallingPlatform : Platform
         }
 
         m_PlatformType = PlatformType.FALLING;
+        m_StartingPosition = transform.position;
+    }
+
+    public override void ResetPlatform()
+    {
+        m_CanFall = true;
+        m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
+        m_Velocity = Vector2.zero;
+        m_CurrentDuration = 0;
+        transform.position = m_StartingPosition;
     }
 
     // Update is called once per frame
@@ -37,14 +44,6 @@ public class FallingPlatform : Platform
     {
         if (!m_CanFall)
         {
-            return;
-        }
-
-        if (m_IsStaticObject)
-        {
-            m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
-            m_CurrentDuration = 0;
-            m_CanFall = false;
             return;
         }
 
@@ -66,42 +65,19 @@ public class FallingPlatform : Platform
                 m_Velocity += Vector2.down * distanceToGo * Time.deltaTime;
 
                 m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
-                platformCatcher.MoveCaughtObjects(m_Velocity);
 
-                ColliderBottomEndCheck();
-            }
-        }
-    }
-
-    public void ColliderBottomEndCheck()
-    {
-        Vector2 raycastStart = m_Rigidbody2D.position + m_Collider.offset;
-
-        if(m_Collider != null)
-        {
-            Vector2 raycastStartBottomCenter = raycastStart + Vector2.down * (m_Collider.bounds.size.y * 0.5f);
-
-            m_RaycastPositions[0] = raycastStartBottomCenter + (Vector2.left * m_Collider.bounds.size.x * 0.5f);
-            m_RaycastPositions[1] = raycastStartBottomCenter;
-            m_RaycastPositions[2] = raycastStartBottomCenter + (Vector2.right * m_Collider.bounds.size.x * 0.5f);
-
-            for (int i = 0; i < m_RaycastPositions.Length; i++)
-            {
-                int count = Physics2D.Raycast(m_RaycastPositions[i], Vector2.down, platformCatcher.contactFilter, m_GroundHit, raycastDistance);
-
-                if(count != 0)
+                if (0 < platformCatcher.CaughtObjectCount)
                 {
-                    float middleHitHeight = m_GroundHit[0].point.y;
-                    float colliderHeight = m_Rigidbody2D.position.y + m_Collider.offset.y - m_Collider.bounds.size.y * 0.5f;
-
-                    m_IsStaticObject = m_Velocity.y <= 0;
-                    m_IsStaticObject &= middleHitHeight < colliderHeight + raycastDistance;
-
-                    if(m_IsStaticObject)
-                    {
-                        break;
-                    }
+                    platformCatcher.MoveCaughtObjects(m_Velocity);
                 }
+            }
+
+            float confinerBoundsMinY = CellController.Instance.CurrentCell.ConfinerBounds.min.y ;
+
+            if(transform.position.y < confinerBoundsMinY)
+            {
+                m_CanFall = false;
+                m_Velocity = Vector2.zero;
             }
         }
     }

@@ -48,36 +48,32 @@ public class Damageable : MonoBehaviour
         m_InvuInerable = false;
     }
 
-    public void TakeDamage(Damager damager)
+    public void TakeDamage(Damager damager, bool ignoreHurt)
     {
         if (m_InvuInerable || m_CurrentHealth <= 0)
         {
             return;
         }
 
-        m_CurrentHealth -= damager.damage;
-        OnTakeDamage.Invoke(this, damager);
+        if (!m_InvuInerable)
+        {
+            if (!ignoreHurt)
+            {
+                m_CurrentHealth -= damager.damage;
+                OnTakeDamage.Invoke(this, damager);
+            }
+            else
+            {
+                m_CurrentHealth -= int.MaxValue;
+            }
+        }
 
-        Debug.Log(m_CurrentHealth);
 
         if (m_CurrentHealth <= 0)
         {
             OnDie.Invoke(this, damager);
             EnableInvulnerability();
         }
-    }
-
-    public void TakeDamage()
-    {
-        if (m_InvuInerable || m_CurrentHealth <= 0)
-        {
-            return;
-        }
-
-        m_CurrentHealth = 0;
-
-        OnDie.Invoke(this, null);
-        EnableInvulnerability();
     }
 
     public void SetHealth(int amount)

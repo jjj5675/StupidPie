@@ -46,6 +46,10 @@ public class ReturningPlatform : Platform
         m_PlatformType = PlatformType.RETURN;
     }
 
+    public override void ResetPlatform()
+    {
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {

@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class DestructibleTile : MonoBehaviour
+public class DestructibleTile : Platform
 {
     public PlatformCatcher platformCatcher;
     public GameObject destroyed;
     public float waitBreakDuration;
+    public TileBase refreshTile;
 
     private Tilemap m_Tilemap;
+    private Tilemap m_StartingTilemap;
     private List<Vector3Int> m_TileArray = new List<Vector3Int>(10);
+    private List<Vector3Int> m_DestroyedTilePositions = new List<Vector3Int>(50);
+    private Coroutine m_DestroyTileCoroutine;
+    private bool m_IsRefreshing = false;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Initialise()
     {
         m_Tilemap = GetComponent<Tilemap>();
 
@@ -21,6 +25,28 @@ public class DestructibleTile : MonoBehaviour
         {
             platformCatcher = GetComponent<PlatformCatcher>();
         }
+    }
+
+    public override void ResetPlatform()
+    {
+        m_IsRefreshing = true;
+
+        if (m_DestroyTileCoroutine != null)
+        {
+            StopCoroutine(m_DestroyTileCoroutine);
+            m_DestroyTileCoroutine = null;
+        }
+
+        for(int i=0; i<m_DestroyedTilePositions.Count; i++)
+        {
+            m_Tilemap.SetColor(m_DestroyedTilePositions[i], new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            m_Tilemap.SetTile(m_DestroyedTilePositions[i], refreshTile);
+        }
+
+        m_TileArray.Clear();
+        m_DestroyedTilePositions.Clear();
+
+        Invoke("DisableRefreshTile", 0.5f);
     }
 
     void FixedUpdate()
@@ -50,7 +76,8 @@ public class DestructibleTile : MonoBehaviour
                     if (!m_TileArray.Contains(cell))
                     {
                         m_TileArray.Add(cell);
-                        StartCoroutine(DestroyTile(cell));
+                        m_DestroyedTilePositions.Add(cell);
+                        m_DestroyTileCoroutine = StartCoroutine(DestroyTile(cell));
                     }
                 }
 
@@ -58,14 +85,32 @@ public class DestructibleTile : MonoBehaviour
         }
     }
 
+    void DisableRefreshTile()
+    {
+        m_IsRefreshing = false;
+    }
+
     IEnumerator DestroyTile(Vector3Int tilePos)
     {
         yield return new WaitForSeconds(waitBreakDuration);
-        m_Tilemap.SetColor(tilePos, new Color(1.0f, 1.0f, 1.0f, 0.0f));
-        GameObject.Instantiate(destroyed, m_Tilemap.CellToLocalInterpolated(tilePos + new Vector3(0.5f, 0.5f)), Quaternion.identity);
+
+        if (!m_IsRefreshing)
+        {
+            m_Tilemap.SetColor(tilePos, new Color(1.0f, 1.0f, 1.0f, 0.0f));
+            GameObject.Instantiate(destroyed, m_Tilemap.CellToLocalInterpolated(tilePos + new Vector3(0.5f, 0.5f)), Quaternion.identity);
+        }
+        else
+        {
+            yield break;
+        }
+
         yield return new WaitForSeconds(0.5f);
-        m_TileArray.RemoveAt(0);
-        m_Tilemap.SetTile(tilePos, null);
+
+        if (!m_IsRefreshing)
+        {
+            m_TileArray.RemoveAt(0);
+            m_Tilemap.SetTile(tilePos, null);
+        }
     }
 
 }

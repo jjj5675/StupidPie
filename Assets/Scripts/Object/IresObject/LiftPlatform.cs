@@ -66,6 +66,10 @@ public class LiftPlatform : Platform
         m_PlatformType = PlatformType.MOVING;
     }
 
+    public override void ResetPlatform()
+    {
+    }
+
     void FixedUpdate()
     {
         if (!m_Started && !platformCatcher.CaughtIresCharacter)

@@ -41,6 +41,10 @@ public class TriggerPlatform : Platform
         m_OverlapCharacterContactFilter.useTriggers = false;
     }
 
+    public override void ResetPlatform()
+    {
+    }
+
     public override void StartMoving()
     {
         EnableOverlapSpikeTriggers();

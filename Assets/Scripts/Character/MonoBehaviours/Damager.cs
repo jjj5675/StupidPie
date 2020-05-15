@@ -55,7 +55,7 @@ public class Damager : MonoBehaviour
 
             if (damageable != null)
             {
-                damageable.TakeDamage(this);
+                damageable.TakeDamage(this, false);
             }
         }
     }

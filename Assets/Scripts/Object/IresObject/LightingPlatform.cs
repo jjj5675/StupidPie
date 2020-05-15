@@ -26,6 +26,10 @@ public class LightingPlatform : Platform
         m_PlatformType = PlatformType.LIGHTING;
     }
 
+    public override void ResetPlatform()
+    {
+    }
+
     void FixedUpdate()
     {
         if(!m_Started && !platformCatcher.CaughtIresCharacter)

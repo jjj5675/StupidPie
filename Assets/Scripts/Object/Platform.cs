@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Platform : MonoBehaviour
@@ -26,6 +25,7 @@ public abstract class Platform : MonoBehaviour
         Initialise();
     }
 
+    public abstract void ResetPlatform();
     protected abstract void Initialise();
 
     protected void SearchOverlapPlatforms<TComponent>(Collider2D rootCollider, out TComponent[] copyArray, int resultCount, bool addRootCollider = true)
@@ -80,13 +80,13 @@ public abstract class Platform : MonoBehaviour
             if(colliderResults[i] == PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
             {
                 playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.IRES);
-                playerBehaviour.damageable.TakeDamage();
+                playerBehaviour.damageable.TakeDamage(null, true);
                 break;
             }
             else if (colliderResults[i] == PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.SERI))
             {
                 playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.SERI);
-                playerBehaviour.damageable.TakeDamage();
+                playerBehaviour.damageable.TakeDamage(null, true);
                 break;
             }
         }

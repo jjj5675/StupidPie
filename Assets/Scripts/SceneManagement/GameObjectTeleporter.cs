@@ -36,12 +36,6 @@ public class GameObjectTeleporter : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public static void Teleport(GameObject transitioningGameObject, CellTransitionDestination.DestinationTag destinationTag)
-    {
-        Transform destinationTransform = CellController.Instance.GetCharacterLocation(transitioningGameObject, destinationTag);
-        Instance.StartCoroutine(Instance.Transition(transitioningGameObject, destinationTransform.position, false));
-    }
-
     public static void Teleport(GameObject transitioningGameObject, Vector3 destinationPosition)
     {
         Instance.StartCoroutine(Instance.Transition(transitioningGameObject, destinationPosition, false));
@@ -50,8 +44,19 @@ public class GameObjectTeleporter : MonoBehaviour
     private IEnumerator Transition(GameObject transitioningGameObject, Vector3 destinationPosition, bool fade)
     {
         m_IsTransitioning = true;
+
+        if(fade)
+        {
+            yield return StartCoroutine(ScreenFader.FadeSceneOut());
+        }
+
         transitioningGameObject.transform.position = destinationPosition;
+
+        if(fade)
+        {
+            yield return StartCoroutine(ScreenFader.FadeSceneIn());
+        }
+
         m_IsTransitioning = false;
-        yield return null; //임시
     }
 }
