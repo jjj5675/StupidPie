@@ -60,7 +60,7 @@ public class CellController : MonoBehaviour
         m_CurrentCell.gameObject.SetActive(true);
         m_CurrentCell.GetCellDestination(destinationTag, out lastEnteringDestination);
 
-        AutoCameraSetup.Instance.SwapVirtualCamera(newCell.confinerCollider);
+        //AutoCameraSetup.Instance.SwapVirtualCamera(newCell.confinerCollider);
     }
 
     public void OnDisabledPreviousCell()
