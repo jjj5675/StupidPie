@@ -227,6 +227,9 @@ MonoBehaviour:
   isMovingAtStart: 0
   compositeCollider: {fileID: 9132810034127000847}
   edgeCollider: {fileID: 0}
+  overlapColliderMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!68 &9132810034127000841
 EdgeCollider2D:
   m_ObjectHideFlags: 0

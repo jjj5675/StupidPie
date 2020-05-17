@@ -6,7 +6,9 @@ public class AutoCameraSetup : MonoBehaviour
     static private AutoCameraSetup s_Instance;
     static public AutoCameraSetup Instance { get { return s_Instance; } }
     public GameObject targetGroup;
-    public GameObject subCamera;
+    public GameObject subvcam;
+    public GameObject mainvcam;
+
     public GameObject mainCamera;
 
     CinemachineVirtualCamera m_SubVirtualCam;
@@ -29,11 +31,11 @@ public class AutoCameraSetup : MonoBehaviour
         m_MainVirtualCam = GetComponent<CinemachineVirtualCamera>();
         m_MainCinemachineBrain = mainCamera.GetComponent<CinemachineBrain>();
 
-        if (subCamera != null)
+        if (subvcam != null)
         {
-            m_SubVirtualCam = subCamera.GetComponent<CinemachineVirtualCamera>();
-            m_SubCinemachineConfiner = subCamera.GetComponent<CinemachineConfiner>();
-            subCamera.SetActive(false);
+            m_SubVirtualCam = subvcam.GetComponent<CinemachineVirtualCamera>();
+            m_SubCinemachineConfiner = subvcam.GetComponent<CinemachineConfiner>();
+            subvcam.SetActive(false);
         }
         else
         {
@@ -62,18 +64,19 @@ public class AutoCameraSetup : MonoBehaviour
         if (!m_MainCinemachineBrain.IsBlending)
         {
             m_MainCinemachineConfiner.m_BoundingShape2D = m_SubCinemachineConfiner.m_BoundingShape2D;
-            subCamera.SetActive(false);
+            m_MainCinemachineConfiner.InvalidatePathCache();
+            subvcam.SetActive(false);
             CellController.Instance.OnDisabledPreviousCell();
             m_ActivationFrameCount = 0;
             m_IsCellChanging = false;
         }
     }
 
-    public void DisabledScrrenEdges()
+    public void DisabledScreenEdges()
     {
         m_MainCinemachineConfiner.m_ConfineScreenEdges = false;
     }
-    public void EnabledScrrenEdges()
+    public void EnabledScreenEdges()
     {
         m_MainCinemachineConfiner.m_ConfineScreenEdges = true;
     }
@@ -81,7 +84,8 @@ public class AutoCameraSetup : MonoBehaviour
     public void SwapVirtualCamera(Collider2D newBound)
     {
         m_SubCinemachineConfiner.m_BoundingShape2D = newBound;
-        subCamera.SetActive(true);
+        m_SubCinemachineConfiner.InvalidatePathCache();
+        subvcam.SetActive(true);
         m_IsCellChanging = true;
     }
 }

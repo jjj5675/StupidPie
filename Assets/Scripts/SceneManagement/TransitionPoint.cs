@@ -40,6 +40,7 @@ public class TransitionPoint : MonoBehaviour
         {
             CellController.Instance.SetCells(transitionCell, transitionDestinationTag);
             TransitionInternal();
+            AutoCameraSetup.Instance.SwapVirtualCamera(CellController.Instance.CurrentCell.confinerCollider);
         }
     }
 
