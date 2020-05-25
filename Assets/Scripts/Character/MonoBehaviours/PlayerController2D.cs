@@ -109,6 +109,11 @@ public class PlayerController2D : CharacterController2D
                             collisionFlags.IsLeftSide = stuck;
                         }
 
+                        if(collisionFlags.CheckForWidth())
+                        {
+                            Debug.Log("충돌");
+                        }
+
                         if (collisionFlags.CheckForWidth() && PhysicsHelper.ColliderHasJumpPad(m_FoundHitList[m_FirstHitIndex].collider))
                         {
                             collisionFlags.inContactJumppad = true;

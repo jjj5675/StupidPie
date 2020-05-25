@@ -92,7 +92,15 @@ public class PlayerBehaviour : MonoBehaviour
         if (spriteOriginallyFacesRight)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
-            m_PlayerController2D.UpdateBoxOffset(1f);
+
+            if (playableCharacter == PlayableCharacter.IRES)
+            {
+                m_PlayerController2D.UpdateBoxOffset(-1f);
+            }
+            else
+            {
+                m_PlayerController2D.UpdateBoxOffset(1f);
+            }
         }
 
         m_BoxOriginallyOffsetSign = Mathf.Sign(m_PlayerController2D.BoxOffset.x);

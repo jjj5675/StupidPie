@@ -141,7 +141,7 @@ public abstract class CharacterController2D : MonoBehaviour
         for (int i = 0; i < raycastCount; i++)
         {
             int count = Physics2D.Raycast(positions[i], direction, m_ContactFilter2D, m_HitBuffer, distance);
-            //Debug.DrawRay(positions[i], direction * distance, Color.red);
+            Debug.DrawRay(positions[i], direction * distance, Color.red);
 
             if (count > 0)
             {
