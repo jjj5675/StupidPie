@@ -15,7 +15,8 @@ public class JumpPad : Platform
     public Vector2 targetPosition { get { return m_TargetPosition; } }
     public bool EventFired { get { return m_EventFired; } }
 
-    private readonly int m_HashJumpPadState = Animator.StringToHash("Base Layer.JumpPad");
+    private readonly int m_HashJumpPadState = Animator.StringToHash("Base Layer.BouncePad");
+    //private readonly int m_HashBouncingEndPara = Animator.StringToHash("BouncingEnd");
 
 
     void Awake()
@@ -43,11 +44,12 @@ public class JumpPad : Platform
     public void OnLaunch(Collider2D collider)
     {
         m_EventFired = true;
-        //m_Animator.Play(m_HashJumpPadState, -1, 0);
 
+        m_Animator.Play(m_HashJumpPadState, -1, 0);
+        
         //if (m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         //{
-        //    m_Animator.SetBool(m_HashPushingPara, false);
+        //    m_Animator.SetBool(m_HashBouncingEndPara, true);
         //}
 
         StartCoroutine(StartLaunch(collider));

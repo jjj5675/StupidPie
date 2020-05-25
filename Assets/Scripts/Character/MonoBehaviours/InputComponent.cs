@@ -12,6 +12,13 @@ public abstract class InputComponent : MonoBehaviour
         public bool Held { get; protected set; }
         public bool Up { get; protected set; }
 
+        public bool Enabled
+        {
+            get { return m_Enabled; }
+        }
+
+        [SerializeField]
+        protected bool m_Enabled = true;
         protected bool m_GettingInput = true;
 
         bool m_AfterFixedUpdateDown;
@@ -25,6 +32,14 @@ public abstract class InputComponent : MonoBehaviour
 
         public void Get(bool fixedUpdateHappened)
         {
+            if(!m_Enabled)
+            {
+                Down = false;
+                Held = false;
+                Up = false;
+                return;
+            }
+
             if (!m_GettingInput)
             {
                 return;
@@ -50,6 +65,16 @@ public abstract class InputComponent : MonoBehaviour
                 m_AfterFixedUpdateHeld |= Held;
                 m_AfterFixedUpdateUp |= Up;
             }
+        }
+
+        public void Enable()
+        {
+            m_Enabled = true;
+        }
+
+        public void Disable()
+        {
+            m_Enabled = false;
         }
 
         public void GainControl()
@@ -90,8 +115,15 @@ public abstract class InputComponent : MonoBehaviour
         public KeyCode negative;
         public float Value { get; protected set; }
         public bool ReceivingInput { get; protected set; }
+
+        public bool Enabled
+        {
+            get { return m_Enabled; }
+        }
+
         public bool GettingInput { get { return m_GettingInput; } }
 
+        protected bool m_Enabled = true;
         protected bool m_GettingInput = true;
 
         public InputAxis(KeyCode positive, KeyCode negative)
@@ -102,6 +134,12 @@ public abstract class InputComponent : MonoBehaviour
 
         public void Get()
         {
+            if(!m_Enabled)
+            {
+                Value = 0f;
+                return;
+            }
+
             if (!m_GettingInput)
             {
                 return;
@@ -127,6 +165,16 @@ public abstract class InputComponent : MonoBehaviour
             }
 
             ReceivingInput = positiveHeld || negativeHeld;
+        }
+
+        public void Enable()
+        {
+            m_Enabled = true;
+        }
+
+        public void Disable()
+        {
+            m_Enabled = false;
         }
 
         public void GainControl()

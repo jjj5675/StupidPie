@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public abstract class Platform : MonoBehaviour
 {
@@ -92,6 +93,30 @@ public abstract class Platform : MonoBehaviour
         }
 
         collider.enabled = false;
+    }
+
+    protected void ChangeAllTiles(Tilemap tilemap, Sprite sprite)
+    {
+        if(tilemap == null)
+        {
+            Debug.LogWarning("타일맵이 설정되지 않았습니다.");
+            return;
+        }
+
+        Tile tile = ScriptableObject.CreateInstance<Tile>();
+        tile.sprite = sprite;
+
+        foreach(var pos in tilemap.cellBounds.allPositionsWithin)
+        {
+            Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
+
+            if(tilemap.HasTile(localPlace))
+            {
+                tilemap.SetTile(localPlace, tile);
+            }
+        }
+
+        tilemap.RefreshAllTiles();
     }
 
     public virtual void StartMoving()

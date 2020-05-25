@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Damager))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class SpikeTrigger : Platform
 {
     public Damager damager;
+    public UnityEvent OnEabled;
+    public UnityEvent OnDisabled;
 
     protected BoxCollider2D m_Box;
     protected SpikeTrigger[] m_SpikeTriggers;
@@ -44,6 +47,8 @@ public class SpikeTrigger : Platform
 
     public override void ResetPlatform()
     {
+        //m_Box.isTrigger = true;
+        //OnDisabled.Invoke();
     }
 
     public bool Resettable
@@ -66,27 +71,29 @@ public class SpikeTrigger : Platform
     {
         if (m_Started)
         {
-            DisableOverlapDamagers(true, true);
+            DisableOverlapDamagers(true, true, true);
         }
         else
         {
-            EnableOverlapDamagers(true, true);
+            EnableOverlapDamagers(true, true, true);
         }
     }
 
     public override void StopMoving()
     {
+        ChangeOnce = false;
+
         if (m_Started)
         {
-            EnableOverlapDamagers(false);
+            EnableOverlapDamagers(false, false);
         }
         else
         {
-            DisableOverlapDamagers(false);
+            DisableOverlapDamagers(false, false);
         }
     }
 
-    public void EnableOverlapDamagers(bool change = true, bool ignoreTrigger = false)
+    public void EnableOverlapDamagers(bool enableEvent, bool change = true, bool ignoreTrigger = false)
     {
         if(ChangeOnce)
         {
@@ -95,13 +102,22 @@ public class SpikeTrigger : Platform
 
         for(int i = 0; i<m_SpikeTriggers.Length; i++)
         {
+            if(enableEvent)
+            {
+                m_SpikeTriggers[i].OnEabled.Invoke();
+            }
+            else
+            {
+                m_SpikeTriggers[i].OnDisabled.Invoke();
+            }
+
             m_SpikeTriggers[i].damager.EnableOnDamage();
             m_SpikeTriggers[i].ChangeOnce = change;
             m_SpikeTriggers[i].m_IgnoreTrigger = ignoreTrigger;
         }
     }
 
-    public void DisableOverlapDamagers(bool change = true, bool ignoreTrigger = false)
+    public void DisableOverlapDamagers(bool enableEvent, bool change = true, bool ignoreTrigger = false)
     {
         if (ChangeOnce)
         {
@@ -110,6 +126,15 @@ public class SpikeTrigger : Platform
 
         for (int i = 0; i < m_SpikeTriggers.Length; i++)
         {
+            if(enableEvent)
+            {
+                m_SpikeTriggers[i].OnEabled.Invoke();
+            }
+            else
+            {
+                m_SpikeTriggers[i].OnDisabled.Invoke();
+            }
+
             m_SpikeTriggers[i].damager.DisableOnDamage();
             m_SpikeTriggers[i].ChangeOnce = change;
             m_SpikeTriggers[i].m_IgnoreTrigger = ignoreTrigger;
@@ -130,11 +155,11 @@ public class SpikeTrigger : Platform
 
             if (m_Started)
             {
-                DisableOverlapDamagers();
+                DisableOverlapDamagers(true);
             }
             else
             {
-                EnableOverlapDamagers();
+                EnableOverlapDamagers(true);
             }
         }
     }
@@ -157,11 +182,11 @@ public class SpikeTrigger : Platform
 
                 if (m_Started)
                 {
-                    EnableOverlapDamagers(false);
+                    EnableOverlapDamagers(false, false);
                 }
                 else
                 {
-                    DisableOverlapDamagers(false);
+                    DisableOverlapDamagers(false, false);
                 }
             }
         }

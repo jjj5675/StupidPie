@@ -58,6 +58,14 @@ public class PlayableCharacterFactory : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    void Start()
+    {
+        Collider2D seri = TryGetCollider(PlayerBehaviour.PlayableCharacter.SERI);
+        Collider2D ires = TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES);
+
+        Physics2D.IgnoreCollision(seri, ires, true);
+    }
+
     public static void Initialise(PlayerBehaviour newBehaviour, PlayerInput newInput, Collider2D collider)
     {
         Character newCharacter = new Character

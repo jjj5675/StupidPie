@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TriggerPlatform : Platform
 {
     public CompositeCollider2D compositeCollider;
     public EdgeCollider2D edgeCollider;
     public LayerMask overlapColliderMask;
+    public Sprite enabledSprite;
+    public Sprite disabledSprite;
 
     protected ContactFilter2D m_OverlapCharacterContactFilter;
     protected SpikeTrigger[] m_SpikeTriggers;
+    protected Tilemap m_Tilemap;
+
+    void Awake()
+    {
+        m_Tilemap = GetComponent<Tilemap>();
+    }
 
     protected override void Initialise()
     {
@@ -48,15 +57,27 @@ public class TriggerPlatform : Platform
     public override void StartMoving()
     {
         EnableOverlapSpikeTriggers();
+
+        if(!m_Started)
+        {
+            SearchOverlapCharacter(edgeCollider, m_OverlapCharacterContactFilter, 5);
+        }
     }
 
     public override void StopMoving()
     {
         DisableOverlapSpikeTriggers();
+
+        if(m_Started)
+        {
+            SearchOverlapCharacter(edgeCollider, m_OverlapCharacterContactFilter, 5);
+        }
     }
 
     void EnableOverlapSpikeTriggers()
     {
+        ChangeAllTiles(m_Tilemap, enabledSprite);
+
         if (m_Started)
         {
             compositeCollider.isTrigger = true;
@@ -77,6 +98,8 @@ public class TriggerPlatform : Platform
 
     void DisableOverlapSpikeTriggers()
     {
+        ChangeAllTiles(m_Tilemap, disabledSprite);
+
         if (m_Started)
         {
             compositeCollider.isTrigger = false;

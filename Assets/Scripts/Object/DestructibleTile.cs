@@ -37,9 +37,11 @@ public class DestructibleTile : Platform
             m_DestroyTileCoroutine = null;
         }
 
+        Color newColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
         for(int i=0; i<m_DestroyedTilePositions.Count; i++)
         {
-            m_Tilemap.SetColor(m_DestroyedTilePositions[i], new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            m_Tilemap.SetColor(m_DestroyedTilePositions[i], newColor);
             m_Tilemap.SetTile(m_DestroyedTilePositions[i], refreshTile);
         }
 

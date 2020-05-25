@@ -508,8 +508,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         m_Animator.SetTrigger(m_HashRespawnPara);
 
-        CellController.Instance.CurrentCell.ResetPlatformInCell();
         PlayableCharacterFactory.AllCharacterTeleport();
+        CellController.Instance.CurrentCell.ResetPlatformInCell();
     }
 
     public void OnHurt(Damageable damageable, Damager damager)
