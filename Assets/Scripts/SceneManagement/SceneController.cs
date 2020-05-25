@@ -56,6 +56,14 @@ public class SceneController : MonoBehaviour
         SetEnteringGameObjectLocation(entrance);
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     private void SetEnteringGameObjectLocation(CellTransitionDestination entrance)
     {
         Transform entranceSeriLocation = entrance.seriLocation.transform;
