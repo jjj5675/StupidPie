@@ -5,15 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerBehaviour : MonoBehaviour
 {
-    public enum PlayableCharacter
-    {
-        SERI, IRES
-    }
-
+    public PlayerDataBase dataBase;
+    public Publisher publisher;
     public SpriteRenderer spriteRenderer;
-    public Damageable damageable;
     public Dashable dashable;
-    public PlayerInput playerInput;
 
     public float moveSpeed;
     public float groundAcceleration;
@@ -34,7 +29,6 @@ public class PlayerBehaviour : MonoBehaviour
     [Range(0f, 1f)] public float slidingSpeedDecelProportion;
 
     public bool spriteOriginallyFacesRight;
-    public PlayableCharacter playableCharacter;
 
     private float m_JumpVelocity;
     private float m_CurrentGravity;
@@ -49,6 +43,7 @@ public class PlayerBehaviour : MonoBehaviour
     private bool m_Slidingable = false;
     private float m_TimeToLeapHeight;
 
+    private Observer m_Observer;
     private Vector2 m_MoveVector;
     private Animator m_Animator;
     private PlayerController2D m_PlayerController2D;
@@ -79,13 +74,16 @@ public class PlayerBehaviour : MonoBehaviour
         m_PlayerController2D = GetComponent<PlayerController2D>();
         m_Animator = GetComponent<Animator>();
         m_Box = GetComponent<BoxCollider2D>();
+
+        dataBase.playerInput = GetComponent<PlayerInput>();
+        m_Observer = new Observer(dataBase);
+        m_Observer.Subscribe(publisher);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         SceneLinkedSMB<PlayerBehaviour>.Initialise(m_Animator, this);
-        PlayableCharacterFactory.Initialise(this, GetComponent<PlayerInput>(), m_Box);
 
         m_PlayerController2D.SetBoxOffset();
 
@@ -93,14 +91,14 @@ public class PlayerBehaviour : MonoBehaviour
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
 
-            if (playableCharacter == PlayableCharacter.IRES)
-            {
-                m_PlayerController2D.UpdateBoxOffset(-1f);
-            }
-            else
-            {
-                m_PlayerController2D.UpdateBoxOffset(1f);
-            }
+            m_PlayerController2D.UpdateBoxOffset(-1f);
+            //if (playableCharacter == PlayableCharacter.IRES)
+            //{
+            //}
+            //else
+            //{
+            //    m_PlayerController2D.UpdateBoxOffset(1f);
+            //}
         }
 
         m_BoxOriginallyOffsetSign = Mathf.Sign(m_PlayerController2D.BoxOffset.x);
@@ -151,8 +149,8 @@ public class PlayerBehaviour : MonoBehaviour
     public void GroundedHorizontalMovement()
     {
         
-        float desiredSpeed = playerInput.Horizontal.Value * moveSpeed;
-        float acceleration = playerInput.Horizontal.ReceivingInput ? groundAcceleration : groundDeceleration;
+        float desiredSpeed = dataBase.playerInput.Horizontal.Value * moveSpeed;
+        float acceleration = dataBase.playerInput.Horizontal.ReceivingInput ? groundAcceleration : groundDeceleration;
         m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
 
         //if (m_CharacterController2D.collisionFlags.CheckForHorizontal())
@@ -173,7 +171,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public bool CheckForJumpInput()
     {
-        return playerInput.Jump.Down;
+        return dataBase.playerInput.Jump.Down;
     }
 
     public bool CheckForUseableXAxis()
@@ -208,11 +206,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void AirborneHorizontalMovement()
     {
-        float desiredSpeed = playerInput.Horizontal.Value * moveSpeed;
+        float desiredSpeed = dataBase.playerInput.Horizontal.Value * moveSpeed;
 
         float acceleration;
 
-        if (!playerInput.Horizontal.ReceivingInput)
+        if (!dataBase.playerInput.Horizontal.ReceivingInput)
             acceleration = groundAcceleration * airborneAccelProportion;
         else
             acceleration = groundDeceleration * airborneDecelProportion;
@@ -238,7 +236,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public bool CheckForDashInput()
     {
-        bool inputDash = playerInput.Dash.Down;
+        bool inputDash = dataBase.playerInput.Dash.Down;
 
         if (inputDash)
         {
@@ -258,8 +256,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     void CalculateDashVelocity(out Vector2 movement)
     {
-        bool inputNone = playerInput.CheckAxisInputsNone();
-        Vector2 dashDirection = playerInput.AxisInputsValue();
+        bool inputNone = dataBase.playerInput.CheckAxisInputsNone();
+        Vector2 dashDirection = dataBase.playerInput.AxisInputsValue();
         dashDirection.Normalize();
         m_DashDirection = dashDirection;
 
@@ -340,8 +338,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void UpdateFacing()
     {
-        bool faceLeft = playerInput.Horizontal.Value < 0f;
-        bool faceRight = playerInput.Horizontal.Value > 0f;
+        bool faceLeft = dataBase.playerInput.Horizontal.Value < 0f;
+        bool faceRight = dataBase.playerInput.Horizontal.Value > 0f;
 
         if (faceLeft)
         {
@@ -462,7 +460,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void GrabbingWallHorizontalMovement()
     {
-        m_MoveVector.x = playerInput.Horizontal.Value;
+        m_MoveVector.x = dataBase.playerInput.Horizontal.Value;
     }
 
     public void SlidingMovement()
@@ -479,7 +477,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         int wallDirection = m_PlayerController2D.collisionFlags.IsLeftSide ? -1 : 1;
 
-        if (playerInput.Horizontal.Value == wallDirection)
+        if (dataBase.playerInput.Horizontal.Value == wallDirection)
         {
             m_MoveVector.x = -wallDirection * wallLeapVelocity.x;
             m_MoveVector.y = wallLeapVelocity.y;
@@ -511,18 +509,17 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (resetHealth)
         {
-            damageable.SetHealth(damageable.startingHealth);
+            dataBase.damageable.SetHealth(dataBase.damageable.startingHealth);
         }
 
         m_Animator.SetTrigger(m_HashRespawnPara);
 
-        PlayableCharacterFactory.AllCharacterTeleport();
         CellController.Instance.CurrentCell.ResetPlatformInCell();
     }
 
     public void OnHurt(Damageable damageable, Damager damager)
     {
-        if (!playerInput.HaveControl)
+        if (!dataBase.playerInput.HaveControl)
         {
             return;
         }
@@ -539,13 +536,13 @@ public class PlayerBehaviour : MonoBehaviour
     // fadeduration * 2 < invulnerabilityDuration
     IEnumerator DieRespawnCoroutine(bool resetHealth)
     {
-        PlayableCharacterFactory.AllCharacterReleaseControl(true);
+        publisher.GainOrReleaseControl(false);
         yield return new WaitForSeconds(1.0f);
         yield return StartCoroutine(ScreenFader.FadeSceneOut());
         Respawn(resetHealth);
         yield return new WaitForEndOfFrame();
         yield return StartCoroutine(ScreenFader.FadeSceneIn());
-        PlayableCharacterFactory.AllCharacterGainControl();
+        publisher.GainOrReleaseControl(true);
     }
 
     public bool CheckForJumpPadCollisionEnter()

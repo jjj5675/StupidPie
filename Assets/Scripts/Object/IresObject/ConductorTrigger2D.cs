@@ -17,17 +17,23 @@ public class ConductorTrigger2D : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES) == collision)
+        if (collision.CompareTag("Player"))
         {
-            OnEnter.Invoke();
+            if (collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
+            {
+                OnEnter.Invoke();
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES) == collision)
+        if (collision.CompareTag("Player"))
         {
-            OnExit.Invoke();
+            if (collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
+            {
+                OnExit.Invoke();
+            }
         }
     }
 }

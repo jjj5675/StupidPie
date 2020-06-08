@@ -123,7 +123,7 @@ public class TriggerPlatform : Platform
     //ON -> OFF
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider != PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
+        if (!collision.gameObject.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
         {
             return;
         }
@@ -138,7 +138,7 @@ public class TriggerPlatform : Platform
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider != PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
+        if (!collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
         {
             return;
         }
@@ -156,7 +156,7 @@ public class TriggerPlatform : Platform
     //OFF -> ON
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider != PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
+        if (!collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
         {
             return;
         }
@@ -173,7 +173,7 @@ public class TriggerPlatform : Platform
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider != PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
+        if (!collision.gameObject.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
         {
             return;
         }

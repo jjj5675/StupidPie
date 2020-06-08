@@ -60,7 +60,7 @@ public class TransitionPoint : MonoBehaviour
     {
         if(transitionType == TransitionType.SameScene)
         {
-            PlayableCharacterFactory.AllCharacterTeleport();
+            //PlayableCharacterFactory.AllCharacterTeleport();
         }
     }
 }

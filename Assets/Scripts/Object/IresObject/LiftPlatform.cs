@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 [SelectionBase]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -12,6 +13,8 @@ public class LiftPlatform : Platform
     public PlatformCatcher platformCatcher;
     public float speed = 1.0f;
     public LiftPlatformType liftType;
+    public UnityEvent OnEnabled;
+    public UnityEvent OnDisabled;
 
     public Vector3[] localNodes = new Vector3[2];
     public float[] waitTimes = new float[2];
@@ -74,6 +77,7 @@ public class LiftPlatform : Platform
     {
         if (!m_Started && !platformCatcher.CaughtIresCharacter)
         {
+            OnDisabled.Invoke();
             return;
         }
 
@@ -88,6 +92,8 @@ public class LiftPlatform : Platform
             m_WaitTime -= Time.deltaTime;
             return;
         }
+
+        OnEnabled.Invoke();
 
         float distanceToGo = speed * Time.deltaTime;
 

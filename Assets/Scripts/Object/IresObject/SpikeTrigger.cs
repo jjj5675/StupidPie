@@ -22,14 +22,14 @@ public class SpikeTrigger : Platform
 
     protected override void Initialise()
     {
-        if(damager == null)
+        if (damager == null)
         {
             damager = GetComponent<Damager>();
         }
 
         SearchOverlapPlatforms(m_Box, out m_SpikeTriggers, 30);
 
-        if(isMovingAtStart)
+        if (isMovingAtStart)
         {
             m_Started = true;
             damager.EnableOnDamage();
@@ -95,14 +95,14 @@ public class SpikeTrigger : Platform
 
     public void EnableOverlapDamagers(bool enableEvent, bool change = true, bool ignoreTrigger = false)
     {
-        if(ChangeOnce)
+        if (ChangeOnce)
         {
             return;
         }
 
-        for(int i = 0; i<m_SpikeTriggers.Length; i++)
+        for (int i = 0; i < m_SpikeTriggers.Length; i++)
         {
-            if(enableEvent)
+            if (enableEvent)
             {
                 m_SpikeTriggers[i].OnEabled.Invoke();
             }
@@ -126,7 +126,7 @@ public class SpikeTrigger : Platform
 
         for (int i = 0; i < m_SpikeTriggers.Length; i++)
         {
-            if(enableEvent)
+            if (enableEvent)
             {
                 m_SpikeTriggers[i].OnEabled.Invoke();
             }
@@ -144,12 +144,12 @@ public class SpikeTrigger : Platform
     //바꾸기
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if(m_IgnoreTrigger)
+        if (m_IgnoreTrigger)
         {
             return;
         }
 
-        if (collider == PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
+        if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
         {
             m_CurrentTriggerState = TriggerState.ENTER;
 
@@ -172,7 +172,7 @@ public class SpikeTrigger : Platform
             return;
         }
 
-        if (collider == PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
+        if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
         {
             m_CurrentTriggerState = TriggerState.EXIT;
 

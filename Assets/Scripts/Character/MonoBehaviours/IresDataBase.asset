@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9745ae0502380742b10689c3806fef8, type: 3}
+  m_Name: IresDataBase
+  m_EditorClassIdentifier: 
+  abilityTypes: 02000000
+  transform: {fileID: 7666998537461105929, guid: 7778a1bf12e5cb84a8ef807d6525a804,
+    type: 3}
+  playerInput: {fileID: 7666998537461105930, guid: 7778a1bf12e5cb84a8ef807d6525a804,
+    type: 3}
+  damageable: {fileID: 7666998537461106163, guid: 7778a1bf12e5cb84a8ef807d6525a804,
+    type: 3}

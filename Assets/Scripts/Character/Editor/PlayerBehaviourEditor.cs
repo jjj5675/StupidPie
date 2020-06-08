@@ -4,10 +4,10 @@ using UnityEngine;
 [CustomEditor(typeof(PlayerBehaviour))]
 public class PlayerBehaviourEditor : Editor
 {
+    SerializedProperty m_PlayerDataBaseProp;
+    SerializedProperty m_PublisherProp;
     SerializedProperty m_SpriteRendererProp;
-    SerializedProperty m_DamageableProp;
     SerializedProperty m_DashableProp;
-    SerializedProperty m_PlayerInputProp;
 
     SerializedProperty m_MoveSpeedProp;
     SerializedProperty m_GroundAccelerationProp;
@@ -28,7 +28,6 @@ public class PlayerBehaviourEditor : Editor
     SerializedProperty m_WallLeapVelocityProp;
 
     SerializedProperty m_SpriteOriginallyFacesRightProp;
-    SerializedProperty m_PlayableCharacterProp;
 
     bool m_ReferencesFoldout;
     bool m_MovementSettingsFoldout;
@@ -37,10 +36,10 @@ public class PlayerBehaviourEditor : Editor
     bool m_SlidingSettingsFoldout;
     bool m_MiscSettingsFoldout;
 
+    readonly GUIContent m_PlayerDataBaseContent = new GUIContent("Player DataBase");
+    readonly GUIContent m_PublisherContent = new GUIContent("Publisher");
     readonly GUIContent m_SpriteRendererContent = new GUIContent("Sprite Renderer");
-    readonly GUIContent m_DamageableContent = new GUIContent("Damageable");
     readonly GUIContent m_DashableContent = new GUIContent("Dashable");
-    readonly GUIContent m_PlayerInputContent = new GUIContent("PlayerInput");
 
     readonly GUIContent m_MoveSpeedContent = new GUIContent("Move Speed");
     readonly GUIContent m_GroundAccelerationContent = new GUIContent("Ground Acceleration");
@@ -62,7 +61,6 @@ public class PlayerBehaviourEditor : Editor
     readonly GUIContent m_WallLeapVelocityContent = new GUIContent("Wall Leap Velocity");
 
     readonly GUIContent m_SpriteOriginallyRightLeftContent = new GUIContent("Sprite Originally Faces Right");
-    readonly GUIContent m_PlayableCharacterContent = new GUIContent("Playable Character");
 
     readonly GUIContent m_ReferencesContent = new GUIContent("References");
     readonly GUIContent m_MovementSettingsContent = new GUIContent("Movement Settings");
@@ -73,10 +71,10 @@ public class PlayerBehaviourEditor : Editor
 
     void OnEnable()
     {
+        m_PlayerDataBaseProp = serializedObject.FindProperty("dataBase");
+        m_PublisherProp = serializedObject.FindProperty("publisher");
         m_SpriteRendererProp = serializedObject.FindProperty("spriteRenderer");
-        m_DamageableProp = serializedObject.FindProperty("damageable");
         m_DashableProp = serializedObject.FindProperty("dashable");
-        m_PlayerInputProp = serializedObject.FindProperty("playerInput");
 
         m_MoveSpeedProp = serializedObject.FindProperty("moveSpeed");
         m_GroundAccelerationProp = serializedObject.FindProperty("groundAcceleration");
@@ -98,7 +96,6 @@ public class PlayerBehaviourEditor : Editor
         m_WallLeapVelocityProp = serializedObject.FindProperty("wallLeapVelocity");
 
         m_SpriteOriginallyFacesRightProp = serializedObject.FindProperty("spriteOriginallyFacesRight");
-        m_PlayableCharacterProp = serializedObject.FindProperty("playableCharacter");
     }
 
     public override void OnInspectorGUI()
@@ -124,10 +121,10 @@ public class PlayerBehaviourEditor : Editor
 
         if (m_ReferencesFoldout)
         {
+            EditorGUILayout.PropertyField(m_PlayerDataBaseProp, m_PlayerDataBaseContent);
+            EditorGUILayout.PropertyField(m_PublisherProp, m_PublisherContent);
             EditorGUILayout.PropertyField(m_SpriteRendererProp, m_SpriteRendererContent);
-            EditorGUILayout.PropertyField(m_DamageableProp, m_DamageableContent);
             EditorGUILayout.PropertyField(m_DashableProp, m_DashableContent);
-            EditorGUILayout.PropertyField(m_PlayerInputProp, m_PlayerInputContent);
         }
 
         EditorGUI.indentLevel--;
@@ -219,7 +216,6 @@ public class PlayerBehaviourEditor : Editor
         if (m_MiscSettingsFoldout)
         {
             EditorGUILayout.PropertyField(m_SpriteOriginallyFacesRightProp, m_SpriteOriginallyRightLeftContent);
-            EditorGUILayout.PropertyField(m_PlayableCharacterProp, m_PlayableCharacterContent);
         }
 
         EditorGUI.indentLevel--;
