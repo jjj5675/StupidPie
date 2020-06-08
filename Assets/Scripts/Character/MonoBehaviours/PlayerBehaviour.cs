@@ -64,7 +64,7 @@ public class PlayerBehaviour : MonoBehaviour
     private readonly int m_HashHorizontalPara = Animator.StringToHash("Horizontal");
     private readonly int m_HashVerticalPara = Animator.StringToHash("Vertical");
 
-    private const float m_GroundedStickingVelocityModifier = 30f;
+    private const float m_GroundedStickingVelocityModifier = 10f;
 
     public float JumpVelocity { get { return m_JumpVelocity; } }
     public Vector2 MoveVector { get { return m_MoveVector; } }
