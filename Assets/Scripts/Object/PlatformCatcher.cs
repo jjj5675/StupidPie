@@ -11,7 +11,7 @@ public class PlatformCatcher : MonoBehaviour
         public Rigidbody2D rigidbody;
         public Collider2D collider;
         public CharacterController2D character;
-        public PlayerBehaviour.PlayableCharacter playableCharacter;
+        public PlayerDataBase dataBase;
         public bool inContact;
         public bool checkedThisFrame;
 
@@ -88,7 +88,7 @@ public class PlatformCatcher : MonoBehaviour
         {
             for (int i = 0; i < m_CaughtObjects.Count; i++)
             {
-                if (m_CaughtObjects[i].inContact && m_CaughtObjects[i].playableCharacter == PlayerBehaviour.PlayableCharacter.IRES)
+                if (m_CaughtObjects[i].inContact && m_CaughtObjects[i].dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
                 {
                     return true;
                 }
@@ -253,7 +253,7 @@ public class PlatformCatcher : MonoBehaviour
                                 rigidbody = contactRigidbody,
                                 character = contactRigidbody.GetComponent<CharacterController2D>(),
                                 collider = contactRigidbody.GetComponent<Collider2D>(),
-                                playableCharacter = contactRigidbody.GetComponent<PlayerBehaviour>().playableCharacter,
+                                dataBase = contactRigidbody.GetComponent<PlayerBehaviour>().dataBase,
                                 inContact = true,
                                 checkedThisFrame = false
                             };

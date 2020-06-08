@@ -72,22 +72,16 @@ public abstract class Platform : MonoBehaviour
     {
         collider.enabled = true;
         Collider2D[] colliderResults = new Collider2D[ressultCount];
-        PlayerBehaviour playerBehaviour;
 
         int count = collider.OverlapCollider(contactFilter2D, colliderResults);
 
         for (int i = 0; i < count; i++)
         {
-            if(colliderResults[i] == PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES))
+            Damageable damageable = colliderResults[i].GetComponent<PlayerBehaviour>().dataBase.damageable;
+
+            if (damageable != null)
             {
-                playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.IRES);
-                playerBehaviour.damageable.TakeDamage(null, true);
-                break;
-            }
-            else if (colliderResults[i] == PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.SERI))
-            {
-                playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.SERI);
-                playerBehaviour.damageable.TakeDamage(null, true);
+                damageable.TakeDamage(null, true);
                 break;
             }
         }
@@ -97,7 +91,7 @@ public abstract class Platform : MonoBehaviour
 
     protected void ChangeAllTiles(Tilemap tilemap, Sprite sprite)
     {
-        if(tilemap == null)
+        if (tilemap == null)
         {
             Debug.LogWarning("타일맵이 설정되지 않았습니다.");
             return;
@@ -106,11 +100,11 @@ public abstract class Platform : MonoBehaviour
         Tile tile = ScriptableObject.CreateInstance<Tile>();
         tile.sprite = sprite;
 
-        foreach(var pos in tilemap.cellBounds.allPositionsWithin)
+        foreach (var pos in tilemap.cellBounds.allPositionsWithin)
         {
             Vector3Int localPlace = new Vector3Int(pos.x, pos.y, pos.z);
 
-            if(tilemap.HasTile(localPlace))
+            if (tilemap.HasTile(localPlace))
             {
                 tilemap.SetTile(localPlace, tile);
             }

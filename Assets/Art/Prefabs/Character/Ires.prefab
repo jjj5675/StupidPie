@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 7666998537461106163}
   m_Layer: 9
   m_Name: Ires
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,13 +78,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8298335142436343970, guid: ee3067a54360af444bf10be6e84a10b9,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09ea3e5f37d36144b9acc8403e6b104f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.9230769, y: 1.4230769}
+  m_Size: {x: 0.8076923, y: 1.6153846}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -124,18 +123,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02686572, y: -0.123580694}
+  m_Offset: {x: 0.013075113, y: -0.021160841}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.9230769, y: 1.4230769}
-    newSize: {x: 1.9230769, y: 1.4230769}
+    oldSize: {x: 0.8076923, y: 1.6153846}
+    newSize: {x: 0.8076923, y: 1.6153846}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.51533175, y: 1.1114388}
+  m_Size: {x: 0.62223196, y: 1.5095792}
   m_EdgeRadius: 0
 --- !u!95 &7666998537461106164
 Animator:
@@ -147,7 +146,7 @@ Animator:
   m_GameObject: {fileID: 7666998537461105933}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f2e2a25dbd9c34246bd428d3af20e2e9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 212a02b54f2910e4597e0d7b14d0d7fc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -172,7 +171,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundedRaycastDistance: 0.00001
-  sideRaycastDistance: 0.1
+  sideRaycastDistance: 0.2
 --- !u!114 &7666998537461106166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,26 +184,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd2cf703f747a1f4099350ead064365b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dataBase: {fileID: 11400000, guid: 40bc08a4865710e4491d96eebddadcf6, type: 2}
+  publisher: {fileID: 5136917005508872771, guid: 9796c8170b0609646bfd37610f173e56,
+    type: 3}
   spriteRenderer: {fileID: 7666998537461105931}
-  damageable: {fileID: 7666998537461106163}
   dashable: {fileID: 7666998537461105928}
-  playerInput: {fileID: 7666998537461105930}
   moveSpeed: 5
   groundAcceleration: 100
   groundDeceleration: 100
   dashDistance: 3
   timeToDashPoint: 0.3
-  jumpHeight: 3
-  timeToJumpApex: 0.7
+  jumpHeight: 2.3
+  timeToJumpApex: 0.4
   airborneAccelProportion: 1
-  airborneDecelProportion: 0.5
-  wallLeapVelocity: {x: 4, y: 5}
+  airborneDecelProportion: 0.7
+  wallLeapVelocity: {x: 7, y: 10}
   slidingSpeed: 5
   slidingByWaitTime: 0
   maxSlidingSpeed: 20
   slidingSpeedDecelProportion: 0.5
   spriteOriginallyFacesRight: 1
-  playableCharacter: 1
 --- !u!114 &7666998537461105928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,18 +218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnDash:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7666998537461106166}
-        m_MethodName: OnDash
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7666998537461105930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,8 +233,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Jump:
     key: 103
+    m_Enabled: 1
   Dash:
     key: 104
+    m_Enabled: 0
   Horizontal:
     positive: 100
     negative: 97
@@ -265,33 +255,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9899e6947ee8ef04db0f9532b0179a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 1
-  invulnerabilityDuration: 3
+  startingHealth: 0
+  invulnerabilityDuration: 0
   OnTakeDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7666998537461106166}
-        m_MethodName: OnHurt
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDie:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7666998537461106166}
-        m_MethodName: OnDie
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []

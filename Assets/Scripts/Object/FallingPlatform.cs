@@ -114,21 +114,21 @@ public class FallingPlatform : Platform
 
                     if (m_Velocity.y <= 0f && middleHitHeight < colliderHeight + m_GroundRaycastDistance)
                     {
-                        if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES) == m_FoundHits[i].collider)
-                        {
-                            playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.IRES);
-                        }
-                        else if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.SERI) == m_FoundHits[i].collider)
-                        {
-                            playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.SERI);
-                        }
+                        //if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES) == m_FoundHits[i].collider)
+                        //{
+                        //    playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.IRES);
+                        //}
+                        //else if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.SERI) == m_FoundHits[i].collider)
+                        //{
+                        //    playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.SERI);
+                        //}
 
-                        if(playerBehaviour != null)
-                        {
-                            playerBehaviour.damageable.TakeDamage(null, true);
-                            m_CanFall = false;
-                            return;
-                        }
+                        //if(playerBehaviour != null)
+                        //{
+                        //    playerBehaviour.damageable.TakeDamage(null, true);
+                        //    m_CanFall = false;
+                        //    return;
+                        //}
 
                         float distance = m_FoundHits[i].distance;
 
