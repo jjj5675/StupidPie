@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: IresDataBase
   m_EditorClassIdentifier: 
   abilityTypes: 02000000
-  transform: {fileID: 7666998537461105929, guid: 7778a1bf12e5cb84a8ef807d6525a804,
-    type: 3}
-  playerInput: {fileID: 7666998537461105930, guid: 7778a1bf12e5cb84a8ef807d6525a804,
-    type: 3}
-  damageable: {fileID: 7666998537461106163, guid: 7778a1bf12e5cb84a8ef807d6525a804,
-    type: 3}
+  transform: {fileID: 0}
+  playerInput: {fileID: 0}
+  damageable: {fileID: 0}
+  animator: {fileID: 0}
+  collider: {fileID: 0}

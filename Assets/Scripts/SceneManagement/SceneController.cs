@@ -33,7 +33,10 @@ public class SceneController : MonoBehaviour
         return instance;
     }
 
+    public CellController cellController;
+    public Cell rootCell;
     public CellTransitionDestination.DestinationTag initalCellTransitionDestinationTag;
+    public Publisher publisher;
 
     private Scene m_CurrentZoneScene;
     private bool m_IsTransitioning;
@@ -51,9 +54,8 @@ public class SceneController : MonoBehaviour
 
     void Start()
     {
-        CellTransitionDestination entrance;
-        CellController.Instance.CurrentCell.GetCellDestination(initalCellTransitionDestinationTag, out entrance);
-        SetEnteringGameObjectLocation(entrance);
+        cellController.SetCells(rootCell, initalCellTransitionDestinationTag);
+        publisher.SetObservers(false, false, 0, cellController.LastEnteringDestination.playerLocations);
     }
 
     void Update()
@@ -64,32 +66,18 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private void SetEnteringGameObjectLocation(CellTransitionDestination entrance)
-    {
-        Transform entranceSeriLocation = entrance.seriLocation.transform;
-        Transform entranceIresLocation = entrance.iresLocation.transform;
-
-        Transform enteringSeriTransform = CellController.Instance.transitioningSeri.transform;
-        Transform enteringIresTransform = CellController.Instance.transitioningIres.transform;
-
-        enteringSeriTransform.position = entranceSeriLocation.position;
-        enteringIresTransform.position = entranceIresLocation.position;
-        enteringSeriTransform.rotation = entranceSeriLocation.rotation;
-        enteringIresTransform.rotation = entranceIresLocation.rotation;
-    }
-
     private IEnumerator Transition(CellTransitionDestination.DestinationTag destinationTag)
     {
         m_IsTransitioning = true;
-        //PlayerInput.Instance.ReleaseControl();
+        publisher.GainOrReleaseControl(false);
         yield return ScreenFader.FadeSceneOut();
 
         CellTransitionDestination entrance;
-        CellController.Instance.CurrentCell.GetCellDestination(destinationTag, out entrance);
-        SetEnteringGameObjectLocation(entrance);
+        cellController.CurrentCell.GetCellDestination(destinationTag, out entrance);
+        publisher.SetObservers(false, false, 0, entrance.playerLocations);
 
         yield return ScreenFader.FadeSceneIn();
-        //PlayerInput.Instance.GainControl();
+        publisher.GainOrReleaseControl(true);
         m_IsTransitioning = false;
     }
 }

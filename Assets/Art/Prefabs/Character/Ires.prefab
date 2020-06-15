@@ -185,8 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataBase: {fileID: 11400000, guid: 40bc08a4865710e4491d96eebddadcf6, type: 2}
-  publisher: {fileID: 5136917005508872771, guid: 9796c8170b0609646bfd37610f173e56,
-    type: 3}
+  cellController: {fileID: 0}
+  publisher: {fileID: 0}
   spriteRenderer: {fileID: 7666998537461105931}
   dashable: {fileID: 7666998537461105928}
   moveSpeed: 5
@@ -257,9 +257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 0
   invulnerabilityDuration: 0
-  OnTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
   OnDie:
     m_PersistentCalls:
       m_Calls: []

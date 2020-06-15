@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class FallingPlatform : Platform
@@ -19,6 +20,8 @@ public class FallingPlatform : Platform
     protected float m_GroundRaycastDistance;
     protected float m_RaycastDistance;
     protected bool m_IsGrounded;
+    protected float confinerBoundsMinY;
+    protected Dictionary<Collider2D, Damageable> m_DamageableCache = new Dictionary<Collider2D, Damageable>();
 
     protected override void Initialise()
     {
@@ -37,6 +40,21 @@ public class FallingPlatform : Platform
 
         m_PlatformType = PlatformType.FALLING;
         m_StartingPosition = transform.position;
+
+        var rootObj = gameObject.scene.GetRootGameObjects();
+        foreach(var go in rootObj)
+        {
+            if(go.name.Equals("CellController"))
+            {
+                confinerBoundsMinY = go.GetComponent<CellController>().CurrentCell.ConfinerBounds.min.y;
+                break;
+            }
+        }
+
+        if(confinerBoundsMinY == 0)
+        {
+            Debug.LogError("셀 바운즈 설정 에러");
+        }
     }
 
     public override void ResetPlatform()
@@ -85,8 +103,6 @@ public class FallingPlatform : Platform
 
             CheckBottomEndCollider();
 
-            float confinerBoundsMinY = CellController.Instance.CurrentCell.ConfinerBounds.min.y;
-
             if (transform.position.y < confinerBoundsMinY)
             {
                 m_CanFall = false;
@@ -99,8 +115,6 @@ public class FallingPlatform : Platform
     {
         if (m_Box != null)
         {
-            PlayerBehaviour playerBehaviour = null;
-
             Vector2 raycastStart = m_Rigidbody2D.position + m_Box.offset + Vector2.down * m_Box.size.y * 0.5f;
 
             int count = Physics2D.BoxCast(raycastStart, m_RaycastSize, 0f, Vector2.down, platformCatcher.contactFilter, m_FoundHits, m_RaycastDistance);
@@ -114,21 +128,22 @@ public class FallingPlatform : Platform
 
                     if (m_Velocity.y <= 0f && middleHitHeight < colliderHeight + m_GroundRaycastDistance)
                     {
-                        //if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.IRES) == m_FoundHits[i].collider)
-                        //{
-                        //    playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.IRES);
-                        //}
-                        //else if (PlayableCharacterFactory.TryGetCollider(PlayerBehaviour.PlayableCharacter.SERI) == m_FoundHits[i].collider)
-                        //{
-                        //    playerBehaviour = PlayableCharacterFactory.TryGetBehaviour(PlayerBehaviour.PlayableCharacter.SERI);
-                        //}
-
-                        //if(playerBehaviour != null)
-                        //{
-                        //    playerBehaviour.damageable.TakeDamage(null, true);
-                        //    m_CanFall = false;
-                        //    return;
-                        //}
+                        if(!m_DamageableCache.ContainsKey(m_FoundHits[i].collider))
+                        {
+                            m_DamageableCache.Add(m_FoundHits[i].collider, m_FoundHits[i].collider.GetComponent<Damageable>());
+                        }
+                        else
+                        {
+                            if(m_DamageableCache.TryGetValue(m_FoundHits[i].collider, out Damageable damageable))
+                            {
+                                if (damageable)
+                                {
+                                    damageable.TakeDamage(null);
+                                    m_CanFall = false;
+                                    return;
+                                }
+                            }
+                        }
 
                         float distance = m_FoundHits[i].distance;
 

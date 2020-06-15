@@ -4,6 +4,7 @@ public class PlayerInput : InputComponent
 {
     public InputButton Jump = new InputButton(KeyCode.Z);
     public InputButton Dash = new InputButton(KeyCode.X);
+    public InputButton Interaction = new InputButton(KeyCode.V);
     public InputAxis Horizontal = new InputAxis(KeyCode.RightArrow, KeyCode.LeftArrow);
     public InputAxis Vertical = new InputAxis(KeyCode.UpArrow, KeyCode.DownArrow);
 
@@ -15,6 +16,7 @@ public class PlayerInput : InputComponent
     {
         Jump.Get(fixedUpdateHappened);
         Dash.Get(fixedUpdateHappened);
+        Interaction.Get(fixedUpdateHappened);
         Horizontal.Get();
         Vertical.Get();
     }
@@ -25,16 +27,18 @@ public class PlayerInput : InputComponent
 
         GainControl(Jump);
         GainControl(Dash);
+        GainControl(Interaction);
         GainControl(Horizontal);
         GainControl(Vertical);
     }
 
     public override void ReleaseControl(bool resetValuse = true)
     {
-        m_HaveControl = true;
+        m_HaveControl = false;
 
         ReleaseControl(Jump, resetValuse);
         ReleaseControl(Dash, resetValuse);
+        ReleaseControl(Interaction, resetValuse);
         ReleaseControl(Horizontal, resetValuse);
         ReleaseControl(Vertical, resetValuse);
     }

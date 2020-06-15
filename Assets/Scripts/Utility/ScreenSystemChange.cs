@@ -11,26 +11,53 @@ public class ScreenSystemChange : MonoBehaviour
     public GameObject singleScreen;
     public GameObject splitScreen;
 
-    public Transform seriCharacter;
-    public Transform iresCharacter;
+    public AutoCameraSetup autoCameraSetup;
+    public GameObject targetGroup;
+
+    public Transform character1;
+    public Transform character2;
+    public CellController cellController;
 
     public float maximumOrthoSize;
 
     float characterMaximumDistance = 1f;
     ScreenType m_CurrentScreenType;
-
+    bool m_CanChange = true;
     CinemachineConfiner[] m_SplitScreenConfiners; 
 
     void Awake()
     {
         characterMaximumDistance = maximumOrthoSize * 2f * Camera.main.aspect;
-
         m_SplitScreenConfiners = splitScreen.GetComponentsInChildren<CinemachineConfiner>();
     }
 
     void OnEnable()
     {
-        Vector2 direction = seriCharacter.position - iresCharacter.position;
+        int characterCount = 0;
+        var rootObj = gameObject.scene.GetRootGameObjects();
+        Transform follow = null;
+        foreach(var go in rootObj)
+        {
+            if(go.GetComponent<PlayerBehaviour>() != null && go.activeSelf)
+            {
+                follow = go.transform;
+                characterCount++;
+            }
+        }
+
+        if(characterCount < 2)
+        {
+            m_CanChange = false;
+            autoCameraSetup.SetVCamFollow(follow);
+        }
+        else
+        {
+            m_CanChange = true;
+            autoCameraSetup.SetVCamFollow(targetGroup.transform);
+        }
+
+
+        Vector2 direction = character1.position - character2.position;
 
         if (direction.sqrMagnitude < characterMaximumDistance * characterMaximumDistance)
         {
@@ -48,13 +75,18 @@ public class ScreenSystemChange : MonoBehaviour
     {
         for (int i = 0; i < m_SplitScreenConfiners.Length; i++)
         {
-            m_SplitScreenConfiners[i].m_BoundingShape2D = CellController.Instance.CurrentCell.confinerCollider;
+            m_SplitScreenConfiners[i].m_BoundingShape2D = cellController.CurrentCell.confinerCollider;
         }
     }
 
     void FixedUpdate()
     {
-        Vector2 direction = seriCharacter.position - iresCharacter.position;
+        if(!m_CanChange)
+        {
+            return;
+        }
+
+        Vector2 direction = character1.position - character2.position;
 
         if(direction.sqrMagnitude < characterMaximumDistance * characterMaximumDistance)
         {
@@ -76,7 +108,7 @@ public class ScreenSystemChange : MonoBehaviour
 
             for(int i=0; i<m_SplitScreenConfiners.Length; i++)
             {
-                m_SplitScreenConfiners[i].m_BoundingShape2D = CellController.Instance.CurrentCell.confinerCollider;
+                m_SplitScreenConfiners[i].m_BoundingShape2D = cellController.CurrentCell.confinerCollider;
             }
 
             singleScreen.SetActive(false);

@@ -9,7 +9,6 @@ public class Damageable : MonoBehaviour
 
     public int startingHealth;
     public float invulnerabilityDuration;
-    public DamageEvent OnTakeDamage;
     public DamageEvent OnDie;
 
     protected bool m_InvuInerable;
@@ -48,7 +47,7 @@ public class Damageable : MonoBehaviour
         m_InvuInerable = false;
     }
 
-    public void TakeDamage(Damager damager, bool ignoreHurt)
+    public void TakeDamage(Damager damager)
     {
         if (m_InvuInerable || m_CurrentHealth <= 0)
         {
@@ -57,10 +56,9 @@ public class Damageable : MonoBehaviour
 
         if (!m_InvuInerable)
         {
-            if (!ignoreHurt)
+            if (damager)
             {
                 m_CurrentHealth -= damager.damage;
-                OnTakeDamage.Invoke(this, damager);
             }
             else
             {

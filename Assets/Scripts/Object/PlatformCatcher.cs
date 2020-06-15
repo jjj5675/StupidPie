@@ -88,7 +88,7 @@ public class PlatformCatcher : MonoBehaviour
         {
             for (int i = 0; i < m_CaughtObjects.Count; i++)
             {
-                if (m_CaughtObjects[i].inContact && m_CaughtObjects[i].dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
+                if (m_CaughtObjects[i].inContact && m_CaughtObjects[i].dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
                 {
                     return true;
                 }

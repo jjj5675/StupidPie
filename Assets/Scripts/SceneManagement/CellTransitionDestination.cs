@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class CellTransitionDestination : MonoBehaviour
 {
@@ -8,7 +9,5 @@ public class CellTransitionDestination : MonoBehaviour
     }
 
     public DestinationTag destinationTag;
-
-    public GameObject seriLocation;
-    public GameObject iresLocation;
+    public List<GameObject> playerLocations;
 }

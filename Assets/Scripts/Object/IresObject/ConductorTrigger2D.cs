@@ -19,7 +19,7 @@ public class ConductorTrigger2D : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
+            if (collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
             {
                 OnEnter.Invoke();
             }
@@ -30,7 +30,7 @@ public class ConductorTrigger2D : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
+            if (collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
             {
                 OnExit.Invoke();
             }

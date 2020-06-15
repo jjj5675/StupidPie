@@ -43,6 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e46c9f7c602434b99b2fd45578634d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootCell: {fileID: 0}
-  transitioningSeri: {fileID: 0}
-  transitioningIres: {fileID: 0}
+  autoCameraSetup: {fileID: 999751506768735106, guid: 46db255b1226637468a7256413272550,
+    type: 3}

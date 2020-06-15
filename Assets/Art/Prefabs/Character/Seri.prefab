@@ -185,8 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataBase: {fileID: 11400000, guid: d73b6746e3aa20246a8d98de99da0c90, type: 2}
-  publisher: {fileID: 5136917005508872771, guid: 9796c8170b0609646bfd37610f173e56,
-    type: 3}
+  cellController: {fileID: 0}
+  publisher: {fileID: 0}
   spriteRenderer: {fileID: 4717500339395800569}
   dashable: {fileID: 4717500339395800551}
   moveSpeed: 5
@@ -268,20 +268,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 1
   invulnerabilityDuration: 3
-  OnTakeDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4717500339395800548}
-        m_MethodName: OnHurt
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnDie:
     m_PersistentCalls:
       m_Calls:
