@@ -6,18 +6,22 @@ using UnityEngine.Events;
 public class SpikeTrigger : Platform
 {
     public Damager damager;
-    public UnityEvent OnEabled;
-    public UnityEvent OnDisabled;
+    //public UnityEvent OnEabled;
+    //public UnityEvent OnDisabled;
 
     protected BoxCollider2D m_Box;
     protected SpikeTrigger[] m_SpikeTriggers;
     protected bool m_IgnoreTrigger = false;
+    protected Animator m_Animator;
+    protected readonly int m_HashTriggerEnablePara = Animator.StringToHash("TriggerEnable");
+    protected readonly int m_HashTriggerDisablePara = Animator.StringToHash("TriggerDisable");
 
     public bool ChangeOnce { get; set; } = false;
 
     void Awake()
     {
         m_Box = GetComponent<BoxCollider2D>();
+        m_Animator = GetComponentInChildren<Animator>();
     }
 
     protected override void Initialise()
@@ -104,12 +108,15 @@ public class SpikeTrigger : Platform
         {
             if (enableEvent)
             {
-                m_SpikeTriggers[i].OnEabled.Invoke();
+                m_SpikeTriggers[i].m_Animator.SetTrigger(m_SpikeTriggers[i].m_HashTriggerEnablePara);
+                //m_SpikeTriggers[i].OnEabled.Invoke();
             }
             else
             {
-                m_SpikeTriggers[i].OnDisabled.Invoke();
+                m_SpikeTriggers[i].m_Animator.SetTrigger(m_SpikeTriggers[i].m_HashTriggerDisablePara);
+                //m_SpikeTriggers[i].OnDisabled.Invoke();
             }
+
 
             m_SpikeTriggers[i].damager.EnableOnDamage();
             m_SpikeTriggers[i].ChangeOnce = change;
@@ -128,11 +135,13 @@ public class SpikeTrigger : Platform
         {
             if (enableEvent)
             {
-                m_SpikeTriggers[i].OnEabled.Invoke();
+                m_SpikeTriggers[i].m_Animator.SetTrigger(m_SpikeTriggers[i].m_HashTriggerEnablePara);
+                //m_SpikeTriggers[i].OnEabled.Invoke();
             }
             else
             {
-                m_SpikeTriggers[i].OnDisabled.Invoke();
+                m_SpikeTriggers[i].m_Animator.SetTrigger(m_SpikeTriggers[i].m_HashTriggerDisablePara);
+                //m_SpikeTriggers[i].OnDisabled.Invoke();
             }
 
             m_SpikeTriggers[i].damager.DisableOnDamage();
