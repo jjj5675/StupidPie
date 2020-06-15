@@ -43,4 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b70c97c2f2a45b8479c71a8d7db10b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellController: {fileID: 0}
+  rootCell: {fileID: 0}
   initalCellTransitionDestinationTag: 0
+  publisher: {fileID: 0}

@@ -6,26 +6,28 @@ public class PlayerController2D : CharacterController2D
 {
     public float sideRaycastDistance;
 
-    protected Vector2 m_BoxOffset;
+    //public bool wallTest;
+
+    //protected Vector2 m_BoxOffset;
     protected Collider2D m_ContactCollider;
 
-    public Vector2 BoxOffset { get { return m_BoxOffset; } }
+    //public Vector2 BoxOffset { get { return m_BoxOffset; } }
     public Collider2D ContactCollider { get { return m_ContactCollider; } }
 
-    public void SetBoxOffset()
-    {
-        m_BoxOffset = m_Box.offset;
-    }
+    //public void SetBoxOffset()
+    //{
+    //    m_BoxOffset = m_Box.offset;
+    //}
 
-    public void UpdateBoxOffset(float sign)
-    {
-        if (!Mathf.Approximately(sign, Mathf.Sign(m_BoxOffset.x)))
-        {
-            m_BoxOffset.x = Mathf.Abs(m_Box.offset.x) * sign;
-        }
+    //public void UpdateBoxOffset(float sign)
+    //{
+    //    if (!Mathf.Approximately(sign, Mathf.Sign(m_BoxOffset.x)))
+    //    {
+    //        m_BoxOffset.x = Mathf.Abs(m_Box.offset.x) * sign;
+    //    }
 
-        m_BoxOffset.y = m_Box.offset.y;
-    }
+    //    m_BoxOffset.y = m_Box.offset.y;
+    //}
 
     public override void CheckBoxHeightCollisions(bool bottom = true)
     {
@@ -41,21 +43,55 @@ public class PlayerController2D : CharacterController2D
         }
     }
 
+    //public void UpdateRaycasting2(Vector2[] positions, Vector2 direction, float distance, int raycastCount)
+    //{
+    //    m_FoundHitList.Clear();
+
+    //    for(int i=0; i<m_HitBuffer.Length; i++)
+    //    {
+    //        m_HitBuffer[i] = new RaycastHit2D();
+    //    }
+
+    //    float minHitDistance = float.MaxValue;
+
+    //    for (int i = 0; i < raycastCount; i++)
+    //    {
+    //        int count = Physics2D.Raycast(positions[i], direction, m_ContactFilter2D, m_HitBuffer, distance);
+    //        Debug.DrawRay(positions[i], direction * distance, Color.red);
+
+    //        if(wallTest && count == 0)
+    //        {
+    //            Debug.Log("");
+    //        }
+
+    //        if (count > 0)
+    //        {
+    //            m_FoundHitList.Add(m_HitBuffer[0]);
+
+    //            if (m_HitBuffer[0].distance < minHitDistance)
+    //            {
+    //                m_FirstHitIndex = m_FoundHitList.Count - 1;
+    //                minHitDistance = m_HitBuffer[0].distance;
+    //            }
+    //        }
+    //    }
+    //}
+
     public override void CheckBoxWidthCollisions()
     {
         m_ContactCollider = null;
         collisionFlags.inContactJumppad = false;
 
-        bool faceRight = m_Velocity.x > 0 ? true : false;
-        bool faceLeft = m_Velocity.x < 0 ? true : false;
+        bool faceRight = m_Velocity.x > 0;
+        bool faceLeft = m_Velocity.x < 0;
 
         Vector2 raycastDirection = Vector2.zero;
         Vector2 raycastStart;
-        float raycastDistance = 0;
+        float raycastDistance;
 
         if (m_Box != null)
         {
-            raycastStart = m_Rigidbody2D.position + m_BoxOffset;
+            raycastStart = m_Rigidbody2D.position + m_Box.offset;
             raycastDistance = m_Box.size.x * 0.5f + sideRaycastDistance * 2f;
 
             if (faceRight)
@@ -87,6 +123,7 @@ public class PlayerController2D : CharacterController2D
 
             if (Mathf.Approximately(hitNormal.x, 0) && Mathf.Approximately(hitNormal.y, 0))
             {
+                //리셋
                 collisionFlags.ResetWidth();
             }
             else
@@ -95,7 +132,7 @@ public class PlayerController2D : CharacterController2D
                 {
                     if (m_FoundHitList[m_FirstHitIndex].collider != null)
                     {
-                        float boxWidth = m_Rigidbody2D.position.x + m_BoxOffset.x + (m_Box.size.x * 0.5f * raycastDirection.x);
+                        float boxWidth = m_Rigidbody2D.position.x + m_Box.offset.x + (m_Box.size.x * 0.5f * raycastDirection.x);
                         float middleHitWidth = m_FoundHitList[m_FirstHitIndex].point.x;
 
                         if (faceRight)
@@ -107,11 +144,6 @@ public class PlayerController2D : CharacterController2D
                         {
                             bool stuck = boxWidth - sideRaycastDistance < middleHitWidth;
                             collisionFlags.IsLeftSide = stuck;
-                        }
-
-                        if(collisionFlags.CheckForWidth())
-                        {
-                            Debug.Log("충돌");
                         }
 
                         if (collisionFlags.CheckForWidth() && PhysicsHelper.ColliderHasJumpPad(m_FoundHitList[m_FirstHitIndex].collider))

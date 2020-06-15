@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     public PlayerDataBase dataBase;
+    public CellController cellController;
     public Publisher publisher;
     public SpriteRenderer spriteRenderer;
     public Dashable dashable;
@@ -45,15 +46,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Observer m_Observer;
     private Vector2 m_MoveVector;
-    private Animator m_Animator;
     private PlayerController2D m_PlayerController2D;
     private Vector2 m_DashDirection;
     private bool m_IsParabolaDash = false;
     private WaitForSeconds m_WallLeapingEndWait;
     private Coroutine m_WallLeapCoroutine;
     private Coroutine m_JumpPadCoroutine;
-    private BoxCollider2D m_Box;
-    private float m_BoxOriginallyOffsetSign;
 
     private readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private readonly int m_HashDashingPara = Animator.StringToHash("Dashing");
@@ -72,10 +70,8 @@ public class PlayerBehaviour : MonoBehaviour
     void Awake()
     {
         m_PlayerController2D = GetComponent<PlayerController2D>();
-        m_Animator = GetComponent<Animator>();
-        m_Box = GetComponent<BoxCollider2D>();
 
-        dataBase.playerInput = GetComponent<PlayerInput>();
+        dataBase.SetDate(transform, GetComponent<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>());
         m_Observer = new Observer(dataBase);
         m_Observer.Subscribe(publisher);
     }
@@ -83,25 +79,9 @@ public class PlayerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SceneLinkedSMB<PlayerBehaviour>.Initialise(m_Animator, this);
+        SceneLinkedSMB<PlayerBehaviour>.Initialise(dataBase.animator, this);
 
-        m_PlayerController2D.SetBoxOffset();
-
-        if (spriteOriginallyFacesRight)
-        {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-
-            m_PlayerController2D.UpdateBoxOffset(-1f);
-            //if (playableCharacter == PlayableCharacter.IRES)
-            //{
-            //}
-            //else
-            //{
-            //    m_PlayerController2D.UpdateBoxOffset(1f);
-            //}
-        }
-
-        m_BoxOriginallyOffsetSign = Mathf.Sign(m_PlayerController2D.BoxOffset.x);
+        spriteRenderer.flipX = spriteOriginallyFacesRight;
 
         m_CurrentGravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         m_OriginallyGravity = m_CurrentGravity;
@@ -120,14 +100,14 @@ public class PlayerBehaviour : MonoBehaviour
     void FixedUpdate()
     {
         m_PlayerController2D.Move(m_MoveVector * Time.deltaTime);
-        m_Animator.SetFloat(m_HashHorizontalPara, m_MoveVector.x);
-        m_Animator.SetFloat(m_HashVerticalPara, m_MoveVector.y);
+        dataBase.animator.SetFloat(m_HashHorizontalPara, m_MoveVector.x);
+        dataBase.animator.SetFloat(m_HashVerticalPara, m_MoveVector.y);
     }
 
     public void TeleportToColliderBottom()
     {
-        Vector2 colliderBottom = m_PlayerController2D.Rigidbody2D.position + m_PlayerController2D.BoxOffset
-            + Vector2.down * (m_Box.size.y * 0.5f);
+        Vector2 colliderBottom = m_PlayerController2D.Rigidbody2D.position + dataBase.collider.offset
+            + Vector2.down * (dataBase.collider.bounds.size.y * 0.5f);
         m_PlayerController2D.Teleport(colliderBottom);
     }
 
@@ -148,7 +128,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void GroundedHorizontalMovement()
     {
-        
+
         float desiredSpeed = dataBase.playerInput.Horizontal.Value * moveSpeed;
         float acceleration = dataBase.playerInput.Horizontal.ReceivingInput ? groundAcceleration : groundDeceleration;
         m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
@@ -183,7 +163,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         bool grounded = m_PlayerController2D.collisionFlags.IsGrounded;
 
-        m_Animator.SetBool(m_HashGroundedPara, grounded);
+        dataBase.animator.SetBool(m_HashGroundedPara, grounded);
 
         return grounded;
     }
@@ -251,7 +231,7 @@ public class PlayerBehaviour : MonoBehaviour
         dashable.EnableDashability(timeToDashPoint, m_PlayerController2D.collisionFlags.IsGrounded);
         CalculateDashVelocity(out m_MoveVector);
         UpdateFacing();
-        m_Animator.SetBool(m_HashDashingPara, true);
+        dataBase.animator.SetBool(m_HashDashingPara, true);
     }
 
     void CalculateDashVelocity(out Vector2 movement)
@@ -320,14 +300,14 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
 
-        m_Animator.SetBool(m_HashDashingPara, true);
+        dataBase.animator.SetBool(m_HashDashingPara, true);
         return true;
     }
 
     bool DashingEnd()
     {
         dashable.DisableDashability();
-        m_Animator.SetBool(m_HashDashingPara, false);
+        dataBase.animator.SetBool(m_HashDashingPara, false);
         return false;
     }
 
@@ -343,29 +323,11 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (faceLeft)
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-
-            if (spriteOriginallyFacesRight)
-            {
-                m_PlayerController2D.UpdateBoxOffset(-m_BoxOriginallyOffsetSign);
-            }
-            else
-            {
-                m_PlayerController2D.UpdateBoxOffset(m_BoxOriginallyOffsetSign);
-            }
+            spriteRenderer.flipX = !spriteOriginallyFacesRight;
         }
         else if (faceRight)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-
-            if (spriteOriginallyFacesRight)
-            {
-                m_PlayerController2D.UpdateBoxOffset(m_BoxOriginallyOffsetSign);
-            }
-            else
-            {
-                m_PlayerController2D.UpdateBoxOffset(-m_BoxOriginallyOffsetSign);
-            }
+            spriteRenderer.flipX = spriteOriginallyFacesRight;
         }
     }
 
@@ -373,63 +335,49 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (faceLeft)
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-
-            if (spriteOriginallyFacesRight)
-            {
-                m_PlayerController2D.UpdateBoxOffset(-m_BoxOriginallyOffsetSign);
-            }
-            else
-            {
-                m_PlayerController2D.UpdateBoxOffset(m_BoxOriginallyOffsetSign);
-            }
+            spriteRenderer.flipX = !spriteOriginallyFacesRight;
         }
         else
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-
-            if (spriteOriginallyFacesRight)
-            {
-                m_PlayerController2D.UpdateBoxOffset(m_BoxOriginallyOffsetSign);
-            }
-            else
-            {
-                m_PlayerController2D.UpdateBoxOffset(-m_BoxOriginallyOffsetSign);
-            }
+            spriteRenderer.flipX = spriteOriginallyFacesRight;
         }
     }
 
     public float GetFacing()
     {
-        return transform.localScale.x > 0 ? -1f : 1f;
+        return spriteRenderer.flipX != spriteOriginallyFacesRight ? -1f : 1f;
     }
 
     public void CheckForGrabbingWall()
     {
-        if(m_Animator.GetBool(m_HashDashingPara))
+        if (dataBase.animator.GetBool(m_HashDashingPara))
         {
-            m_Animator.SetBool(m_HashGrabbingPara, false);
+            dataBase.animator.SetBool(m_HashGrabbingPara, false);
             return;
         }
         if (m_PlayerController2D.collisionFlags.IsGrounded)
         {
             m_CurrentTimeToWaitSliding = 0f;
-            m_Animator.SetBool(m_HashGrabbingPara, false);
+            dataBase.animator.SetBool(m_HashGrabbingPara, false);
+            //m_PlayerController2D.wallTest = false;
+
             return;
         }
         if (!m_PlayerController2D.collisionFlags.CheckForWidth())
         {
-            m_Animator.SetBool(m_HashGrabbingPara, false);
+            dataBase.animator.SetBool(m_HashGrabbingPara, false);
+            //m_PlayerController2D.wallTest = false;
+
             return;
         }
         if (m_PlayerController2D.collisionFlags.inContactJumppad)
         {
-            m_Animator.SetBool(m_HashGrabbingPara, false);
+            dataBase.animator.SetBool(m_HashGrabbingPara, false);
             return;
         }
         if (m_MoveVector.y > 0)
         {
-            m_Animator.SetBool(m_HashGrabbingPara, false);
+            dataBase.animator.SetBool(m_HashGrabbingPara, false);
             return;
         }
 
@@ -440,7 +388,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         WaitForSliding();
 
-        m_Animator.SetBool(m_HashGrabbingPara, true);
+        dataBase.animator.SetBool(m_HashGrabbingPara, true);
+        //m_PlayerController2D.wallTest = true;
     }
 
     void WaitForSliding()
@@ -481,7 +430,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             m_MoveVector.x = -wallDirection * wallLeapVelocity.x;
             m_MoveVector.y = wallLeapVelocity.y;
-            UpdateFacing(-wallDirection < 0 ? true : false);
+            UpdateFacing(-wallDirection < 0);
 
             m_UseableXAxis = false;
 
@@ -505,41 +454,30 @@ public class PlayerBehaviour : MonoBehaviour
         //m_Animator.SetBool(m_HashCrouchingPara, PlayerInput.Instance.Vertical.Value < 0f);
     }
 
-    public void Respawn(bool resetHealth)
+    public void Respawn()
     {
-        if (resetHealth)
-        {
-            dataBase.damageable.SetHealth(dataBase.damageable.startingHealth);
-        }
-
-        m_Animator.SetTrigger(m_HashRespawnPara);
-
-        CellController.Instance.CurrentCell.ResetPlatformInCell();
+        publisher.SetObservers(true, true, m_HashRespawnPara, cellController.LastEnteringDestination.playerLocations);
+        cellController.CurrentCell.ResetPlatformInCell();
     }
 
-    public void OnHurt(Damageable damageable, Damager damager)
+    public void OnDie()
     {
         if (!dataBase.playerInput.HaveControl)
         {
             return;
         }
 
-        damageable.EnableInvulnerability();
-    }
-
-    public void OnDie()
-    {
         //m_Animator.SetTrigger(m_HashDeadPara);
-        StartCoroutine(DieRespawnCoroutine(true));
+        StartCoroutine(DieRespawnCoroutine());
     }
 
     // fadeduration * 2 < invulnerabilityDuration
-    IEnumerator DieRespawnCoroutine(bool resetHealth)
+    IEnumerator DieRespawnCoroutine()
     {
         publisher.GainOrReleaseControl(false);
         yield return new WaitForSeconds(1.0f);
         yield return StartCoroutine(ScreenFader.FadeSceneOut());
-        Respawn(resetHealth);
+        Respawn();
         yield return new WaitForEndOfFrame();
         yield return StartCoroutine(ScreenFader.FadeSceneIn());
         publisher.GainOrReleaseControl(true);
@@ -549,14 +487,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (m_PlayerController2D.collisionFlags.inContactJumppad && m_PlayerController2D.ContactCollider != null)
         {
-            JumpPad jumpPad;
 
-            if (PhysicsHelper.TryGetJumpPad(m_PlayerController2D.ContactCollider, out jumpPad))
+            if (PhysicsHelper.TryGetJumpPad(m_PlayerController2D.ContactCollider, out JumpPad jumpPad))
             {
                 if (!jumpPad.EventFired)
                 {
                     StartStraightMoving(jumpPad.targetPosition, jumpPad.timeToPoint);
-                    jumpPad.OnLaunch(m_Box);
+                    jumpPad.OnLaunch(dataBase.collider);
 
                     if (!jumpPad.useOnlyVertically)
                     {

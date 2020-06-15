@@ -81,7 +81,7 @@ public abstract class Platform : MonoBehaviour
 
             if (damageable != null)
             {
-                damageable.TakeDamage(null, true);
+                damageable.TakeDamage(null);
                 break;
             }
         }

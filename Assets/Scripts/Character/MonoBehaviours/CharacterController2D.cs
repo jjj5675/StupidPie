@@ -68,6 +68,30 @@ public abstract class CharacterController2D : MonoBehaviour
         m_NextMovement += movement;
     }
 
+
+    public void UpdateRaycasting(Vector2[] positions, Vector2 direction, float distance, int raycastCount)
+    {
+        m_FoundHitList.Clear();
+        float minHitDistance = float.MaxValue;
+
+        for (int i = 0; i < raycastCount; i++)
+        {
+            int count = Physics2D.Raycast(positions[i], direction, m_ContactFilter2D, m_HitBuffer, distance);
+            Debug.DrawRay(positions[i], direction * distance, Color.red);
+
+            if (count > 0)
+            {
+                m_FoundHitList.Add(m_HitBuffer[0]);
+
+                if (m_HitBuffer[0].distance < minHitDistance)
+                {
+                    m_FirstHitIndex = m_FoundHitList.Count - 1;
+                    minHitDistance = m_HitBuffer[0].distance;
+                }
+            }
+        }
+    }
+
     public virtual void CheckBoxHeightCollisions(bool bottom = true)
     {
         Vector2 raycastDirection = Vector2.zero;
@@ -128,29 +152,6 @@ public abstract class CharacterController2D : MonoBehaviour
                     {
                         collisionFlags.IsCeilinged = colliderHeight + groundedRaycastDistance < middleHitHeight;
                     }
-                }
-            }
-        }
-    }
-
-    public void UpdateRaycasting(Vector2[] positions, Vector2 direction, float distance, int raycastCount)
-    {
-        m_FoundHitList.Clear();
-        float minHitDistance = float.MaxValue;
-
-        for (int i = 0; i < raycastCount; i++)
-        {
-            int count = Physics2D.Raycast(positions[i], direction, m_ContactFilter2D, m_HitBuffer, distance);
-            //Debug.DrawRay(positions[i], direction * distance, Color.red);
-
-            if (count > 0)
-            {
-                m_FoundHitList.Add(m_HitBuffer[0]);
-
-                if (m_HitBuffer[0].distance < minHitDistance)
-                {
-                    m_FirstHitIndex = m_FoundHitList.Count - 1;
-                    minHitDistance = m_HitBuffer[0].distance;
                 }
             }
         }

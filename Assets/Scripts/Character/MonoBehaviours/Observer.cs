@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Observer
 {
     private Unsubscriber m_Cancellation;
     private PlayerDataBase m_PlayerInfo;
+
+    public PlayerDataBase PlayerInfo { get { return m_PlayerInfo; } }
 
     public class Unsubscriber
     {
@@ -60,6 +63,22 @@ public class Observer
         {
             m_PlayerInfo.playerInput.ReleaseControl(true);
         }
+    }
+
+    public void SetObserver(bool resetHealth, bool resetTrigger, int hashPara, Transform entrance)
+    {
+        if (resetHealth)
+        {
+            m_PlayerInfo.damageable.SetHealth(m_PlayerInfo.damageable.startingHealth);
+        }
+
+        if (resetTrigger)
+        {
+            m_PlayerInfo.animator.SetTrigger(hashPara);
+        }
+
+        m_PlayerInfo.transform.position = entrance.position;
+        m_PlayerInfo.transform.rotation = entrance.rotation;
     }
 }
 

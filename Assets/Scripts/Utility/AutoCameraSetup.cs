@@ -1,39 +1,31 @@
 ﻿using Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AutoCameraSetup : MonoBehaviour
 {
-    static private AutoCameraSetup s_Instance;
-    static public AutoCameraSetup Instance { get { return s_Instance; } }
-    public GameObject targetGroup;
     public GameObject subvcam;
-    public GameObject mainvcam;
-
     public GameObject mainCamera;
+    public CinemachineVirtualCamera m_MainVCam;
+    public CinemachineVirtualCamera m_SubVCam;
+    public UnityEvent OnDisabledPreviousCell;
 
-    CinemachineVirtualCamera m_SubVirtualCam;
     CinemachineConfiner m_SubCinemachineConfiner;
-
-    CinemachineVirtualCamera m_MainVirtualCam;
     CinemachineConfiner m_MainCinemachineConfiner;
     CinemachineBrain m_MainCinemachineBrain;
     bool m_IsCellChanging = false;
 
-    static int DELAYDEFRAME_COUNT = 1;
+    const int m_DelayFrameCount = 1;
     int m_ActivationFrameCount = 0;
 
 
     void Awake()
     {
-        s_Instance = this;
-
         m_MainCinemachineConfiner = GetComponent<CinemachineConfiner>();
-        m_MainVirtualCam = GetComponent<CinemachineVirtualCamera>();
         m_MainCinemachineBrain = mainCamera.GetComponent<CinemachineBrain>();
 
         if (subvcam != null)
         {
-            m_SubVirtualCam = subvcam.GetComponent<CinemachineVirtualCamera>();
             m_SubCinemachineConfiner = subvcam.GetComponent<CinemachineConfiner>();
             subvcam.SetActive(false);
         }
@@ -43,19 +35,14 @@ public class AutoCameraSetup : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        m_MainCinemachineConfiner.m_BoundingShape2D = CellController.Instance.CurrentCell.confinerCollider;
-    }
-
     void LateUpdate()
     {
-        if(!m_IsCellChanging)
+        if (!m_IsCellChanging)
         {
             return;
         }
 
-        if(m_ActivationFrameCount < DELAYDEFRAME_COUNT)
+        if (m_ActivationFrameCount < m_DelayFrameCount)
         {
             m_ActivationFrameCount += 1;
             return;
@@ -66,10 +53,16 @@ public class AutoCameraSetup : MonoBehaviour
             m_MainCinemachineConfiner.m_BoundingShape2D = m_SubCinemachineConfiner.m_BoundingShape2D;
             m_MainCinemachineConfiner.InvalidatePathCache();
             subvcam.SetActive(false);
-            CellController.Instance.OnDisabledPreviousCell();
+            OnDisabledPreviousCell.Invoke();
             m_ActivationFrameCount = 0;
             m_IsCellChanging = false;
         }
+    }
+
+    public void SetVCamFollow(Transform transform)
+    {
+        m_MainVCam.Follow = transform;
+        m_SubVCam.Follow = transform;
     }
 
     public void DisabledScreenEdges()
@@ -81,11 +74,19 @@ public class AutoCameraSetup : MonoBehaviour
         m_MainCinemachineConfiner.m_ConfineScreenEdges = true;
     }
 
-    public void SwapVirtualCamera(Collider2D newBound)
+    public void SetVCam(Collider2D newBound, bool swapVCam = false)
     {
-        m_SubCinemachineConfiner.m_BoundingShape2D = newBound;
-        m_SubCinemachineConfiner.InvalidatePathCache();
-        subvcam.SetActive(true);
-        m_IsCellChanging = true;
+        if (swapVCam)
+        {
+            subvcam.SetActive(true);
+            m_IsCellChanging = true;
+            m_SubCinemachineConfiner.m_BoundingShape2D = newBound;
+            m_SubCinemachineConfiner.InvalidatePathCache();
+        }
+        else
+        {
+            m_MainCinemachineConfiner.m_BoundingShape2D = newBound;
+            m_MainCinemachineConfiner.InvalidatePathCache();
+        }
     }
 }

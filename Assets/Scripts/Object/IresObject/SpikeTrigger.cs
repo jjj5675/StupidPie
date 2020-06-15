@@ -149,7 +149,7 @@ public class SpikeTrigger : Platform
             return;
         }
 
-        if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
+        if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
         {
             m_CurrentTriggerState = TriggerState.ENTER;
 
@@ -172,7 +172,7 @@ public class SpikeTrigger : Platform
             return;
         }
 
-        if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.GIMMICK_ACTIVATE))
+        if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
         {
             m_CurrentTriggerState = TriggerState.EXIT;
 

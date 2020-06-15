@@ -13,46 +13,35 @@ public class TransitionPoint : MonoBehaviour
         ExternalCall, InteractPressed, OnTriggerEnter
     }
 
-    public GameObject transitioningSeri;
-    public GameObject transitioningIres;
     public TransitionType transitionType;
     public Cell transitionCell;
     public CellTransitionDestination.DestinationTag transitionDestinationTag;
+    public Publisher publisher;
     public TransitionWhen transitionWhen;
     public bool resetInputValueOnTransition = true;
+    public CellController cellController;
 
-    bool m_TransitioningSeriPresent = false;
-    bool m_TransitioningIresPresent = false;
-
+    int transitioningPresentCount = 0;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject == transitioningSeri)
+        if(publisher.ColliderHasObserver(collision))
         {
-            m_TransitioningSeriPresent = true;
-        }
-        else if(collision.gameObject == transitioningIres)
-        {
-            m_TransitioningIresPresent = true;
+            transitioningPresentCount++;
         }
 
-        if(m_TransitioningIresPresent && m_TransitioningSeriPresent && transitionWhen == TransitionWhen.OnTriggerEnter)
+        if(publisher.Observers.Count <= transitioningPresentCount && transitionWhen == TransitionWhen.OnTriggerEnter)
         {
-            CellController.Instance.SetCells(transitionCell, transitionDestinationTag);
+            cellController.SetCells(transitionCell, transitionDestinationTag, true);
             TransitionInternal();
-            AutoCameraSetup.Instance.SwapVirtualCamera(CellController.Instance.CurrentCell.confinerCollider);
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject == transitioningSeri)
+        if (publisher.ColliderHasObserver(collision))
         {
-            m_TransitioningSeriPresent = false;
-        }
-        else if (collision.gameObject == transitioningIres)
-        {
-            m_TransitioningIresPresent = false;
+            transitioningPresentCount--;
         }
     }
 
@@ -60,7 +49,7 @@ public class TransitionPoint : MonoBehaviour
     {
         if(transitionType == TransitionType.SameScene)
         {
-            //PlayableCharacterFactory.AllCharacterTeleport();
+            publisher.SetObservers(false, false, 0, cellController.LastEnteringDestination.playerLocations);
         }
     }
 }
