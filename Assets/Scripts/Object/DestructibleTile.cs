@@ -11,7 +11,6 @@ public class DestructibleTile : Platform
     public TileBase refreshTile;
 
     private Tilemap m_Tilemap;
-    private Tilemap m_StartingTilemap;
     private List<Vector3Int> m_TileArray = new List<Vector3Int>(10);
     private List<Vector3Int> m_DestroyedTilePositions = new List<Vector3Int>(50);
     private Coroutine m_DestroyTileCoroutine;
