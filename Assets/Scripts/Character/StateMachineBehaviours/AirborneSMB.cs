@@ -18,7 +18,7 @@ public class AirborneSMB : SceneLinkedSMB<PlayerBehaviour>
         m_MonoBehaviour.AirborneVerticalMovement();
         if(m_MonoBehaviour.CheckForGrounded())
         {
-            m_MonoBehaviour.ResetAirborneDashState();
+            m_MonoBehaviour.ResetDashState();
             //m_MonoBehaviour.SetVerticalMovement(0);     //플랫폼 캐처용도였으나 무빙플랫폼이 아래로 향할때 속도를 없애 버리면 문제가 생깁니다
         }
 

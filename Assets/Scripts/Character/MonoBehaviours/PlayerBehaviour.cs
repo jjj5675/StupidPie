@@ -261,17 +261,9 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    public void ResetAirborneDashState()
-    {
-        dashable.SetState(Dashable.DashState.Ready);
-    }
-
     public void ResetDashState()
     {
-        if (dashable.CurrentDashState == Dashable.DashState.Cooldown)
-        {
-            dashable.SetState(Dashable.DashState.Ready);
-        }
+        dashable.SetState(Dashable.DashState.Ready);
     }
 
     public bool CheckForDashing()
@@ -500,7 +492,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 if (!jumpPad.EventFired)
                 {
-                    StartStraightMoving(jumpPad.targetPosition, jumpPad.timeToPoint, jumpPad.transform.position);
+                    StartStraightMoving(jumpPad.targetPosition, jumpPad.timeToPoint);
                     jumpPad.OnLaunch(dataBase.collider);
 
                     if (!jumpPad.useOnlyVertically)
@@ -540,10 +532,10 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     //피직스헬퍼로 플레이어가 충돌안했는데 점프대에서 캐처했다면 무시
-    public void StartStraightMoving(Vector2 target, float time, Vector2 padPosition)
+    public void StartStraightMoving(Vector2 target, float time)
     {
         bool horizontally = !Mathf.Approximately(target.x, 0);
-        float displacementY = target.y - padPosition.y;
+        float displacementY = target.y - m_PlayerController2D.Rigidbody2D.position.y;
         float acceleration = -(2 * displacementY) / Mathf.Pow(time, 2);
         Vector2 velocity = Vector2.zero;
 
@@ -551,7 +543,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (horizontally)
         {
-            float displacementX = target.x - padPosition.x;
+            float displacementX = target.x - m_PlayerController2D.Rigidbody2D.position.x;
             velocity.x = (displacementX / time);
 
             float launchDirection = Mathf.Sign(velocity.x);
