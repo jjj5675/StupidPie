@@ -31,6 +31,10 @@ public class PlayerBehaviour : MonoBehaviour
 
     public bool spriteOriginallyFacesRight;
 
+    public RandomAudioPlayer footstepAudioPlayer;
+    public RandomAudioPlayer jumpAudioPlayer;
+    public RandomAudioPlayer wallSlidingAudioPlayer;
+
     private float m_JumpVelocity;
     private float m_CurrentGravity;
     private float m_OriginallyGravity;
@@ -133,6 +137,7 @@ public class PlayerBehaviour : MonoBehaviour
         float acceleration = dataBase.playerInput.Horizontal.ReceivingInput ? groundAcceleration : groundDeceleration;
         m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
 
+
         //if (m_CharacterController2D.collisionFlags.CheckForHorizontal())
         //{
         //    m_MoveVector.x = (m_CharacterController2D.sideRaycastDistance + m_Box.size.x * 0.5f) * PlayerInput.Instance.Horizontal.Value;
@@ -182,6 +187,12 @@ public class PlayerBehaviour : MonoBehaviour
     public bool CheckForSide()
     {
         return m_PlayerController2D.collisionFlags.CheckForWidth();
+    }
+
+    public void SetJumpingMovement()
+    {
+        m_MoveVector.y = m_JumpVelocity;
+        jumpAudioPlayer.PlayRandomSound();
     }
 
     public void AirborneHorizontalMovement()
