@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ConductorTrigger2D : MonoBehaviour
+public abstract class ConductorTrigger2D : Platform
 {
     public GameObject wireTilemap;
     public UnityEvent OnEnabled;
@@ -26,6 +26,21 @@ public class ConductorTrigger2D : MonoBehaviour
         m_ContactFilter.layerMask = 1 << LayerMask.NameToLayer("Platform");
         Physics2D.queriesStartInColliders = false;
         GetComponent<Collider2D>().isTrigger = true;
+    }
+
+    protected override void Initialise()
+    {
+    }
+
+    public override void ResetPlatform()
+    {
+        m_TriggerEnabled = false;
+        OnDisabled.Invoke();
+
+        foreach (var platform in m_PlatformCache)
+        {
+            platform.Value.StopMoving();
+        }
     }
 
     private void OnEnable()
