@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: c10fc705f4fea714b8a88b0c811e6854, type: 3}
+  - {fileID: 8300000, guid: 090df578ec839cb44b3aff958ec37833, type: 3}
   randomizePitch: 0
   pitchRange: 0.3
 --- !u!1 &4717500339395800544
@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 090df578ec839cb44b3aff958ec37833, type: 3}
+  - {fileID: 8300000, guid: c10fc705f4fea714b8a88b0c811e6854, type: 3}
   randomizePitch: 0
   pitchRange: 0.3
 --- !u!1 &8019412161609224370
@@ -754,6 +754,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 090df578ec839cb44b3aff958ec37833, type: 3}
+  - {fileID: 8300000, guid: 51fd79ce121dfd1419f65910a74f642d, type: 3}
   randomizePitch: 0
   pitchRange: 0.3
