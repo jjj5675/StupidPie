@@ -8,6 +8,7 @@ public class FallingPlatform : Platform
     public float speed = 1.0f;
     public float maxSpeed = 0;
     public float waitFallingTime;
+    public RandomAudioPlayer groundHitAudioPlayer;
 
     protected Rigidbody2D m_Rigidbody2D;
     protected bool m_CanFall = true;
@@ -165,6 +166,7 @@ public class FallingPlatform : Platform
 
                         if (distance < 0.2f)
                         {
+                            groundHitAudioPlayer.PlayRandomSound();
                             m_CanFall = false;
                             return;
                         }

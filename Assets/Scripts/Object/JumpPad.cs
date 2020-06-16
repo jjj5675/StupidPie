@@ -8,6 +8,7 @@ public class JumpPad : Platform
     public bool useOnlyVertically;
     [Range(0f, 1f)]
     public float airborneAccelProportion;
+    public RandomAudioPlayer springAudioPlayer;
 
     private Vector2 m_TargetPosition;
     private Animator m_Animator;
@@ -48,7 +49,9 @@ public class JumpPad : Platform
         m_EventFired = true;
 
         m_Animator.Play(m_HashJumpPadState, -1, 0);
-        
+
+        springAudioPlayer.PlayRandomSound();
+
         //if (m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         //{
         //    m_Animator.SetBool(m_HashBouncingEndPara, true);
