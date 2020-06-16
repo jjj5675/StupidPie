@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class ConductorTrigger2D : Platform
+public class ConductorTrigger2D : Platform
 {
     public GameObject wireTilemap;
     public UnityEvent OnEnabled;
