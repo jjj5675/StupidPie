@@ -391,7 +391,7 @@ MonoBehaviour:
   platformCatcher: {fileID: 0}
   destroyed: {fileID: 1763693132740936043, guid: a1f6e9d829873174baacab35eea07ccd,
     type: 3}
-  waitBreakDuration: 3
+  waitBreakDuration: 0.3
   refreshTile: {fileID: 11400000, guid: fa9eb27b6a6690c41952215250691f13, type: 2}
   collapsesAudioPlayer: {fileID: 6689038041904812241}
 --- !u!66 &5402036534043705974
