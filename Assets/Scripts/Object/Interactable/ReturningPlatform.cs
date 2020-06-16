@@ -53,7 +53,7 @@ public class ReturningPlatform : Platform
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (m_Returnable && !m_Started && !platformCatcher.CaughtIresCharacter)
+        if (m_Returnable && !m_Started && !platformCatcher.CaughtInteractionAbility)
         {
             float distanceToGo = speed * Time.deltaTime;
 
@@ -82,7 +82,7 @@ public class ReturningPlatform : Platform
 
             return;
         }
-        else if (m_Started || platformCatcher.CaughtIresCharacter)
+        else if (m_Started || platformCatcher.CaughtInteractionAbility)
         {
             m_Returnable = true;
             m_Velocity = m_WorldNodeDirection.normalized * speed * Time.deltaTime;

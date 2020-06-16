@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: YellowDoorAnimOverrideController
+  m_Controller: {fileID: 9100000, guid: 78d9138845e78214c92a14c296b8878b, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f840081d4040b58489fcfda3b178eaf0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 89907cc5866c46b48b78b44ddf947cb0, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7faa3a46a996f3948a70f7ea59b46f59, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b54f063a829d70a4baa01694c0a6e536, type: 2}

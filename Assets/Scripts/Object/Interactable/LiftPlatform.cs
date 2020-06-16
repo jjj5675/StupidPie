@@ -75,7 +75,7 @@ public class LiftPlatform : Platform
 
     void FixedUpdate()
     {
-        if (!m_Started && !platformCatcher.CaughtIresCharacter)
+        if (!m_Started && !platformCatcher.CaughtInteractionAbility)
         {
             OnDisabled.Invoke();
             return;

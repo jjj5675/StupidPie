@@ -82,7 +82,7 @@ public class PlatformCatcher : MonoBehaviour
         }
     }
 
-    public bool CaughtIresCharacter
+    public bool CaughtInteractionAbility
     {
         get
         {
@@ -108,6 +108,11 @@ public class PlatformCatcher : MonoBehaviour
         if (m_Collider == null)
         {
             m_Collider = GetComponent<Collider2D>();
+
+            if(m_Collider == null)
+            {
+                m_Collider = GetComponentInChildren<Collider2D>();
+            }
         }
 
         for (int i = 0; i < normalDirection.Length; i++)

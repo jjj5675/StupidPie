@@ -32,7 +32,7 @@ public class LightingPlatform : Platform
 
     void FixedUpdate()
     {
-        if(!m_Started && !platformCatcher.CaughtIresCharacter)
+        if(!m_Started && !platformCatcher.CaughtInteractionAbility)
         {
             UnCaughted.Invoke();
             return;
