@@ -13,8 +13,8 @@ public class LocomotionSMB : SceneLinkedSMB<PlayerBehaviour>
         if (m_MonoBehaviour.CheckForUseableXAxis())
         {
             m_MonoBehaviour.UpdateFacing();
+            m_MonoBehaviour.GroundedHorizontalMovement();
         }
-        m_MonoBehaviour.GroundedHorizontalMovement();
         m_MonoBehaviour.GroundedVerticalMovement();
         if (m_MonoBehaviour.CheckForGrounded())
         {
