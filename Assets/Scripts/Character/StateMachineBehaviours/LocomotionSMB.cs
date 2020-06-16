@@ -13,8 +13,9 @@ public class LocomotionSMB : SceneLinkedSMB<PlayerBehaviour>
         if (m_MonoBehaviour.CheckForUseableXAxis())
         {
             m_MonoBehaviour.UpdateFacing();
+            m_MonoBehaviour.GroundedHorizontalMovement();
         }
-        m_MonoBehaviour.GroundedHorizontalMovement();
+
         m_MonoBehaviour.GroundedVerticalMovement();
         if (m_MonoBehaviour.CheckForGrounded())
         {
@@ -24,8 +25,8 @@ public class LocomotionSMB : SceneLinkedSMB<PlayerBehaviour>
         {
             m_MonoBehaviour.SetVerticalMovement(m_MonoBehaviour.JumpVelocity);
         }
-        m_MonoBehaviour.CheckForGrabbingWall();
         m_MonoBehaviour.CheckForDashInput();
+        m_MonoBehaviour.CheckForGrabbingWall();
         m_MonoBehaviour.CheckForJumpPadCollisionEnter();
     }
 
