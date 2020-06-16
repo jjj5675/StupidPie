@@ -132,16 +132,24 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void GroundedHorizontalMovement()
     {
-
         float desiredSpeed = dataBase.playerInput.Horizontal.Value * moveSpeed;
         float acceleration = dataBase.playerInput.Horizontal.ReceivingInput ? groundAcceleration : groundDeceleration;
         m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
-
 
         //if (m_CharacterController2D.collisionFlags.CheckForHorizontal())
         //{
         //    m_MoveVector.x = (m_CharacterController2D.sideRaycastDistance + m_Box.size.x * 0.5f) * PlayerInput.Instance.Horizontal.Value;
         //}
+    }
+
+    public void PlayFootstep()
+    {
+        footstepAudioPlayer.PlayRandomSound();
+    }
+
+    public void PlayWallSliding()
+    {
+        wallSlidingAudioPlayer.PlayRandomSound();
     }
 
     public void GroundedVerticalMovement()
