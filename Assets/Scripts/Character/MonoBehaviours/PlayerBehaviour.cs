@@ -513,7 +513,7 @@ public class PlayerBehaviour : MonoBehaviour
                         StopCoroutine(m_JumpPadCoroutine);
                     }
 
-                    m_JumpPadCoroutine = StartCoroutine(WaitForJumpingPadEnd(jumpPad.timeToPoint, jumpPad.useOnlyVertically));
+                    m_JumpPadCoroutine = StartCoroutine(WaitForJumpingPadEnd(jumpPad.timeToPoint, jumpPad.useOnlyVertically, jumpPad.airborneAccelProportion));
 
                     return true;
                 }
@@ -523,7 +523,7 @@ public class PlayerBehaviour : MonoBehaviour
         return false;
     }
 
-    IEnumerator WaitForJumpingPadEnd(float waitForSec, bool useOnlyVertically)
+    IEnumerator WaitForJumpingPadEnd(float waitForSec, bool useOnlyVertically, float accelProportion)
     {
         yield return new WaitForSeconds(waitForSec);
         m_CurrentGravity = m_OriginallyGravity;
@@ -531,7 +531,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (!useOnlyVertically)
         {
-            airborneAccelProportion = 0.01f;
+            airborneAccelProportion = accelProportion;
         }
 
         yield return new WaitForSeconds(0.05f);
@@ -543,7 +543,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void StartStraightMoving(Vector2 target, float time, Vector2 padPosition)
     {
         bool horizontally = !Mathf.Approximately(target.x, 0);
-        float displacementY = target.y - padPosition.y;
+        float displacementY = target.y - m_PlayerController2D.Rigidbody2D.position.y;
         float acceleration = -(2 * displacementY) / Mathf.Pow(time, 2);
         Vector2 velocity = Vector2.zero;
 
@@ -551,7 +551,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (horizontally)
         {
-            float displacementX = target.x - padPosition.x;
+            float displacementX = target.x - m_PlayerController2D.Rigidbody2D.position.x;
             velocity.x = (displacementX / time);
 
             float launchDirection = Mathf.Sign(velocity.x);

@@ -6,6 +6,8 @@ public class JumpPad : Platform
     public Transform target;
     public float timeToPoint;
     public bool useOnlyVertically;
+    [Range(0f, 1f)]
+    public float airborneAccelProportion;
 
     private Vector2 m_TargetPosition;
     private Animator m_Animator;
