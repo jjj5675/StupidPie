@@ -71,6 +71,11 @@ public class LiftPlatform : Platform
 
     public override void ResetPlatform()
     {
+        transform.position = m_WorldNode[0];
+        m_WaitTime = waitTimes[0];
+        m_Current = 0;
+        m_Dir = 1;
+        m_Next = localNodes.Length > 1 ? 1 : 0;
     }
 
     void FixedUpdate()

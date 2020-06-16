@@ -28,6 +28,10 @@ public class PlayerBehaviourEditor : Editor
     SerializedProperty m_SlidingSpeedDecelProportionProp;
     SerializedProperty m_WallLeapVelocityProp;
 
+    SerializedProperty m_FootstepAudioPlayerProp;
+    SerializedProperty m_JumpAudioPlayerProp;
+    SerializedProperty m_WallSlidingAudioPlayerProp;
+
     SerializedProperty m_SpriteOriginallyFacesRightProp;
 
     bool m_ReferencesFoldout;
@@ -35,6 +39,7 @@ public class PlayerBehaviourEditor : Editor
     bool m_DashSettingsFoldout;
     bool m_AirborneSettingsFoldout;
     bool m_SlidingSettingsFoldout;
+    bool m_AudioSettingsFoldout;
     bool m_MiscSettingsFoldout;
 
     readonly GUIContent m_PlayerDataBaseContent = new GUIContent("Player DataBase");
@@ -62,6 +67,10 @@ public class PlayerBehaviourEditor : Editor
     readonly GUIContent m_SlidingSpeedDecelProportionContent = new GUIContent("Sliding Speed Decel Proportion");
     readonly GUIContent m_WallLeapVelocityContent = new GUIContent("Wall Leap Velocity");
 
+    readonly GUIContent m_FootstepAudioPlayerContent = new GUIContent("Footstep Audio Player");
+    readonly GUIContent m_JumpAudioPlayerContent = new GUIContent("Jump Audio Player");
+    readonly GUIContent m_WallSlidingAudioPlayerContent = new GUIContent("Wall Sliding Audio Player");
+
     readonly GUIContent m_SpriteOriginallyRightLeftContent = new GUIContent("Sprite Originally Faces Right");
 
     readonly GUIContent m_ReferencesContent = new GUIContent("References");
@@ -69,6 +78,7 @@ public class PlayerBehaviourEditor : Editor
     readonly GUIContent m_DashSettingsContent = new GUIContent("Dash Settings");
     readonly GUIContent m_AirborneSettingsContent = new GUIContent("Airborne Settings");
     readonly GUIContent m_SlidingSettingsContent = new GUIContent("Sliding Settings");
+    readonly GUIContent m_AudioSettingsContent = new GUIContent("Audio Settings");
     readonly GUIContent m_MiscSettingsContent = new GUIContent("Misc Settings");
 
     void OnEnable()
@@ -91,12 +101,15 @@ public class PlayerBehaviourEditor : Editor
         m_AirborneAccelProportionProp = serializedObject.FindProperty("airborneAccelProportion");
         m_AirborneDecelProportionProp = serializedObject.FindProperty("airborneDecelProportion");
 
-
         m_SlidingSpeedProp = serializedObject.FindProperty("slidingSpeed");
         m_SlidingByWaitTimeProp = serializedObject.FindProperty("slidingByWaitTime");
         m_MaxSlidingSpeedProp = serializedObject.FindProperty("maxSlidingSpeed");
         m_SlidingSpeedDecelProportionProp = serializedObject.FindProperty("slidingSpeedDecelProportion");
         m_WallLeapVelocityProp = serializedObject.FindProperty("wallLeapVelocity");
+
+        m_FootstepAudioPlayerProp = serializedObject.FindProperty("footstepAudioPlayer");
+        m_JumpAudioPlayerProp = serializedObject.FindProperty("jumpAudioPlayer");
+        m_WallSlidingAudioPlayerProp = serializedObject.FindProperty("wallSlidingAudioPlayer");
 
         m_SpriteOriginallyFacesRightProp = serializedObject.FindProperty("spriteOriginallyFacesRight");
     }
@@ -110,6 +123,7 @@ public class PlayerBehaviourEditor : Editor
         DrawDashSettingsGUI();
         DrawAirborneSettingsGUI();
         DrawSlidingSettingsGUI();
+        DrawAudioSettingsGUI();
         DrawMiscSettingsGUI();
 
         serializedObject.ApplyModifiedProperties();
@@ -204,6 +218,24 @@ public class PlayerBehaviourEditor : Editor
             EditorGUILayout.PropertyField(m_SlidingSpeedDecelProportionProp, m_SlidingSpeedDecelProportionContent);
             EditorGUILayout.PropertyField(m_WallLeapVelocityProp, m_WallLeapVelocityContent);
 
+        }
+
+        EditorGUI.indentLevel--;
+        EditorGUILayout.EndVertical();
+    }
+
+    public void DrawAudioSettingsGUI()
+    {
+        EditorGUILayout.BeginVertical(GUI.skin.box);
+        EditorGUI.indentLevel++;
+
+        m_AudioSettingsFoldout = EditorGUILayout.Foldout(m_AudioSettingsFoldout, m_AudioSettingsContent);
+
+        if(m_AudioSettingsFoldout)
+        {
+            EditorGUILayout.PropertyField(m_FootstepAudioPlayerProp, m_FootstepAudioPlayerContent);
+            EditorGUILayout.PropertyField(m_JumpAudioPlayerProp, m_JumpAudioPlayerContent);
+            EditorGUILayout.PropertyField(m_WallSlidingAudioPlayerProp, m_WallSlidingAudioPlayerContent);
         }
 
         EditorGUI.indentLevel--;

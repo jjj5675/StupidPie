@@ -30,6 +30,7 @@ Transform:
   m_Children:
   - {fileID: 156992048896020630}
   - {fileID: 156992048064682557}
+  - {fileID: 4586443632556808872}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,6 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   singleScreen: {fileID: 156992048896020625}
   splitScreen: {fileID: 156992048064682556}
+  autoCameraSetup: {fileID: 0}
+  targetGroup: {fileID: 0}
   character1: {fileID: 0}
   character2: {fileID: 0}
   cellController: {fileID: 0}
@@ -518,7 +521,6 @@ GameObject:
   m_Component:
   - component: {fileID: 156992048904307634}
   - component: {fileID: 156992048904307533}
-  - component: {fileID: 156992048904307535}
   - component: {fileID: 156992048904307532}
   m_Layer: 0
   m_Name: Main Camera
@@ -536,7 +538,7 @@ Transform:
   m_GameObject: {fileID: 156992048904307534}
   m_LocalRotation: {x: 0.00000000851495, y: -0.0000000170299, z: 0.0000000027977451,
     w: 1}
-  m_LocalPosition: {x: -6.504999, y: 2.6450005, z: -12.548828}
+  m_LocalPosition: {x: -6.504999, y: 2.6450002, z: -11.548828}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 156992048896020630}
@@ -569,7 +571,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.5
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -585,14 +587,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &156992048904307535
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156992048904307534}
-  m_Enabled: 1
 --- !u!114 &156992048904307532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -967,6 +961,45 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 3.5
   m_MaximumOrthoSize: 4
+--- !u!1 &1042999647489918925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4586443632556808872}
+  - component: {fileID: 5156865159807609997}
+  m_Layer: 0
+  m_Name: AudioListener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4586443632556808872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042999647489918925}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 156992047837758945}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &5156865159807609997
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042999647489918925}
+  m_Enabled: 1
 --- !u!1 &6557457711850640127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,6 +1101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subvcam: {fileID: 156992048427438094}
   mainCamera: {fileID: 156992048904307534}
+  m_MainVCam: {fileID: 0}
+  m_SubVCam: {fileID: 0}
   OnDisabledPreviousCell:
     m_PersistentCalls:
       m_Calls: []

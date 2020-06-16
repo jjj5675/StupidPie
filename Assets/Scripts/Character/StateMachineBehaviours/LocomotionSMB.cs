@@ -22,7 +22,8 @@ public class LocomotionSMB : SceneLinkedSMB<PlayerBehaviour>
         }
         if (m_MonoBehaviour.CheckForJumpInput() && m_MonoBehaviour.CheckForCurrentGravity())
         {
-            m_MonoBehaviour.SetVerticalMovement(m_MonoBehaviour.JumpVelocity);
+            //m_MonoBehaviour.SetVerticalMovement(m_MonoBehaviour.JumpVelocity);
+            m_MonoBehaviour.SetJumpingMovement();
         }
         m_MonoBehaviour.CheckForGrabbingWall();
         m_MonoBehaviour.CheckForDashInput();

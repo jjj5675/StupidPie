@@ -9,6 +9,7 @@ public class DestructibleTile : Platform
     public GameObject destroyed;
     public float waitBreakDuration;
     public TileBase refreshTile;
+    public RandomAudioPlayer collapsesAudioPlayer;
 
     private Tilemap m_Tilemap;
     private List<Vector3Int> m_TileArray = new List<Vector3Int>(10);
@@ -99,6 +100,7 @@ public class DestructibleTile : Platform
         {
             m_Tilemap.SetColor(tilePos, new Color(1.0f, 1.0f, 1.0f, 0.0f));
             GameObject.Instantiate(destroyed, m_Tilemap.CellToLocalInterpolated(tilePos + new Vector3(0.5f, 0.5f)), Quaternion.identity);
+            collapsesAudioPlayer.PlayRandomSound();
         }
         else
         {
