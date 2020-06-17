@@ -54,7 +54,7 @@ public class CellController : MonoBehaviour
     {
         if (m_PreviousCell != null)
         {
-            m_PreviousCell.ResetPlatformInCell();
+            m_PreviousCell.ResetCell(true);
             m_PreviousCell.gameObject.SetActive(false);
         }
     }

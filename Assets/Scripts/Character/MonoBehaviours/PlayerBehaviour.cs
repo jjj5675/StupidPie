@@ -484,17 +484,18 @@ public class PlayerBehaviour : MonoBehaviour
     public void Respawn()
     {
         publisher.SetObservers(true, true, m_HashRespawnPara, cellController.LastEnteringDestination.playerLocations);
-        cellController.CurrentCell.ResetPlatformInCell();
+        cellController.CurrentCell.ResetCell(false);
     }
 
     public void OnDie()
     {
+        //m_Animator.SetTrigger(m_HashDeadPara);
+
         if (!dataBase.playerInput.HaveControl)
         {
             return;
         }
 
-        //m_Animator.SetTrigger(m_HashDeadPara);
         StartCoroutine(DieRespawnCoroutine());
     }
 
