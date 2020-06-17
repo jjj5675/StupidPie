@@ -121,4 +121,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cc6137cf3034345b52fefddcabc98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 0}
+  isMovingAtStart: 1
+  wireTilemap: {fileID: 0}
+  OnEnabled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7394968323375989287}
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 21300000, guid: a1bd4bdb54d57cb45824cf4f230efa3e,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDisabled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7394968323375989287}
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 21300000, guid: 4f63a3a1b51db4b4eb74efc7b929832c,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
