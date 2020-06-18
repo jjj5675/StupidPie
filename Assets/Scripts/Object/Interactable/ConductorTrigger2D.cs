@@ -39,13 +39,16 @@ public class ConductorTrigger2D : Platform
 
         foreach (var platform in m_PlatformCache)
         {
-            platform.Value.StopMoving();
+            if (platform.Value)
+            {
+                platform.Value.StopMoving();
+            }
         }
     }
 
     private void OnEnable()
     {
-        m_DataBaseCache = new Dictionary<Collider2D, PlayerDataBase>(2);
+        m_DataBaseCache = new Dictionary<Collider2D, PlayerDataBase>(16);
         m_PlatformCache = new Dictionary<Collider2D, Platform>(16);
         m_OverlapBuffer = new Collider2D[16];
     }
@@ -127,7 +130,10 @@ public class ConductorTrigger2D : Platform
 
                         foreach(var platform in m_PlatformCache)
                         {
-                            platform.Value.StopMoving();
+                            if (platform.Value)
+                            {
+                                platform.Value.StopMoving();
+                            }
                         }
                     }
 
