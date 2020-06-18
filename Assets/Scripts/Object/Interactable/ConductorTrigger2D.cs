@@ -113,7 +113,7 @@ public class ConductorTrigger2D : Platform
                     return;
                 }
 
-                if (dataBase.playerInput.Interaction.Down)
+                if (dataBase.playerInput.Interact.Down)
                 {
                     if (!m_TriggerEnabled)
                     {

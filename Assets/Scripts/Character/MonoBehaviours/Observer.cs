@@ -48,21 +48,15 @@ public class Observer
 
     }
 
-    public void InputControl(bool gain)
+    public PlayerInput GetInput()
     {
-        if (m_PlayerInfo.playerInput == null)
+        if(!m_PlayerInfo.playerInput)
         {
-            return;
+            Debug.LogError("Player Input is null");
+            return null;
         }
 
-        if (gain)
-        {
-            m_PlayerInfo.playerInput.GainControl();
-        }
-        else
-        {
-            m_PlayerInfo.playerInput.ReleaseControl(true);
-        }
+        return m_PlayerInfo.playerInput;
     }
 
     public void SetObserver(bool resetHealth, bool resetTrigger, int hashPara, Transform entrance)

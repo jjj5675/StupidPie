@@ -37,11 +37,11 @@ public class PlayerDataBase : ScriptableObject
 
         if (abilityTypes.Contains(AbilityType.INTERACTION))
         {
-            this.playerInput.Interaction.Enable();
+            this.playerInput.Interact.Enable();
         }
         else
         {
-            this.playerInput.Interaction.Disable();
+            this.playerInput.Interact.Disable();
         }
     }
 }

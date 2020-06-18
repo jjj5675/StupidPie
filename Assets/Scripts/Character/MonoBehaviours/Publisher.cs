@@ -39,7 +39,22 @@ public class Publisher : MonoBehaviour
     {
         foreach(var observer in m_Observers)
         {
-            observer.InputControl(gain);
+            if(gain)
+            {
+                observer.GetInput().GainControl();
+            }
+            else
+            {
+                observer.GetInput().ReleaseControl(true);
+            }
+        }
+    }
+
+    public void GainPause()
+    {
+        foreach(var observer in m_Observers)
+        {
+            observer.GetInput().Pause.GainControl();
         }
     }
 

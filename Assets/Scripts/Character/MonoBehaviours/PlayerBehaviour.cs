@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Data;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController2D))]
@@ -34,6 +35,8 @@ public class PlayerBehaviour : MonoBehaviour
     public RandomAudioPlayer footstepAudioPlayer;
     public RandomAudioPlayer jumpAudioPlayer;
     public RandomAudioPlayer wallSlidingAudioPlayer;
+
+    private bool m_InPause = false;
 
     private float m_JumpVelocity;
     private float m_CurrentGravity;
@@ -101,11 +104,56 @@ public class PlayerBehaviour : MonoBehaviour
         m_WallLeapingEndWait = new WaitForSeconds(m_TimeToLeapHeight);
     }
 
+    void Update()
+    {
+        if(dataBase.playerInput.Pause.Down)
+        {
+            if(!m_InPause)
+            {
+                if(ScreenFader.IsFading)
+                {
+                    return;
+                }
+
+                publisher.GainOrReleaseControl(false);
+                publisher.GainPause();
+                m_InPause = true;
+                Time.timeScale = 0;
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("UIMenus", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            }
+            else
+            {
+                Unpause();
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         m_PlayerController2D.Move(m_MoveVector * Time.deltaTime);
         dataBase.animator.SetFloat(m_HashHorizontalPara, m_MoveVector.x);
         dataBase.animator.SetFloat(m_HashVerticalPara, m_MoveVector.y);
+    }
+
+    public void Unpause()
+    {
+        if(Time.timeScale > 0)
+        {
+            return;
+        }
+
+        StartCoroutine(UnpauseCoroutine());
+    }
+
+    IEnumerator UnpauseCoroutine()
+    {
+        Time.timeScale = 1;
+        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("UIMenus");
+        publisher.GainOrReleaseControl(true);
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForEndOfFrame();
+
+        m_InPause = false;
     }
 
     public void TeleportToColliderBottom()

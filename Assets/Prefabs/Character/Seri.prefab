@@ -424,13 +424,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc69faa0cc53bc74bb769b4a9ba5908b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Pause:
+    key: 0
+    m_Enabled: 1
   Jump:
     key: 257
     m_Enabled: 1
   Dash:
     key: 258
     m_Enabled: 1
-  Interaction:
+  Interact:
     key: 118
     m_Enabled: 1
   Horizontal:
