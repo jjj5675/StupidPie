@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DataBase", menuName = "Data", order = 1)]
+[CreateAssetMenu(fileName = "DataBase", menuName = "Data/PlayerData", order = 1)]
 public class PlayerDataBase : ScriptableObject
 {
     public enum AbilityType { NONE, DASH, INTERACTION }

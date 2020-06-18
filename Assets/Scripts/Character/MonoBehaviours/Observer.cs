@@ -59,20 +59,5 @@ public class Observer
         return m_PlayerInfo.playerInput;
     }
 
-    public void SetObserver(bool resetHealth, bool resetTrigger, int hashPara, Transform entrance)
-    {
-        if (resetHealth)
-        {
-            m_PlayerInfo.damageable.SetHealth(m_PlayerInfo.damageable.startingHealth);
-        }
-
-        if (resetTrigger)
-        {
-            m_PlayerInfo.animator.SetTrigger(hashPara);
-        }
-
-        m_PlayerInfo.transform.position = entrance.position;
-        m_PlayerInfo.transform.rotation = entrance.rotation;
-    }
 }
 

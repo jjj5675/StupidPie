@@ -121,10 +121,11 @@ public class PlayerBehaviour : MonoBehaviour
                 Time.timeScale = 0;
                 UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("UIMenus", UnityEngine.SceneManagement.LoadSceneMode.Additive);
             }
-            else
-            {
-                Unpause();
-            }
+        }
+
+        if(m_InPause && Time.timeScale == 1)
+        {
+            m_InPause = false;
         }
     }
 
@@ -135,26 +136,6 @@ public class PlayerBehaviour : MonoBehaviour
         dataBase.animator.SetFloat(m_HashVerticalPara, m_MoveVector.y);
     }
 
-    public void Unpause()
-    {
-        if(Time.timeScale > 0)
-        {
-            return;
-        }
-
-        StartCoroutine(UnpauseCoroutine());
-    }
-
-    IEnumerator UnpauseCoroutine()
-    {
-        Time.timeScale = 1;
-        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("UIMenus");
-        publisher.GainOrReleaseControl(true);
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForEndOfFrame();
-
-        m_InPause = false;
-    }
 
     public void TeleportToColliderBottom()
     {
@@ -531,19 +512,18 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Respawn()
     {
-        publisher.SetObservers(true, true, m_HashRespawnPara, cellController.LastEnteringDestination.playerLocations);
+        publisher.SetObservers(true, false, true, cellController.LastEnteringDestination.playerLocations);
         cellController.CurrentCell.ResetCell(false);
     }
 
     public void OnDie()
     {
-        //m_Animator.SetTrigger(m_HashDeadPara);
-
         if (!dataBase.playerInput.HaveControl)
         {
             return;
         }
 
+        dataBase.animator.SetTrigger(m_HashDeadPara);
         StartCoroutine(DieRespawnCoroutine());
     }
 

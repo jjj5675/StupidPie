@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class TimerUI : MonoBehaviour
 {
-    public Text minuteAndSecondsText;
-    public Text milliSecondsText;
+    public TextMeshProUGUI minuteAndSecondsText;
+    public TextMeshProUGUI milliSecondsText;
 
     private float m_Timer;
     private int m_TotalMinutes = 0;

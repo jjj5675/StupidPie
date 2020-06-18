@@ -49,7 +49,7 @@ public class TransitionPoint : MonoBehaviour
     {
         if(transitionType == TransitionType.SameScene)
         {
-            publisher.SetObservers(false, false, 0, cellController.LastEnteringDestination.playerLocations);
+            publisher.SetObservers(false, false, true, cellController.LastEnteringDestination.playerLocations);
         }
     }
 }

@@ -58,12 +58,27 @@ public class Publisher : MonoBehaviour
         }
     }
 
-    public void SetObservers(bool resetHealth, bool resetTrigger, int hashPara, List<GameObject> entrances)
+    public void SetObservers(bool resetHealth, bool dead, bool transition, List<GameObject> entrances)
     {
         int observerCount = 0;
         foreach(var observer in m_Observers)
         {
-            observer.SetObserver(resetHealth, resetTrigger, hashPara, entrances[observerCount].transform);
+            if(resetHealth)
+            {
+                observer.PlayerInfo.damageable.SetHealth(observer.PlayerInfo.damageable.startingHealth);
+            }
+
+            if(dead)
+            {
+                observer.PlayerInfo.animator.SetTrigger("Dead");
+            }
+
+            if(transition)
+            {
+                observer.PlayerInfo.transform.position = entrances[observerCount].transform.position;
+                observer.PlayerInfo.transform.rotation = entrances[observerCount].transform.rotation;
+            }
+
             observerCount++;
         }
     }

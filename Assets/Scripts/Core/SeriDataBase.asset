@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: SeriDataBase
   m_EditorClassIdentifier: 
   abilityTypes: 01000000
-  transform: {fileID: 4717500339395800574, guid: 1391fc39dd57de540890ec8739a541bf,
-    type: 3}
-  playerInput: {fileID: 4717500339395800550, guid: 1391fc39dd57de540890ec8739a541bf,
-    type: 3}
-  damageable: {fileID: 4717500339395800545, guid: 1391fc39dd57de540890ec8739a541bf,
-    type: 3}
+  transform: {fileID: 0}
+  playerInput: {fileID: 0}
+  damageable: {fileID: 0}
+  animator: {fileID: 0}
+  collider: {fileID: 0}

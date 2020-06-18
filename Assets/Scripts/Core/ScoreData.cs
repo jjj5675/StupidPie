@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "ScoreData", menuName = "Score")]
+[CreateAssetMenu(fileName = "ScoreData", menuName = "Data/ScoreData")]
 public class ScoreData : ScriptableObject
 {
     [HideInInspector]

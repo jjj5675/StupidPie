@@ -55,28 +55,48 @@ public class SceneController : MonoBehaviour
     void Start()
     {
         cellController.SetCells(rootCell, initalCellTransitionDestinationTag);
-        publisher.SetObservers(false, false, 0, cellController.LastEnteringDestination.playerLocations);
+        publisher.SetObservers(false, false, true, cellController.LastEnteringDestination.playerLocations);
     }
 
-    void Update()
+    public static void Regame()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        Instance.rootCell.GetCellDestination(CellTransitionDestination.DestinationTag.A, out CellTransitionDestination entrance);
+        Instance.StartCoroutine(Instance.Transition(entrance, true, true, true, true));
+        Instance.cellController.SetCells(Instance.rootCell, CellTransitionDestination.DestinationTag.A);
     }
 
-    private IEnumerator Transition(CellTransitionDestination.DestinationTag destinationTag)
+    public static void Restage()
+    {
+        Instance.StartCoroutine(Instance.Transition(Instance.cellController.LastEnteringDestination, true, true, true, true));
+
+    }
+
+    public IEnumerator UnpauseCoroutine()
+    {
+        Time.timeScale = 1;
+        SceneManager.UnloadSceneAsync("UIMenus");
+        publisher.GainOrReleaseControl(true);
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForEndOfFrame();
+    }
+
+    private IEnumerator Transition(CellTransitionDestination entrance, bool fade, bool resetCell, bool dead, bool resetHealth)
     {
         m_IsTransitioning = true;
         publisher.GainOrReleaseControl(false);
-        yield return ScreenFader.FadeSceneOut();
 
-        CellTransitionDestination entrance;
-        cellController.CurrentCell.GetCellDestination(destinationTag, out entrance);
-        publisher.SetObservers(false, false, 0, entrance.playerLocations);
+        if (fade)
+        {
+            yield return ScreenFader.FadeSceneOut();
+        }
 
-        yield return ScreenFader.FadeSceneIn();
+        publisher.SetObservers(resetHealth, dead, true, entrance.playerLocations);
+
+        if (fade)
+        {
+            yield return ScreenFader.FadeSceneIn();
+        }
+
         publisher.GainOrReleaseControl(true);
         m_IsTransitioning = false;
     }
