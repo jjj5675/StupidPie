@@ -55,7 +55,6 @@ public abstract class CharacterController2D : MonoBehaviour
         CheckBoxWidthCollisions();
         CheckBoxHeightCollisions();
         CheckBoxHeightCollisions(false);
-        Debug.Log(collisionFlags.hitCount);
     }
 
     public void Teleport(Vector2 position)

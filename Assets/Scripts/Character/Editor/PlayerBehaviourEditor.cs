@@ -19,6 +19,7 @@ public class PlayerBehaviourEditor : Editor
 
     SerializedProperty m_JumpHeightProp;
     SerializedProperty m_TimeToJumpApexProp;
+    SerializedProperty m_MaxAirborneSpeedProp;
     SerializedProperty m_AirborneAccelProportionProp;
     SerializedProperty m_AirborneDecelProportionProp;
 
@@ -57,6 +58,7 @@ public class PlayerBehaviourEditor : Editor
 
     readonly GUIContent m_JumpHeightContent = new GUIContent("Jump Height");
     readonly GUIContent m_TimeToJumpApexContent = new GUIContent("Time To Jump Apex");
+    readonly GUIContent m_MaxAirborneSpeedContent = new GUIContent("Max Speed");
     readonly GUIContent m_AirborneAccelProportionContent = new GUIContent("Airborne Accel Proportion");
     readonly GUIContent m_AirborneDecelProportionContent = new GUIContent("Airborne Decel Proportion");
 
@@ -98,6 +100,7 @@ public class PlayerBehaviourEditor : Editor
 
         m_JumpHeightProp = serializedObject.FindProperty("jumpHeight");
         m_TimeToJumpApexProp = serializedObject.FindProperty("timeToJumpApex");
+        m_MaxAirborneSpeedProp = serializedObject.FindProperty("maxAirborneSpeed");
         m_AirborneAccelProportionProp = serializedObject.FindProperty("airborneAccelProportion");
         m_AirborneDecelProportionProp = serializedObject.FindProperty("airborneDecelProportion");
 
@@ -195,6 +198,7 @@ public class PlayerBehaviourEditor : Editor
         {
             EditorGUILayout.PropertyField(m_JumpHeightProp, m_JumpHeightContent);
             EditorGUILayout.PropertyField(m_TimeToJumpApexProp, m_TimeToJumpApexContent);
+            EditorGUILayout.PropertyField(m_MaxAirborneSpeedProp, m_MaxAirborneSpeedContent);
             EditorGUILayout.PropertyField(m_AirborneAccelProportionProp, m_AirborneAccelProportionContent);
             EditorGUILayout.PropertyField(m_AirborneDecelProportionProp, m_AirborneDecelProportionContent);
         }

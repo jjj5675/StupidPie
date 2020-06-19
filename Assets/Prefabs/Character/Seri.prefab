@@ -375,6 +375,7 @@ MonoBehaviour:
   timeToDashPoint: 0.3
   jumpHeight: 2.3
   timeToJumpApex: 0.4
+  maxAirborneSpeed: 11.5
   airborneAccelProportion: 1
   airborneDecelProportion: 0.7
   wallLeapVelocity: {x: 7, y: 10}
