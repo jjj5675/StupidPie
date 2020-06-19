@@ -22,6 +22,7 @@ public abstract class CharacterController2D : MonoBehaviour
     protected Vector2[] m_RaycastPositions = new Vector2[3];
     protected List<RaycastHit2D> m_FoundHitList = new List<RaycastHit2D>(3);
     protected Collider2D m_ContactCollider;
+
     public Collider2D ContactCollider { get { return m_ContactCollider; } }
     public Rigidbody2D Rigidbody2D { get { return m_Rigidbody2D; } }
     public Vector2 Velocity { get { return m_Velocity; } }
@@ -54,6 +55,7 @@ public abstract class CharacterController2D : MonoBehaviour
         CheckBoxWidthCollisions();
         CheckBoxHeightCollisions();
         CheckBoxHeightCollisions(false);
+        Debug.Log(collisionFlags.hitCount);
     }
 
     public void Teleport(Vector2 position)
@@ -70,10 +72,15 @@ public abstract class CharacterController2D : MonoBehaviour
     }
 
 
-    public void UpdateRaycasting(Vector2[] positions, Vector2 direction, float distance, int raycastCount)
+    public void UpdateRaycasting(Vector2[] positions, Vector2 direction, float distance, int raycastCount, bool horizontal = false)
     {
         m_FoundHitList.Clear();
         float minHitDistance = float.MaxValue;
+
+        if (horizontal)
+        {
+            collisionFlags.hitCount = 0;
+        }
 
         for (int i = 0; i < raycastCount; i++)
         {
@@ -82,6 +89,11 @@ public abstract class CharacterController2D : MonoBehaviour
 
             if (count > 0)
             {
+                if (horizontal)
+                {
+                    collisionFlags.hitCount++;
+                }
+
                 m_FoundHitList.Add(m_HitBuffer[0]);
 
                 if (m_HitBuffer[0].distance < minHitDistance)
@@ -165,6 +177,7 @@ public abstract class CharacterController2D : MonoBehaviour
         public bool IsLeftSide, IsRightSide;
         public bool IsGrounded, IsCeilinged;
         public bool inContactJumppad;
+        public int hitCount;
 
         public void ResetWidth()
         {

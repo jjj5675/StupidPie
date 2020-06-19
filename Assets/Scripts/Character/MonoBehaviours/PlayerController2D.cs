@@ -112,7 +112,7 @@ public class PlayerController2D : CharacterController2D
                 m_RaycastPositions[2] = raycastStartLeftCenter + Vector2.down * (m_Box.size.y * 0.5f);
             }
 
-            UpdateRaycasting(m_RaycastPositions, raycastDirection, raycastDistance, m_RaycastPositions.Length);
+            UpdateRaycasting(m_RaycastPositions, raycastDirection, raycastDistance, m_RaycastPositions.Length, true);
             Vector2 hitNormal = Vector2.zero;
 
             if (m_FoundHitList.Count != 0)

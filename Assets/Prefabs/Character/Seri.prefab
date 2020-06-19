@@ -434,7 +434,7 @@ MonoBehaviour:
     key: 258
     m_Enabled: 1
   Interact:
-    key: 118
+    key: 0
     m_Enabled: 1
   Horizontal:
     positive: 275

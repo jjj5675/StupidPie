@@ -403,6 +403,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void CheckForGrabbingWall()
     {
+        if(dataBase.character.collisionFlags.hitCount != 3)
+        {
+            dataBase.animator.SetBool(m_HashGrabbingPara, false);
+            return;
+        }
+
         if (dataBase.animator.GetBool(m_HashDashingPara))
         {
             dataBase.animator.SetBool(m_HashGrabbingPara, false);
@@ -412,15 +418,11 @@ public class PlayerBehaviour : MonoBehaviour
         {
             m_CurrentTimeToWaitSliding = 0f;
             dataBase.animator.SetBool(m_HashGrabbingPara, false);
-            //m_PlayerController2D.wallTest = false;
-
             return;
         }
         if (!dataBase.character.collisionFlags.CheckForWidth())
         {
             dataBase.animator.SetBool(m_HashGrabbingPara, false);
-            //m_PlayerController2D.wallTest = false;
-
             return;
         }
         if (dataBase.character.collisionFlags.inContactJumppad)
@@ -442,7 +444,6 @@ public class PlayerBehaviour : MonoBehaviour
         WaitForSliding();
 
         dataBase.animator.SetBool(m_HashGrabbingPara, true);
-        //m_PlayerController2D.wallTest = true;
     }
 
     void WaitForSliding()
