@@ -9,10 +9,9 @@ public class PlayerController2D : CharacterController2D
     //public bool wallTest;
 
     //protected Vector2 m_BoxOffset;
-    protected Collider2D m_ContactCollider;
+
 
     //public Vector2 BoxOffset { get { return m_BoxOffset; } }
-    public Collider2D ContactCollider { get { return m_ContactCollider; } }
 
     //public void SetBoxOffset()
     //{

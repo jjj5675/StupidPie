@@ -17,14 +17,17 @@ public class PlayerDataBase : ScriptableObject
     public Animator animator;
     [HideInInspector]
     public Collider2D collider;
+    [HideInInspector]
+    public CharacterController2D character;
 
-    public void SetDate(Transform transform, PlayerInput playerInput, Damageable damageable, Animator animator, Collider2D collider)
+    public void SetDate(Transform transform, PlayerInput playerInput, Damageable damageable, Animator animator, Collider2D collider, CharacterController2D character)
     {
         this.transform = transform;
         this.playerInput = playerInput;
         this.damageable = damageable;
         this.animator = animator;
         this.collider = collider;
+        this.character = character;
 
         if(abilityTypes.Contains(AbilityType.DASH))
         {

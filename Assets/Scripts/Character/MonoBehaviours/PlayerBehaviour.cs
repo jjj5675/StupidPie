@@ -53,7 +53,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Observer m_Observer;
     private Vector2 m_MoveVector;
-    private PlayerController2D m_PlayerController2D;
     private Vector2 m_DashDirection;
     private bool m_IsParabolaDash = false;
     private WaitForSeconds m_WallLeapingEndWait;
@@ -76,9 +75,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Awake()
     {
-        m_PlayerController2D = GetComponent<PlayerController2D>();
-
-        dataBase.SetDate(transform, GetComponent<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>());
+        dataBase.SetDate(transform, GetComponent<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>());
         m_Observer = new Observer(dataBase);
         m_Observer.Subscribe(publisher);
     }
@@ -131,7 +128,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        m_PlayerController2D.Move(m_MoveVector * Time.deltaTime);
+        dataBase.character.Move(m_MoveVector * Time.deltaTime);
         dataBase.animator.SetFloat(m_HashHorizontalPara, m_MoveVector.x);
         dataBase.animator.SetFloat(m_HashVerticalPara, m_MoveVector.y);
     }
@@ -139,9 +136,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void TeleportToColliderBottom()
     {
-        Vector2 colliderBottom = m_PlayerController2D.Rigidbody2D.position + dataBase.collider.offset
+        Vector2 colliderBottom = dataBase.character.Rigidbody2D.position + dataBase.collider.offset
             + Vector2.down * (dataBase.collider.bounds.size.y * 0.5f);
-        m_PlayerController2D.Teleport(colliderBottom);
+        dataBase.character.Teleport(colliderBottom);
     }
 
     public void SetMoveVector(Vector2 newMovement)
@@ -203,7 +200,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public bool CheckForGrounded()
     {
-        bool grounded = m_PlayerController2D.collisionFlags.IsGrounded;
+        bool grounded = dataBase.character.collisionFlags.IsGrounded;
 
         dataBase.animator.SetBool(m_HashGroundedPara, grounded);
 
@@ -223,7 +220,7 @@ public class PlayerBehaviour : MonoBehaviour
     //이제 플레이어의 레이캐스트 위치까지 고려할것
     public bool CheckForSide()
     {
-        return m_PlayerController2D.collisionFlags.CheckForWidth();
+        return dataBase.character.collisionFlags.CheckForWidth();
     }
 
     public void SetJumpingMovement()
@@ -254,7 +251,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void AirborneVerticalMovement()
     {
-        if (m_PlayerController2D.collisionFlags.IsCeilinged && !m_PlayerController2D.collisionFlags.inContactJumppad && m_MoveVector.y > 0)
+        if (dataBase.character.collisionFlags.IsCeilinged && !dataBase.character.collisionFlags.inContactJumppad && m_MoveVector.y > 0)
         {
             m_MoveVector.y = 0;
         }
@@ -276,7 +273,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void OnDash(Dashable dashable)
     {
-        dashable.EnableDashability(timeToDashPoint, m_PlayerController2D.collisionFlags.IsGrounded);
+        dashable.EnableDashability(timeToDashPoint, dataBase.character.collisionFlags.IsGrounded);
         CalculateDashVelocity(out m_MoveVector);
         UpdateFacing();
         dataBase.animator.SetBool(m_HashDashingPara, true);
@@ -331,26 +328,26 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (!m_IsParabolaDash)
         {
-            if (m_PlayerController2D.collisionFlags.CheckForWidth())
+            if (dataBase.character.collisionFlags.CheckForWidth())
             {
                 return DashingEnd();
             }
 
             bool airborneDashing = dashable.CurrentDashState == Dashable.DashState.AirborneDashing;
-            bool grounded = m_PlayerController2D.collisionFlags.IsGrounded;
+            bool grounded = dataBase.character.collisionFlags.IsGrounded;
 
             if (airborneDashing && grounded && m_DashDirection.y < 0)
             {
                 return DashingEnd();
             }
 
-            if (m_PlayerController2D.collisionFlags.IsCeilinged)
+            if (dataBase.character.collisionFlags.IsCeilinged)
             {
                 return DashingEnd();
             }
         }
 
-        if (m_PlayerController2D.collisionFlags.inContactJumppad)
+        if (dataBase.character.collisionFlags.inContactJumppad)
         {
             return DashingEnd();
         }
@@ -411,7 +408,7 @@ public class PlayerBehaviour : MonoBehaviour
             dataBase.animator.SetBool(m_HashGrabbingPara, false);
             return;
         }
-        if (m_PlayerController2D.collisionFlags.IsGrounded)
+        if (dataBase.character.collisionFlags.IsGrounded)
         {
             m_CurrentTimeToWaitSliding = 0f;
             dataBase.animator.SetBool(m_HashGrabbingPara, false);
@@ -419,14 +416,14 @@ public class PlayerBehaviour : MonoBehaviour
 
             return;
         }
-        if (!m_PlayerController2D.collisionFlags.CheckForWidth())
+        if (!dataBase.character.collisionFlags.CheckForWidth())
         {
             dataBase.animator.SetBool(m_HashGrabbingPara, false);
             //m_PlayerController2D.wallTest = false;
 
             return;
         }
-        if (m_PlayerController2D.collisionFlags.inContactJumppad)
+        if (dataBase.character.collisionFlags.inContactJumppad)
         {
             dataBase.animator.SetBool(m_HashGrabbingPara, false);
             return;
@@ -480,7 +477,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void WallLeapMovement()
     {
-        int wallDirection = m_PlayerController2D.collisionFlags.IsLeftSide ? -1 : 1;
+        int wallDirection = dataBase.character.collisionFlags.IsLeftSide ? -1 : 1;
 
         if (dataBase.playerInput.Horizontal.Value == wallDirection)
         {
@@ -542,10 +539,10 @@ public class PlayerBehaviour : MonoBehaviour
 
     public bool CheckForJumpPadCollisionEnter()
     {
-        if (m_PlayerController2D.collisionFlags.inContactJumppad && m_PlayerController2D.ContactCollider != null)
+        if (dataBase.character.collisionFlags.inContactJumppad && dataBase.character.ContactCollider != null)
         {
 
-            if (PhysicsHelper.TryGetJumpPad(m_PlayerController2D.ContactCollider, out JumpPad jumpPad))
+            if (PhysicsHelper.TryGetJumpPad(dataBase.character.ContactCollider, out JumpPad jumpPad))
             {
                 if (!jumpPad.EventFired)
                 {
@@ -592,7 +589,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void StartStraightMoving(Vector2 target, float time, Vector2 padPosition)
     {
         bool horizontally = !Mathf.Approximately(target.x, 0);
-        float displacementY = target.y - m_PlayerController2D.Rigidbody2D.position.y;
+        float displacementY = target.y - dataBase.character.Rigidbody2D.position.y;
         float acceleration = -(2 * displacementY) / Mathf.Pow(time, 2);
         Vector2 velocity = Vector2.zero;
 
@@ -600,7 +597,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (horizontally)
         {
-            float displacementX = target.x - m_PlayerController2D.Rigidbody2D.position.x;
+            float displacementX = target.x - dataBase.character.Rigidbody2D.position.x;
             velocity.x = (displacementX / time);
 
             float launchDirection = Mathf.Sign(velocity.x);

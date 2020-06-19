@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class ElectricTrap : MonoBehaviour
 {
@@ -14,36 +15,40 @@ public class ElectricTrap : MonoBehaviour
     public float transitionDistance;
 
     int m_PlayerLayerIndex;
-    Dictionary<Collider2D, PlayerDataBase> m_DataBaseCache;
+    Dictionary<Collider2D, PlayerDataBase> m_DataBaseCache = new Dictionary<Collider2D, PlayerDataBase>(2);
+    Tilemap m_Tilemap;
+
+    Vector2Int[] tileWay;
 
     private void Awake()
     {
         m_PlayerLayerIndex = LayerMask.NameToLayer("Player");
-    }
+        GetComponent<CompositeCollider2D>().isTrigger = true;
+        m_Tilemap = GetComponent<Tilemap>();
 
-    private void OnEnable()
-    {
-        m_DataBaseCache = new Dictionary<Collider2D, PlayerDataBase>(2);
-    }
-
-    private void OnDisable()
-    {
-        if (m_DataBaseCache.Count != 0)
+        tileWay = new Vector2Int[]
         {
-            m_DataBaseCache.Clear();
-        }
+            new Vector2Int(-1,0),
+            new Vector2Int(1,0),
+            new Vector2Int(0,-1),
+            new Vector2Int(0,1),
+            new Vector2Int(-1,1),
+            new Vector2Int(-1,-1),
+            new Vector2Int(1,1),
+            new Vector2Int(1,-1),
+        };
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (m_PlayerLayerIndex == collision.gameObject.layer)
         {
-            if (!m_DataBaseCache.ContainsKey(collision.collider))
+            if (!m_DataBaseCache.ContainsKey(collision))
             {
-                m_DataBaseCache.Add(collision.collider, collision.gameObject.GetComponent<PlayerBehaviour>().dataBase);
+                m_DataBaseCache.Add(collision, collision.gameObject.GetComponent<PlayerBehaviour>().dataBase);
             }
 
-            if (m_DataBaseCache.TryGetValue(collision.collider, out PlayerDataBase dataBase))
+            if (m_DataBaseCache.TryGetValue(collision, out PlayerDataBase dataBase))
             {
                 if (!dataBase)
                 {
@@ -52,13 +57,31 @@ public class ElectricTrap : MonoBehaviour
 
                 if (dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
                 {
-                    if (collision.contacts[0].point.x < collision.transform.position.x)
+                    Vector3Int localPosition = m_Tilemap.WorldToCell(collision.transform.position);
+
+                    for (int i = 0; i < tileWay.Length; i++)
                     {
-                        GameObjectTeleporter.Teleport(collision.gameObject, collision.transform.position + Vector3.left * transitionDistance);
-                    }
-                    else
-                    {
-                        GameObjectTeleporter.Teleport(collision.gameObject, collision.transform.position + Vector3.right * transitionDistance);
+                        int nx = localPosition.x + tileWay[i].x;
+                        int ny = localPosition.y + tileWay[i].y;
+
+                        Vector3Int tilePosition = new Vector3Int(nx, ny, localPosition.z);
+
+                        if (m_Tilemap.HasTile(tilePosition))
+                        {
+                            Vector3 worldPosition = m_Tilemap.CellToWorld(tilePosition);
+
+                            if (worldPosition.x < collision.transform.position.x)
+                            {
+                                dataBase.character.Move(Vector2.left * transitionDistance);
+                            }
+                            else
+                            {
+                                dataBase.character.Move(Vector2.right * transitionDistance);
+                            }
+
+                            break;
+                        }
+
                     }
                 }
                 else

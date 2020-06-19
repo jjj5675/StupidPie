@@ -194,4 +194,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f20956d15be0cb419e35d076905f4a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionDistance: 0
+  transitionDistance: 2

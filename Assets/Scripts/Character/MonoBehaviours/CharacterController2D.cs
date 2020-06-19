@@ -21,7 +21,8 @@ public abstract class CharacterController2D : MonoBehaviour
     protected int m_FirstHitIndex;
     protected Vector2[] m_RaycastPositions = new Vector2[3];
     protected List<RaycastHit2D> m_FoundHitList = new List<RaycastHit2D>(3);
-
+    protected Collider2D m_ContactCollider;
+    public Collider2D ContactCollider { get { return m_ContactCollider; } }
     public Rigidbody2D Rigidbody2D { get { return m_Rigidbody2D; } }
     public Vector2 Velocity { get { return m_Velocity; } }
 
