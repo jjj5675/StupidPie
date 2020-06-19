@@ -30,8 +30,13 @@ public class LiftPlatform : Platform
 
     protected Rigidbody2D m_Rigidbody2D;
     protected Vector2 m_Velocity;
+    protected bool m_EventFired = false;
 
     public Vector2 Velocity { get { return m_Velocity; } }
+
+    protected const int m_DelayedFrameCount = 2;
+    protected int m_ActivationFrameCount = 0;
+    protected bool m_PreviousWasPressed = false;
 
     protected override void Initialise()
     {
@@ -76,13 +81,34 @@ public class LiftPlatform : Platform
         m_Current = 0;
         m_Dir = 1;
         m_Next = localNodes.Length > 1 ? 1 : 0;
+        m_EventFired = false;
+        m_PreviousWasPressed = false;
+        m_ActivationFrameCount = 0;
     }
 
     void FixedUpdate()
     {
         if (!m_Started && !platformCatcher.CaughtInteractionAbility)
         {
-            OnDisabled.Invoke();
+            if (m_EventFired)
+            {
+                if(!m_PreviousWasPressed)
+                {
+                    m_PreviousWasPressed = true;
+                    m_ActivationFrameCount = 1;
+                }
+                else
+                {
+                    m_ActivationFrameCount += 1;
+                }
+
+                if (m_ActivationFrameCount > m_DelayedFrameCount)
+                {
+                    OnDisabled.Invoke();
+                    m_EventFired = false;
+                }
+            }
+
             return;
         }
 
@@ -98,7 +124,12 @@ public class LiftPlatform : Platform
             return;
         }
 
-        OnEnabled.Invoke();
+        if(!m_EventFired)
+        {
+            OnEnabled.Invoke();
+            m_EventFired = true;
+        }
+
 
         float distanceToGo = speed * Time.deltaTime;
 
@@ -161,7 +192,16 @@ public class LiftPlatform : Platform
             m_Velocity = direction.normalized * dist;
 
             m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
-            platformCatcher.MoveCaughtObjects(m_Velocity);
+
+            if (0 < m_Velocity.y)
+            {
+                Vector2 velocity = new Vector2(m_Velocity.x, m_Velocity.y * 0.2f);
+                platformCatcher.MoveCaughtObjects(velocity);
+            }
+            else
+            {
+                platformCatcher.MoveCaughtObjects(m_Velocity);
+            }
 
             //현재 프레임의 속도 제거
             distanceToGo -= dist;
