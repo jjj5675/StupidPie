@@ -341,7 +341,7 @@ public class PlayerBehaviour : MonoBehaviour
                 return DashingEnd();
             }
 
-            if (dataBase.character.collisionFlags.IsCeilinged)
+            if (Mathf.Approximately(m_MoveVector.x, 0) && dataBase.character.collisionFlags.IsCeilinged)
             {
                 return DashingEnd();
             }
