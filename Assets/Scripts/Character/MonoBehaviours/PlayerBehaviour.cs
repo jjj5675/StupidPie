@@ -261,7 +261,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         m_MoveVector.y += m_CurrentGravity * Time.deltaTime;
-        m_MoveVector.y = Mathf.Clamp(m_MoveVector.y, -maxAirborneSpeed, m_JumpVelocity);
+        m_MoveVector.y = Mathf.Clamp(m_MoveVector.y, -maxAirborneSpeed, 50.0f);
     }
 
     public bool CheckForDashInput()
