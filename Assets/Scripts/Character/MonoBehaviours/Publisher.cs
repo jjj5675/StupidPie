@@ -58,7 +58,23 @@ public class Publisher : MonoBehaviour
         }
     }
 
-    public void SetObservers(bool resetHealth, bool dead, bool transition, List<GameObject> entrances)
+    public void SetAnimState(bool respawn, bool dead)
+    {
+        foreach(var observer in m_Observers)
+        {
+            if(respawn)
+            {
+                observer.PlayerInfo.animator.SetTrigger("Respawn");
+            }
+
+            if(dead)
+            {
+                observer.PlayerInfo.animator.SetTrigger("Dead");
+            }
+        }
+    }
+
+    public void SetObservers(bool resetHealth, bool transition, List<GameObject> entrances)
     {
         int observerCount = 0;
         foreach(var observer in m_Observers)
@@ -66,11 +82,6 @@ public class Publisher : MonoBehaviour
             if(resetHealth)
             {
                 observer.PlayerInfo.damageable.SetHealth(observer.PlayerInfo.damageable.startingHealth);
-            }
-
-            if(dead)
-            {
-                observer.PlayerInfo.animator.SetTrigger("Dead");
             }
 
             if(transition)

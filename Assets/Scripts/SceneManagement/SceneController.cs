@@ -37,9 +37,11 @@ public class SceneController : MonoBehaviour
     public Cell rootCell;
     public CellTransitionDestination.DestinationTag initalCellTransitionDestinationTag;
     public Publisher publisher;
+    public TimerUI timerUI;
+    public ScreenManager screenManager;
 
     private Scene m_CurrentZoneScene;
-    private bool m_IsTransitioning;
+    private bool m_Transitioning;
 
     void Awake()
     {
@@ -54,35 +56,51 @@ public class SceneController : MonoBehaviour
 
     void Start()
     {
-        cellController.SetCells(rootCell, initalCellTransitionDestinationTag);
-        publisher.SetObservers(false, false, true, cellController.LastEnteringDestination.playerLocations);
+        cellController.SetCell(rootCell, initalCellTransitionDestinationTag);
+        screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
+        publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
     }
 
-    public static void Regame()
+    public void UnPause(bool inputControl)
     {
-        Instance.rootCell.GetCellDestination(CellTransitionDestination.DestinationTag.A, out CellTransitionDestination entrance);
-        Instance.StartCoroutine(Instance.Transition(entrance, true, true, true, true));
-        Instance.cellController.SetCells(Instance.rootCell, CellTransitionDestination.DestinationTag.A);
+        if (Time.timeScale > 0)
+        {
+            return;
+        }
+
+        StartCoroutine(UnpauseCoroutine(inputControl));
     }
-
-    public static void Restage()
-    {
-        Instance.StartCoroutine(Instance.Transition(Instance.cellController.LastEnteringDestination, true, true, true, true));
-
-    }
-
-    public IEnumerator UnpauseCoroutine()
+    IEnumerator UnpauseCoroutine(bool inputControl)
     {
         Time.timeScale = 1;
         SceneManager.UnloadSceneAsync("UIMenus");
-        publisher.GainOrReleaseControl(true);
+        if (inputControl)
+        {
+            publisher.GainOrReleaseControl(true);
+        }
         yield return new WaitForFixedUpdate();
         yield return new WaitForEndOfFrame();
     }
 
-    private IEnumerator Transition(CellTransitionDestination entrance, bool fade, bool resetCell, bool dead, bool resetHealth)
+    public void Restage()
     {
-        m_IsTransitioning = true;
+        timerUI.StopTimer();
+        publisher.SetAnimState(false, true);
+        StartCoroutine(Transition(true, false, cellController.LastEnteringDestination));
+    }
+
+    public void Regame()
+    {
+        timerUI.StopTimer();
+        publisher.SetAnimState(false, true);
+        rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
+        StartCoroutine(Transition(true, true, cellTransitionDestination));
+    }
+
+
+    private IEnumerator Transition(bool fade, bool cameraSetting, CellTransitionDestination entrance)
+    {
+        m_Transitioning = true;
         publisher.GainOrReleaseControl(false);
 
         if (fade)
@@ -90,7 +108,21 @@ public class SceneController : MonoBehaviour
             yield return ScreenFader.FadeSceneOut();
         }
 
-        publisher.SetObservers(resetHealth, dead, true, entrance.playerLocations);
+        publisher.SetAnimState(true, false);
+        publisher.SetObservers(true, true, entrance.locations);
+        cellController.CurrentCell.ResetCell(false);
+
+        if (cameraSetting)
+        {
+            cellController.SetCell(rootCell, initalCellTransitionDestinationTag);
+            if (cellController.PreviousCell != rootCell)
+            {
+                cellController.DisablePreviousCell();
+            }
+            screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
+        }
+
+        timerUI.ResetTimer();
 
         if (fade)
         {
@@ -98,6 +130,7 @@ public class SceneController : MonoBehaviour
         }
 
         publisher.GainOrReleaseControl(true);
-        m_IsTransitioning = false;
+        timerUI.StartTimer();
+        m_Transitioning = false;
     }
 }

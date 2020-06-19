@@ -21,7 +21,7 @@ public class OptionUI : MonoBehaviour
      pauseCanvases[m_CurrentCanvas].anchorMax.x, pauseCanvases[m_CurrentCanvas].anchorMax.y);
 
         pauseCanvases[m_NextCanvas].anchorMin -= anchorMin;
-        pauseCanvases[m_NextCanvas].anchorMax -= anchorMax;
+        pauseCanvases[m_NextCanvas].anchorMax += anchorMax;
     }
 
     private void Update()
@@ -30,14 +30,28 @@ public class OptionUI : MonoBehaviour
         {
             if (m_CurrentCanvas != 0)
             {
-                m_NextCanvas--;
+                if (m_CurrentCanvas == 4)
+                {
+                    m_NextCanvas -= 2;
+                }
+                else
+                {
+                    m_NextCanvas--;
+                }
             }
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             if (m_CurrentCanvas < pauseCanvases.Length - 1)
             {
-                m_NextCanvas++;
+                if (m_CurrentCanvas == 2)
+                {
+                    m_NextCanvas += 2;
+                }
+                else
+                {
+                    m_NextCanvas++;
+                }
             }
         }
         else if (Input.GetKeyDown(KeyCode.Return))
@@ -82,30 +96,24 @@ public class OptionUI : MonoBehaviour
         pauseCanvases[m_NextCanvas].anchorMax.x, pauseCanvases[m_NextCanvas].anchorMax.y);
 
         pauseCanvases[m_NextCanvas].anchorMin -= anchorMin;
-        pauseCanvases[m_NextCanvas].anchorMax -= anchorMax;
+        pauseCanvases[m_NextCanvas].anchorMax += anchorMax;
     }
 
     void Resume()
     {
-        if (Time.timeScale > 0)
-        {
-            return;
-        }
-
-        StartCoroutine(SceneController.Instance.UnpauseCoroutine());
+        SceneController.Instance.UnPause(true);
     }
-
 
     void Restage()
     {
-        Resume();
-        SceneController.Restage();
+        SceneController.Instance.UnPause(false);
+        SceneController.Instance.Restage();
     }
 
     void Regame()
     {
-        Resume();
-        SceneController.Regame();
+        SceneController.Instance.UnPause(false);
+        SceneController.Instance.Regame();
     }
 
     void Setting()

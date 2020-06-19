@@ -9,5 +9,5 @@ public class CellTransitionDestination : MonoBehaviour
     }
 
     public DestinationTag destinationTag;
-    public List<GameObject> playerLocations;
+    public List<GameObject> locations;
 }

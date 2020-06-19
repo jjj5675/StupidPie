@@ -12,9 +12,19 @@ public class TimerUI : MonoBehaviour
 
     public void ResetTimer()
     {
+        m_Timer = 0;
         m_TotalMinutes = 0;
         minuteAndSecondsText.text = "00:00";
-        milliSecondsText.text = "00";
+        milliSecondsText.text = ".00";
+    }
+
+    public void StopTimer()
+    {
+        m_Timeable = false;
+    }
+
+    public void StartTimer()
+    {
         m_Timeable = true;
     }
 

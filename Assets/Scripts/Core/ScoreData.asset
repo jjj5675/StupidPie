@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ScoreData
   m_EditorClassIdentifier: 
   scoreUI: {fileID: 0}
-  newScore: 2
-  savedScore: 2
+  newScore: 0
+  savedScore: 0

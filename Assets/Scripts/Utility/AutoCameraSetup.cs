@@ -13,11 +13,10 @@ public class AutoCameraSetup : MonoBehaviour
     CinemachineConfiner m_SubCinemachineConfiner;
     CinemachineConfiner m_MainCinemachineConfiner;
     CinemachineBrain m_MainCinemachineBrain;
-    bool m_IsCellChanging = false;
+    bool m_CellChanging = false;
 
     const int m_DelayFrameCount = 1;
     int m_ActivationFrameCount = 0;
-
 
     void Awake()
     {
@@ -37,7 +36,7 @@ public class AutoCameraSetup : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!m_IsCellChanging)
+        if (!m_CellChanging)
         {
             return;
         }
@@ -55,7 +54,7 @@ public class AutoCameraSetup : MonoBehaviour
             subvcam.SetActive(false);
             OnDisabledPreviousCell.Invoke();
             m_ActivationFrameCount = 0;
-            m_IsCellChanging = false;
+            m_CellChanging = false;
         }
     }
 
@@ -65,28 +64,17 @@ public class AutoCameraSetup : MonoBehaviour
         m_SubVCam.Follow = transform;
     }
 
-    public void DisabledScreenEdges()
+    public void SetMainConfinerBound(Collider2D newBound)
     {
-        m_MainCinemachineConfiner.m_ConfineScreenEdges = false;
-    }
-    public void EnabledScreenEdges()
-    {
-        m_MainCinemachineConfiner.m_ConfineScreenEdges = true;
+        m_MainCinemachineConfiner.m_BoundingShape2D = newBound;
+        m_MainCinemachineConfiner.InvalidatePathCache();
     }
 
-    public void SetVCam(Collider2D newBound, bool swapVCam = false)
+    public void SwapVCam(Collider2D newBound)
     {
-        if (swapVCam)
-        {
-            subvcam.SetActive(true);
-            m_IsCellChanging = true;
-            m_SubCinemachineConfiner.m_BoundingShape2D = newBound;
-            m_SubCinemachineConfiner.InvalidatePathCache();
-        }
-        else
-        {
-            m_MainCinemachineConfiner.m_BoundingShape2D = newBound;
-            m_MainCinemachineConfiner.InvalidatePathCache();
-        }
+        subvcam.SetActive(true);
+        m_SubCinemachineConfiner.m_BoundingShape2D = newBound;
+        m_SubCinemachineConfiner.InvalidatePathCache();
+        m_CellChanging = true;
     }
 }

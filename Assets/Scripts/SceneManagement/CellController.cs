@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class CellController : MonoBehaviour
 {
-    public AutoCameraSetup autoCameraSetup;
-
     List<Cell> m_CellCache = new List<Cell>();
     Cell m_CurrentCell;
     Cell m_PreviousCell;
     CellTransitionDestination m_LastEnteringDestination;
 
     public Cell CurrentCell { get { return m_CurrentCell; } }
+    public Cell PreviousCell { get { return m_PreviousCell; } }
     public CellTransitionDestination LastEnteringDestination { get { return m_LastEnteringDestination; } }
 
     void Awake()
@@ -31,7 +30,7 @@ public class CellController : MonoBehaviour
         }
     }
 
-    public void SetCells(Cell newCell, CellTransitionDestination.DestinationTag destinationTag, bool swapVCam = false)
+    public void SetCell(Cell newCell, CellTransitionDestination.DestinationTag destinationTag)
     {
         if (newCell == null || !m_CellCache.Contains(newCell))
         {
@@ -47,10 +46,9 @@ public class CellController : MonoBehaviour
         m_CurrentCell = newCell;
         m_CurrentCell.gameObject.SetActive(true);
         m_CurrentCell.GetCellDestination(destinationTag, out m_LastEnteringDestination);
-        autoCameraSetup.SetVCam(m_CurrentCell.confinerCollider, swapVCam);
     }
 
-    public void OnDisabledPreviousCell()
+    public void DisablePreviousCell()
     {
         if (m_PreviousCell != null)
         {

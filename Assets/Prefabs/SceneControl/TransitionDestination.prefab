@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1771947756365050106}
   m_Layer: 0
-  m_Name: SeriLocation
+  m_Name: Location1
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1771947757168387229}
   m_Layer: 0
-  m_Name: IresLocation
+  m_Name: Location2
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -106,5 +106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinationTag: 0
-  seriLocation: {fileID: 1771947756365050085}
-  iresLocation: {fileID: 1771947757168387228}
+  locations:
+  - {fileID: 1771947756365050085}
+  - {fileID: 1771947757168387228}

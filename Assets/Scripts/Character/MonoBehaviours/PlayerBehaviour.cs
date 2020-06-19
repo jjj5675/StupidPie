@@ -512,7 +512,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Respawn()
     {
-        publisher.SetObservers(true, false, true, cellController.LastEnteringDestination.playerLocations);
+        publisher.SetAnimState(true, false);
+        publisher.SetObservers(true, true, cellController.LastEnteringDestination.locations);
         cellController.CurrentCell.ResetCell(false);
     }
 

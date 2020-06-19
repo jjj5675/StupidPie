@@ -20,6 +20,7 @@ public class TransitionPoint : MonoBehaviour
     public TransitionWhen transitionWhen;
     public bool resetInputValueOnTransition = true;
     public CellController cellController;
+    public ScreenManager screenManager;
 
     int transitioningPresentCount = 0;
 
@@ -32,7 +33,8 @@ public class TransitionPoint : MonoBehaviour
 
         if(publisher.Observers.Count <= transitioningPresentCount && transitionWhen == TransitionWhen.OnTriggerEnter)
         {
-            cellController.SetCells(transitionCell, transitionDestinationTag, true);
+            cellController.SetCell(transitionCell, transitionDestinationTag);
+            screenManager.autoCameraSetup.SwapVCam(cellController.CurrentCell.confinerCollider);
             TransitionInternal();
         }
     }
@@ -49,7 +51,7 @@ public class TransitionPoint : MonoBehaviour
     {
         if(transitionType == TransitionType.SameScene)
         {
-            publisher.SetObservers(false, false, true, cellController.LastEnteringDestination.playerLocations);
+            publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
         }
     }
 }

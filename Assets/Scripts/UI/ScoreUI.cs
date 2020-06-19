@@ -11,10 +11,15 @@ public class ScoreUI : MonoBehaviour
     {
         scoreText.text = "X 0";
         scoreData.scoreUI = this;
+        scoreData.newScore = 0;
+        scoreData.savedScore = 0;
     }
 
     public void ChangeScoreText(int count)
     {
         scoreText.text = "X " + count.ToString();
     }
+
+
+
 }
