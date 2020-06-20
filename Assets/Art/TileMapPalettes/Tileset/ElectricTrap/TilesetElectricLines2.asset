@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: TilesetElectricLines2
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: b457c5d83d2401a4b97bb7fe1593661f, type: 3}
+  - {fileID: 21300000, guid: 51cef6e3a399a9240955d3ffa951160a, type: 3}
+  - {fileID: 21300000, guid: b81bc4cc98159d5419ff9d645412335d, type: 3}
+  - {fileID: 21300000, guid: 9faa1371c2bbf534eb0d48599e6db2f1, type: 3}
+  - {fileID: 21300000, guid: 9c6e57d08228cfb418c9e57fcd5976ca, type: 3}
+  - {fileID: 21300000, guid: 08d2ce573a7c4354ab202a68a79677f5, type: 3}
+  - {fileID: 21300000, guid: 20cb013ecc6ea3640abbeae969c2b5d1, type: 3}
+  - {fileID: 21300000, guid: 60866036e54defe45a9330e3e906d099, type: 3}
+  - {fileID: 21300000, guid: 02dc89503b4818b439b9c696ee77cdc5, type: 3}
+  m_MinSpeed: 1
+  m_MaxSpeed: 1
+  m_AnimationStartTime: 0
+  m_TileColliderType: 2

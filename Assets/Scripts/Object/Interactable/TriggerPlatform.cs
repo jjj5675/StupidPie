@@ -6,8 +6,8 @@ public class TriggerPlatform : Platform
     public CompositeCollider2D compositeCollider;
     public EdgeCollider2D edgeCollider;
     public LayerMask overlapColliderMask;
-    public Sprite enabledSprite;
-    public Sprite disabledSprite;
+    public TileBase onTileset;
+    public TileBase offTileset;
 
     protected ContactFilter2D m_OverlapCharacterContactFilter;
     protected SpikeTrigger[] m_SpikeTriggers;
@@ -76,7 +76,13 @@ public class TriggerPlatform : Platform
 
     void EnableOverlapSpikeTriggers()
     {
-        ChangeAllTiles(m_Tilemap, enabledSprite);
+        foreach(var pos in m_Tilemap.cellBounds.allPositionsWithin)
+        {
+            if(m_Tilemap.HasTile(pos))
+            {
+                m_Tilemap.SetTile(pos, onTileset);
+            }
+        }
 
         if (m_Started)
         {
@@ -98,7 +104,13 @@ public class TriggerPlatform : Platform
 
     void DisableOverlapSpikeTriggers()
     {
-        ChangeAllTiles(m_Tilemap, disabledSprite);
+        foreach (var pos in m_Tilemap.cellBounds.allPositionsWithin)
+        {
+            if (m_Tilemap.HasTile(pos))
+            {
+                m_Tilemap.SetTile(pos, offTileset);
+            }
+        }
 
         if (m_Started)
         {

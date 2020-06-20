@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   confinerCollider: {fileID: 8684699649932694896}
+  cellType: 0
 --- !u!1 &4248069700281305185
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +476,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9200902955066221733}
     m_Modifications:
+    - target: {fileID: 7796949771813041592, guid: 4669a6b4aadd6e745b6e7ad86b969cdd,
+        type: 3}
+      propertyPath: newSceneName
+      value: SampleScene
+      objectReference: {fileID: 0}
     - target: {fileID: 7796949771813041598, guid: 4669a6b4aadd6e745b6e7ad86b969cdd,
         type: 3}
       propertyPath: m_Name

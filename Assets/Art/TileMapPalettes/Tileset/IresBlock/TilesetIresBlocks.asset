@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: TilesetIresBlocks
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: d3fc32aa5315c3247aae6bc04d621a72, type: 3}
+  - {fileID: 21300000, guid: 271ba2f69cec3774a81b0207283fc6ca, type: 3}
+  - {fileID: 21300000, guid: bd10d46574a971b41a3847897a56b9fc, type: 3}
+  - {fileID: 21300000, guid: af5b40c8d112fd84c8069529519ca76e, type: 3}
+  - {fileID: 21300000, guid: 1a4b726e8581c5f4fb61daa287c53882, type: 3}
+  - {fileID: 21300000, guid: 0fa694c16b57c974c8f81a9eaa4379d1, type: 3}
+  - {fileID: 21300000, guid: fb5fe034f775195409e604b74a30369a, type: 3}
+  m_MinSpeed: 1
+  m_MaxSpeed: 1
+  m_AnimationStartTime: 0
+  m_TileColliderType: 2

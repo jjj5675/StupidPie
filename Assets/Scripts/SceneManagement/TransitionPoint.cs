@@ -24,30 +24,44 @@ public class TransitionPoint : MonoBehaviour
     public CellController cellController;
     public ScreenManager screenManager;
 
-    int transitioningPresentCount = 0;
+    int m_TransitioningPresentCount = 0;
+    bool m_TransitioningPresent = false;
+
+
+    private void OnDisable()
+    {
+        if(m_TransitioningPresent)
+        {
+            m_TransitioningPresent = false;
+            publisher.GainOrReleaseControl(true);
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(publisher.ColliderHasObserver(collision))
         {
-            transitioningPresentCount++;
+            m_TransitioningPresentCount++;
         }
 
-        if(publisher.Observers.Count <= transitioningPresentCount && transitionWhen == TransitionWhen.OnTriggerEnter)
+        if(publisher.Observers.Count <= m_TransitioningPresentCount && transitionWhen == TransitionWhen.OnTriggerEnter)
         {
             cellController.SetCell(transitionCell, transitionDestinationTag);
             screenManager.autoCameraSetup.SwapVCam(cellController.CurrentCell.confinerCollider);
+            publisher.GainOrReleaseControl(false);
+            m_TransitioningPresent = true;
+
             TransitionInternal();
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (publisher.ColliderHasObserver(collision))
-        {
-            transitioningPresentCount--;
-        }
-    }
+    //void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (publisher.ColliderHasObserver(collision))
+    //    {
+    //        m_TransitioningPresentCount--;
+    //    }
+    //}
 
     void TransitionInternal()
     {

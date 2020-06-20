@@ -230,8 +230,8 @@ MonoBehaviour:
   overlapColliderMask:
     serializedVersion: 2
     m_Bits: 512
-  enabledSprite: {fileID: 21300000, guid: f33e92c0c9f35454a98c3638c78a56a4, type: 3}
-  disabledSprite: {fileID: 21300000, guid: d7991c7f57574484db04a02c78b97482, type: 3}
+  onTileset: {fileID: 11400000, guid: 85ef2960e3c65204daf6db5d72444fa4, type: 2}
+  offTileset: {fileID: 11400000, guid: 45914fb6b9734404ca280d68aced8ae3, type: 2}
 --- !u!68 &4933210301144644106
 EdgeCollider2D:
   m_ObjectHideFlags: 0

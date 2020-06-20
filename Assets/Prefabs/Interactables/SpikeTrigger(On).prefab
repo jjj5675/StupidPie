@@ -92,12 +92,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMovingAtStart: 1
   damager: {fileID: 2475415442362784098}
-  OnEabled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDisabled:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &8556814790524240268
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +182,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0926348891d08714aacf7dd1b6dfde18, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b2ded8788a919845b0fe1f574e05a59, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

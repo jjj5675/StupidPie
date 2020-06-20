@@ -18,6 +18,8 @@ public class AutoCameraSetup : MonoBehaviour
     const int m_DelayFrameCount = 1;
     int m_ActivationFrameCount = 0;
 
+    public bool CellChanging { get { return m_CellChanging; } }
+
     void Awake()
     {
         m_MainCinemachineConfiner = GetComponent<CinemachineConfiner>();

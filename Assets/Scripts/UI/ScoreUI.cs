@@ -20,6 +20,8 @@ public class ScoreUI : MonoBehaviour
         scoreText.text = "X " + count.ToString();
     }
 
-
-
+    public void TakeScore(SettleUI settle)
+    {
+        settle.scoreText.text += scoreText.text.Substring(2, 1);
+    }
 }

@@ -15,6 +15,7 @@ public class SpikeTrigger : Platform
     protected Animator m_Animator;
     protected readonly int m_HashTriggerEnablePara = Animator.StringToHash("TriggerEnable");
     protected readonly int m_HashTriggerDisablePara = Animator.StringToHash("TriggerDisable");
+    protected int m_PlayerLayerIndex;
 
     public bool ChangeOnce { get; set; } = false;
 
@@ -22,6 +23,7 @@ public class SpikeTrigger : Platform
     {
         m_Box = GetComponent<BoxCollider2D>();
         m_Animator = GetComponentInChildren<Animator>();
+        m_PlayerLayerIndex = LayerMask.NameToLayer("Player");
     }
 
     protected override void Initialise()
@@ -158,17 +160,20 @@ public class SpikeTrigger : Platform
             return;
         }
 
-        if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        if (collider.gameObject.layer == m_PlayerLayerIndex)
         {
-            m_CurrentTriggerState = TriggerState.ENTER;
+            if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+            {
+                m_CurrentTriggerState = TriggerState.ENTER;
 
-            if (m_Started)
-            {
-                DisableOverlapDamagers(true);
-            }
-            else
-            {
-                EnableOverlapDamagers(true);
+                if (m_Started)
+                {
+                    DisableOverlapDamagers(true);
+                }
+                else
+                {
+                    EnableOverlapDamagers(true);
+                }
             }
         }
     }
@@ -181,21 +186,24 @@ public class SpikeTrigger : Platform
             return;
         }
 
-        if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        if (collider.gameObject.layer == m_PlayerLayerIndex)
         {
-            m_CurrentTriggerState = TriggerState.EXIT;
-
-            if (Resettable)
+            if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
             {
-                ChangeOnce = false;
+                m_CurrentTriggerState = TriggerState.EXIT;
 
-                if (m_Started)
+                if (Resettable)
                 {
-                    EnableOverlapDamagers(false, false);
-                }
-                else
-                {
-                    DisableOverlapDamagers(false, false);
+                    ChangeOnce = false;
+
+                    if (m_Started)
+                    {
+                        EnableOverlapDamagers(false, false);
+                    }
+                    else
+                    {
+                        DisableOverlapDamagers(false, false);
+                    }
                 }
             }
         }

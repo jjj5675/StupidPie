@@ -28,6 +28,11 @@ public class TimerUI : MonoBehaviour
         m_Timeable = true;
     }
 
+    public void TakeTimerInfo(SettleUI settle)
+    {
+        settle.timerText.text += minuteAndSecondsText.text + milliSecondsText.text;
+    }
+
     // Update is called once per frame
     void Update()
     {
