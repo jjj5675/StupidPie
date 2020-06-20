@@ -56,9 +56,18 @@ public class SceneController : MonoBehaviour
 
     void Start()
     {
-        cellController.SetCell(rootCell, initalCellTransitionDestinationTag);
-        screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
-        publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
+        if (cellController)
+        {
+            cellController.SetCell(rootCell, initalCellTransitionDestinationTag);
+        }
+        if (screenManager)
+        {
+            screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
+        }
+        if (publisher)
+        {
+            publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
+        }
     }
 
     public void UnPause(bool inputControl)
@@ -86,7 +95,7 @@ public class SceneController : MonoBehaviour
     {
         timerUI.StopTimer();
         publisher.SetAnimState(false, true);
-        StartCoroutine(Transition(true, false, cellController.LastEnteringDestination));
+        StartCoroutine(InTransition(true, false, cellController.LastEnteringDestination));
     }
 
     public void Regame()
@@ -94,11 +103,39 @@ public class SceneController : MonoBehaviour
         timerUI.StopTimer();
         publisher.SetAnimState(false, true);
         rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
-        StartCoroutine(Transition(true, true, cellTransitionDestination));
+        StartCoroutine(InTransition(true, true, cellTransitionDestination));
     }
 
+    public void TransitionToScene(TransitionPoint transitionPoint)
+    {
+        StartCoroutine(Transition(transitionPoint.newSceneName, CellTransitionDestination.DestinationTag.A));
+    }
 
-    private IEnumerator Transition(bool fade, bool cameraSetting, CellTransitionDestination entrance)
+    private IEnumerator Transition(string newSceneName, CellTransitionDestination.DestinationTag destinationTag, TransitionPoint.TransitionType transitionType = TransitionPoint.TransitionType.DifferentZone)
+    {
+        m_Transitioning = true;
+
+        yield return StartCoroutine(ScreenFader.FadeSceneOut(ScreenFader.FadeType.Black));
+        yield return SceneManager.LoadSceneAsync(newSceneName);
+
+        publisher = FindObjectOfType<Publisher>();
+        cellController = FindObjectOfType<CellController>();
+        screenManager = FindObjectOfType<ScreenManager>();
+        timerUI = FindObjectOfType<TimerUI>();
+
+        publisher.GainOrReleaseControl(false);
+        cellController.GetRootCell(out rootCell);
+        cellController.SetCell(rootCell, destinationTag);
+        publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
+        screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
+
+        yield return StartCoroutine(ScreenFader.FadeSceneIn());
+
+        publisher.GainOrReleaseControl(true);
+        m_Transitioning = false;
+    }
+
+    private IEnumerator InTransition(bool fade, bool cameraSetting, CellTransitionDestination entrance)
     {
         m_Transitioning = true;
         publisher.GainOrReleaseControl(false);

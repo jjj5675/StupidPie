@@ -92,8 +92,6 @@ public class PlayerBehaviour : MonoBehaviour
         m_OriginallyGravity = m_CurrentGravity;
         m_JumpVelocity = Mathf.Abs(m_CurrentGravity) * timeToJumpApex;
 
-        Debug.Log(gameObject.name + ": " + m_JumpVelocity);
-
         m_OriginallyAirborneAccelProp = airborneAccelProportion;
 
         m_TimeToLeapHeight = -wallLeapVelocity.y / m_CurrentGravity;
@@ -131,7 +129,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(m_MoveVector.y);
         dataBase.character.Move(m_MoveVector * Time.deltaTime);
         dataBase.animator.SetFloat(m_HashHorizontalPara, m_MoveVector.x);
         dataBase.animator.SetFloat(m_HashVerticalPara, m_MoveVector.y);

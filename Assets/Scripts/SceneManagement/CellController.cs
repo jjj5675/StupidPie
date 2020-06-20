@@ -48,6 +48,21 @@ public class CellController : MonoBehaviour
         m_CurrentCell.GetCellDestination(destinationTag, out m_LastEnteringDestination);
     }
 
+    public void GetRootCell(out Cell cell)
+    {
+        foreach(var item in m_CellCache)
+        {
+            if(item.cellType == Cell.CellType.ROOT)
+            {
+                cell = item;
+                return;
+            }
+        }
+
+        Debug.LogError("Root Cell이 없습니다.");
+        cell = null;
+    }
+
     public void DisablePreviousCell()
     {
         if (m_PreviousCell != null)

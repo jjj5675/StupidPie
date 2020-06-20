@@ -13,6 +13,8 @@ public class TransitionPoint : MonoBehaviour
         ExternalCall, InteractPressed, OnTriggerEnter
     }
 
+    [SceneName]
+    public string newSceneName;
     public TransitionType transitionType;
     public Cell transitionCell;
     public CellTransitionDestination.DestinationTag transitionDestinationTag;

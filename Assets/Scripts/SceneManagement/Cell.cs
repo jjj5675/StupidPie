@@ -2,9 +2,15 @@
 
 public class Cell : MonoBehaviour
 {
+    public enum CellType
+    {
+        NONE, ROOT, END
+    }
+
     [HideInInspector]
     public CellTransitionDestination[] cellTransitionDestinations = new CellTransitionDestination[7];
     public CompositeCollider2D confinerCollider;
+    public CellType cellType;
 
     protected Platform[] m_PlatformCache;
     protected ScorePickup[] m_ScorePickups;
@@ -34,6 +40,7 @@ public class Cell : MonoBehaviour
         cellTransitionDestination = null;
         Debug.LogError("해당 목적지가 현재 셀에 없습니다");
     }
+
 
     public void ResetCell(bool transition)
     {
