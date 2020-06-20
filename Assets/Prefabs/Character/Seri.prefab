@@ -384,6 +384,7 @@ MonoBehaviour:
   maxSlidingSpeed: 20
   slidingSpeedDecelProportion: 0.5
   spriteOriginallyFacesRight: 1
+  maxIdleDuration: 5
   footstepAudioPlayer: {fileID: 6508672889826544097}
   jumpAudioPlayer: {fileID: 5984608767778701181}
   wallSlidingAudioPlayer: {fileID: 283536652486144795}

@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Data;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController2D))]
@@ -32,6 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
     [Range(0f, 1f)] public float slidingSpeedDecelProportion;
 
     public bool spriteOriginallyFacesRight;
+    public float maxIdleDuration;
 
     public RandomAudioPlayer footstepAudioPlayer;
     public RandomAudioPlayer jumpAudioPlayer;
@@ -59,6 +60,8 @@ public class PlayerBehaviour : MonoBehaviour
     private WaitForSeconds m_WallLeapingEndWait;
     private Coroutine m_WallLeapCoroutine;
     private Coroutine m_JumpPadCoroutine;
+    private float m_IdleElapsedTime;
+    private Action m_HackAction;
 
     private readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private readonly int m_HashDashingPara = Animator.StringToHash("Dashing");
@@ -68,6 +71,8 @@ public class PlayerBehaviour : MonoBehaviour
     private readonly int m_HashDeadPara = Animator.StringToHash("Dead");
     private readonly int m_HashHorizontalPara = Animator.StringToHash("Horizontal");
     private readonly int m_HashVerticalPara = Animator.StringToHash("Vertical");
+    private readonly int m_HashBoringPara = Animator.StringToHash("Boring");
+    private readonly int m_HashInteractPara = Animator.StringToHash("Interact");
 
     private const float m_GroundedStickingVelocityModifier = 10f;
 
@@ -92,9 +97,9 @@ public class PlayerBehaviour : MonoBehaviour
         m_OriginallyGravity = m_CurrentGravity;
         m_JumpVelocity = Mathf.Abs(m_CurrentGravity) * timeToJumpApex;
 
+        m_TimeToLeapHeight = -wallLeapVelocity.y / m_CurrentGravity;
         m_OriginallyAirborneAccelProp = airborneAccelProportion;
 
-        m_TimeToLeapHeight = -wallLeapVelocity.y / m_CurrentGravity;
 
         m_DashDeceleration = (2 * dashDistance) / Mathf.Pow(timeToDashPoint, 2);
         m_DashVelocity = m_DashDeceleration * timeToDashPoint;
@@ -104,11 +109,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
-        if(dataBase.playerInput.Pause.Down)
+        if (dataBase.playerInput.Pause.Down)
         {
-            if(!m_InPause)
+            if (!m_InPause)
             {
-                if(ScreenFader.IsFading)
+                if (ScreenFader.IsFading)
                 {
                     return;
                 }
@@ -121,7 +126,7 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
 
-        if(m_InPause && Time.timeScale == 1)
+        if (m_InPause && Time.timeScale == 1)
         {
             m_InPause = false;
         }
@@ -167,6 +172,53 @@ public class PlayerBehaviour : MonoBehaviour
         //{
         //    m_MoveVector.x = (m_CharacterController2D.sideRaycastDistance + m_Box.size.x * 0.5f) * PlayerInput.Instance.Horizontal.Value;
         //}
+    }
+
+    public void OnHack(bool facing, Action action)
+    {
+        dataBase.animator.SetTrigger(m_HashInteractPara);
+        UpdateFacing(facing);
+
+        m_HackAction = action;
+    }
+
+    public void ClearHack()
+    {
+        m_HackAction.Invoke();
+    }
+
+    public void CheckForIdleElapsed()
+    {
+        Vector2 v = dataBase.playerInput.AxisInputsValue();
+        m_IdleElapsedTime += Time.deltaTime;
+
+        if (v.x != 0 || v.y != 0 || dataBase.playerInput.Jump.Down)
+        {
+            m_IdleElapsedTime = 0;
+            return;
+        }
+
+        if (m_IdleElapsedTime > maxIdleDuration)
+        {
+            dataBase.animator.SetBool(m_HashBoringPara, true);
+        }
+    }
+
+    public void CheckForBoring()
+    {
+        Vector2 v = dataBase.playerInput.AxisInputsValue();
+
+        if (v.x != 0 || v.y != 0 || dataBase.playerInput.Jump.Down)
+        {
+            m_IdleElapsedTime = 0;
+            dataBase.animator.SetBool(m_HashBoringPara, false);
+        }
+    }
+
+    public void StopBoring()
+    {
+        m_IdleElapsedTime = 0;
+        dataBase.animator.SetBool(m_HashBoringPara, false);
     }
 
     public void PlayFootstep()
@@ -405,7 +457,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void CheckForGrabbingWall()
     {
-        if(dataBase.character.collisionFlags.hitCount != 3)
+        if (dataBase.character.collisionFlags.hitCount != 3)
         {
             dataBase.animator.SetBool(m_HashGrabbingPara, false);
             return;

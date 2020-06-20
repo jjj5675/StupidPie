@@ -34,6 +34,7 @@ public class PlayerBehaviourEditor : Editor
     SerializedProperty m_WallSlidingAudioPlayerProp;
 
     SerializedProperty m_SpriteOriginallyFacesRightProp;
+    SerializedProperty m_MaxIdleDurationProp;
 
     bool m_ReferencesFoldout;
     bool m_MovementSettingsFoldout;
@@ -74,6 +75,7 @@ public class PlayerBehaviourEditor : Editor
     readonly GUIContent m_WallSlidingAudioPlayerContent = new GUIContent("Wall Sliding Audio Player");
 
     readonly GUIContent m_SpriteOriginallyRightLeftContent = new GUIContent("Sprite Originally Faces Right");
+    readonly GUIContent m_MaxIdleDurationContent = new GUIContent("Max Idle Duration");
 
     readonly GUIContent m_ReferencesContent = new GUIContent("References");
     readonly GUIContent m_MovementSettingsContent = new GUIContent("Movement Settings");
@@ -115,6 +117,7 @@ public class PlayerBehaviourEditor : Editor
         m_WallSlidingAudioPlayerProp = serializedObject.FindProperty("wallSlidingAudioPlayer");
 
         m_SpriteOriginallyFacesRightProp = serializedObject.FindProperty("spriteOriginallyFacesRight");
+        m_MaxIdleDurationProp = serializedObject.FindProperty("maxIdleDuration");
     }
 
     public override void OnInspectorGUI()
@@ -256,6 +259,7 @@ public class PlayerBehaviourEditor : Editor
         if (m_MiscSettingsFoldout)
         {
             EditorGUILayout.PropertyField(m_SpriteOriginallyFacesRightProp, m_SpriteOriginallyRightLeftContent);
+            EditorGUILayout.PropertyField(m_MaxIdleDurationProp, m_MaxIdleDurationContent);
         }
 
         EditorGUI.indentLevel--;
