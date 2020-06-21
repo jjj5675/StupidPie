@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
@@ -193,11 +194,11 @@ imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMax.x, imageTable
 
     void Exit()
     {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
-        Application.Qait();
-#endif
+//#if UNITY_EDITOR
+//        EditorApplication.isPlaying = false;
+//#else
+//        Application.Qait();
+//#endif
     }
 
 }

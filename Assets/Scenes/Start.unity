@@ -758,6 +758,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1702509659}
     m_Modifications:
+    - target: {fileID: 4090654735733443192, guid: 78d10ebb36c32244892508a812b2c451,
+        type: 3}
+      propertyPath: writeDelay
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 9204529587148057729, guid: 78d10ebb36c32244892508a812b2c451,
         type: 3}
       propertyPath: m_Name
