@@ -355,10 +355,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 2dd74cd654c4a174ebc2744210903f44, type: 3}
-  - {fileID: 8300000, guid: 26889f502910b1f498c6443641a2ddcf, type: 3}
-  - {fileID: 8300000, guid: ba24a744daab34646901275a7ec4a93a, type: 3}
-  - {fileID: 8300000, guid: 3f39758a298f85d448ea387513a11a38, type: 3}
-  - {fileID: 8300000, guid: 3c0c752a46d12aa4c917456e259fa0f7, type: 3}
+  - {fileID: 8300000, guid: 58d71afbcec1e9e4a884c21936071f43, type: 3}
   randomizePitch: 1
   pitchRange: 0.3

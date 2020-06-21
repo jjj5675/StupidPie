@@ -51,7 +51,7 @@ Tilemap:
   m_TileMatrixArray: []
   m_TileColorArray: []
   m_TileObjectToInstantiateArray: []
-  m_AnimationFrameRate: 1
+  m_AnimationFrameRate: 12
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
   m_Size: {x: 0, y: 0, z: 1}
@@ -194,4 +194,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f20956d15be0cb419e35d076905f4a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionDistance: 2
+  transitionDistance: 1.525
