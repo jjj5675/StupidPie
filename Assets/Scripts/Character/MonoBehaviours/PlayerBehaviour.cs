@@ -179,10 +179,7 @@ public class PlayerBehaviour : MonoBehaviour
         dataBase.animator.SetBool(m_HashInteractPara, true);
         UpdateFacing(facing);
 
-        if (m_HackController == null)
-        {
-            m_HackController = action;
-        }
+        m_HackController = action;
     }
 
     public void MachineOperate()
