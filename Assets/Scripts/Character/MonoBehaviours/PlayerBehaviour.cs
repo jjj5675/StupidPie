@@ -61,7 +61,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Coroutine m_WallLeapCoroutine;
     private Coroutine m_JumpPadCoroutine;
     private float m_IdleElapsedTime;
-    private Action m_HackAction;
+    private Action m_HackController;
 
     private readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private readonly int m_HashDashingPara = Animator.StringToHash("Dashing");
@@ -176,15 +176,19 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void OnHack(bool facing, Action action)
     {
-        dataBase.animator.SetTrigger(m_HashInteractPara);
+        dataBase.animator.SetBool(m_HashInteractPara, true);
         UpdateFacing(facing);
 
-        m_HackAction = action;
+        if (m_HackController == null)
+        {
+            m_HackController = action;
+        }
     }
 
-    public void ClearHack()
+    public void MachineOperate()
     {
-        m_HackAction.Invoke();
+        dataBase.animator.SetBool(m_HashInteractPara, false);
+        m_HackController.Invoke();
     }
 
     public void CheckForIdleElapsed()

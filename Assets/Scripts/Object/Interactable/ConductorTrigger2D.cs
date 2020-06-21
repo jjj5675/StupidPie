@@ -5,13 +5,13 @@ using UnityEngine.Events;
 public class ConductorTrigger2D : Platform
 {
     public GameObject wireTilemap;
-    public bool spriteOriginallyFacesRight;
     public Transform facingLeftHackingPoint;
     public Transform facingRightHackingPoint;
 
     public UnityEvent OnEnabled;
     public UnityEvent OnDisabled;
 
+    bool m_SpriteOriginallyFacesRight;
     Animator m_Animator;
     Collider2D m_WireCollider;
     int m_PlayerLayerIndex;
@@ -20,7 +20,6 @@ public class ConductorTrigger2D : Platform
     ContactFilter2D m_ContactFilter = new ContactFilter2D();
     Dictionary<Collider2D, PlayerBehaviour> m_DataBaseCache;
     Dictionary<Collider2D, Platform> m_PlatformCache;
-    Animator m_PlayerAnim;
 
     readonly int m_HashOperatePara = Animator.StringToHash("Operate");
 
@@ -34,6 +33,11 @@ public class ConductorTrigger2D : Platform
         Physics2D.queriesStartInColliders = false;
         GetComponent<Collider2D>().isTrigger = true;
         m_Animator = GetComponentInChildren<Animator>();
+
+        if(!GetComponentInChildren<SpriteRenderer>().flipX)
+        {
+            m_SpriteOriginallyFacesRight = true;
+        }
     }
 
     protected override void Initialise()
@@ -75,27 +79,7 @@ public class ConductorTrigger2D : Platform
         System.Array.Clear(m_OverlapBuffer, 0, m_OverlapBuffer.Length);
     }
 
-    public void ConductorOperate()
-    {
-        if (!m_TriggerEnabled)
-        {
-            m_TriggerEnabled = true;
-            OnEnabled.Invoke();
-        }
-        else
-        {
-            m_TriggerEnabled = false;
-            OnDisabled.Invoke();
 
-            foreach (var platform in m_PlatformCache)
-            {
-                if (platform.Value)
-                {
-                    platform.Value.StopMoving();
-                }
-            }
-        }
-    }
 
     private void Update()
     {
@@ -148,49 +132,72 @@ public class ConductorTrigger2D : Platform
 
                 if (playerBehaviour.dataBase.playerInput.Interact.Down)
                 {
-                    //언제나 Gounded상태일때만 실행한다.
                     if (!playerBehaviour.dataBase.character.collisionFlags.IsGrounded)
                     {
                         return;
                     }
 
-                    Vector2 dx;
+                    if(playerBehaviour.dataBase.animator.GetBool("Interact"))
+                    {
+                        return;
+                    }
+
+                    Vector2 displecement;
                     bool facingLeft;
 
-                    if (spriteOriginallyFacesRight)
+                    if (m_SpriteOriginallyFacesRight)
                     {
-                        float diffX = facingRightHackingPoint.position.x - playerBehaviour.dataBase.character.Rigidbody2D.position.x;
-                        dx = Vector2.right * diffX;
+                        float diffX = facingRightHackingPoint.position.x - playerBehaviour.dataBase.transform.position.x;
+                        displecement = Vector2.right * diffX;
                         facingLeft = true;
                     }
                     else
                     {
-                        float diffX = facingLeftHackingPoint.position.x - playerBehaviour.dataBase.character.Rigidbody2D.position.x;
-                        dx = Vector2.right * diffX;
+                        float diffX = facingLeftHackingPoint.position.x - playerBehaviour.dataBase.transform.position.x;
+                        displecement = Vector2.right * diffX;
                         facingLeft = false;
                     }
 
-                    Vector2 velocity = dx / Time.deltaTime;
+                    Vector2 velocity = displecement / Time.deltaTime;
                     playerBehaviour.dataBase.character.Move(velocity * Time.deltaTime);
-                    ///////////////////////////////////////////////////////
 
-                    //상호작용시작
-                    playerBehaviour.OnHack(facingLeft, ConductorOperate);
+                    playerBehaviour.OnHack(facingLeft, ConductorController);
                     m_Animator.SetTrigger(m_HashOperatePara);
                 }
             }
         }
+    }
 
+    void ConductorController()
+    {
+        if (!m_TriggerEnabled)
+        {
+            m_TriggerEnabled = true;
+            OnEnabled.Invoke();
+        }
+        else
+        {
+            m_TriggerEnabled = false;
+            OnDisabled.Invoke();
+
+            foreach (var platform in m_PlatformCache)
+            {
+                if (platform.Value)
+                {
+                    platform.Value.StopMoving();
+                }
+            }
+        }
     }
 
     //UI말풍선 끄기
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (m_PlayerLayerIndex == collision.gameObject.layer)
-        {
+    //void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (m_PlayerLayerIndex == collision.gameObject.layer)
+    //    {
 
-        }
-    }
+    //    }
+    //}
 }
 
 

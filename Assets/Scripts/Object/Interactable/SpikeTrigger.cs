@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Damager))]
@@ -11,6 +12,7 @@ public class SpikeTrigger : Platform
 
     protected BoxCollider2D m_Box;
     protected SpikeTrigger[] m_SpikeTriggers;
+    protected List<SpikeTrigger> m_SameSpikes = new List<SpikeTrigger>();
     protected bool m_IgnoreTrigger = false;
     protected Animator m_Animator;
     protected readonly int m_HashTriggerEnablePara = Animator.StringToHash("TriggerEnable");
@@ -35,6 +37,14 @@ public class SpikeTrigger : Platform
 
         SearchOverlapPlatforms(m_Box, out m_SpikeTriggers, 30);
 
+        for(int i=0; i<m_SpikeTriggers.Length; i++)
+        {
+            if(m_SpikeTriggers[i].isMovingAtStart == isMovingAtStart)
+            {
+                m_SameSpikes.Add(m_SpikeTriggers[i]);
+            }
+        }
+
         if (isMovingAtStart)
         {
             m_Started = true;
@@ -53,17 +63,26 @@ public class SpikeTrigger : Platform
 
     public override void ResetPlatform()
     {
-        //m_Box.isTrigger = true;
-        //OnDisabled.Invoke();
+        //trigger enter이면서 exit가 아닐때
+        if(m_Started)
+        {
+            damager.EnableOnDamage();
+        }
+        else
+        {
+            damager.DisableOnDamage();
+        }
+
+        m_CurrentTriggerState = TriggerState.EXIT;
     }
 
     public bool Resettable
     {
         get
         {
-            for (int i = 0; i < m_SpikeTriggers.Length; i++)
+            foreach (var spike in m_SameSpikes)
             {
-                if (m_SpikeTriggers[i].m_CurrentTriggerState != TriggerState.EXIT)
+                if(spike.m_CurrentTriggerState != TriggerState.EXIT)
                 {
                     return false;
                 }
@@ -119,8 +138,15 @@ public class SpikeTrigger : Platform
                 //m_SpikeTriggers[i].OnDisabled.Invoke();
             }
 
+            if (m_SameSpikes.Contains(m_SpikeTriggers[i]))
+            {
+                m_SpikeTriggers[i].damager.EnableOnDamage();
+            }
+            else
+            {
+                m_SpikeTriggers[i].damager.DisableOnDamage();
+            }
 
-            m_SpikeTriggers[i].damager.EnableOnDamage();
             m_SpikeTriggers[i].ChangeOnce = change;
             m_SpikeTriggers[i].m_IgnoreTrigger = ignoreTrigger;
         }
@@ -146,7 +172,15 @@ public class SpikeTrigger : Platform
                 //m_SpikeTriggers[i].OnDisabled.Invoke();
             }
 
-            m_SpikeTriggers[i].damager.DisableOnDamage();
+            if(m_SameSpikes.Contains(m_SpikeTriggers[i]))
+            {
+                m_SpikeTriggers[i].damager.DisableOnDamage();
+            }
+            else
+            {
+                m_SpikeTriggers[i].damager.EnableOnDamage();
+            }
+
             m_SpikeTriggers[i].ChangeOnce = change;
             m_SpikeTriggers[i].m_IgnoreTrigger = ignoreTrigger;
         }

@@ -17,7 +17,7 @@ public class HackSMB : SceneLinkedSMB<PlayerBehaviour>
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        m_MonoBehaviour.ClearHack();
+        m_MonoBehaviour.MachineOperate();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
