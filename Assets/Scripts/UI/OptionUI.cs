@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class OptionUI : MonoBehaviour
 {
@@ -12,14 +13,16 @@ public class OptionUI : MonoBehaviour
     public class ImageTable
     {
         public RectTransform[] buttonImages;
+        [HideInInspector]
         public Dictionary<Image, SpriteRenderer[]> switchImagesDict;
         public bool isChangeSize;
     }
 
     public ImageTable[] imageTable;
+    //캔버스 개수
+    public GameObject[] canvases;
 
-    public Vector2 anchorMin;
-    public Vector2 anchorMax;
+    public Vector2 sizeDelta;
 
     //테이블 개수, 테이블의 이미지 갯수 (딕셔너리 키값)
     protected List<List<Image>> m_ButtonImages;
@@ -28,10 +31,13 @@ public class OptionUI : MonoBehaviour
     protected int m_CurrentTable = 0;
 
     //이미지 인덱스
-    protected int m_CurrentImages = 0;
-    protected int m_NextImages = 0;
+    protected int m_CurrentImage = 0;
+    protected int m_NextImage = 0;
 
-    protected Vector4 m_CurrentAnchor;
+    protected int m_ReturnImage = 0;
+
+    protected Vector2 m_CurrentSize;
+    protected Vector2 m_CurrentPosition;
 
     //off
     private readonly int m_OffImageIndex = 0;
@@ -47,7 +53,6 @@ public class OptionUI : MonoBehaviour
         {
             //메모리 할당
             imageTable[i].switchImagesDict = new Dictionary<Image, SpriteRenderer[]>();
-
 
             for (int k = 0; k < imageTable[i].buttonImages.Length; k++)
             {
@@ -66,50 +71,54 @@ public class OptionUI : MonoBehaviour
 
     void SetButtonImage()
     {
-        m_CurrentAnchor = new Vector4(
-imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMin.x, imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMin.y,
-imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMax.x, imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMax.y);
+        m_CurrentImage = 0;
+        m_NextImage = 0;
 
-        imageTable[m_CurrentTable].buttonImages[m_NextImages].anchorMin -= anchorMin;
-        imageTable[m_CurrentTable].buttonImages[m_NextImages].anchorMax += anchorMax;
+        if (imageTable[m_CurrentTable].isChangeSize)
+        {
+            //되돌릴때를 위해 처음 이미지의 Anchor값 저장 
+            m_CurrentSize = imageTable[m_CurrentTable].buttonImages[m_CurrentImage].sizeDelta;
+            m_CurrentPosition = imageTable[m_CurrentTable].buttonImages[m_CurrentImage].anchoredPosition;
 
-        imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImages], out SpriteRenderer[] valuse);
-        m_ButtonImages[m_CurrentTable][m_CurrentImages].color = valuse[m_ONImageIndex].color;
+            //현재 이미지의 Anchor 값 변경
+            imageTable[m_CurrentTable].buttonImages[m_NextImage].sizeDelta += sizeDelta;
+            imageTable[m_CurrentTable].buttonImages[m_NextImage].anchoredPosition += new Vector2(-(sizeDelta.x * 0.5f), 0);
+        }
+
+        //이미지 체인지 (활성화 ON)
+        imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage], out SpriteRenderer[] valuse);
+        m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuse[m_ONImageIndex].color;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (m_CurrentImages != 0)
+            if (m_CurrentImage != 0)
             {
-                m_NextImages--;
-
-                //if (m_CurrentCanvas == 4)
-                //{
-                //    m_NextCanvas -= 2;
-                //}
-                //else
-                //{
-                //    m_NextCanvas--;
-                //}
+                if (m_CurrentTable == 0 && m_CurrentImage == 4)
+                {
+                    m_NextImage -= 2;
+                }
+                else
+                {
+                    m_NextImage--;
+                }
             }
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             //현재 테이블 버튼갯수만큼
-            if (m_CurrentImages < imageTable[m_CurrentTable].buttonImages.Length - 1)
+            if (m_CurrentImage < imageTable[m_CurrentTable].buttonImages.Length - 1)
             {
-                m_NextImages++;
-
-                //if (m_CurrentCanvas == 2)
-                //{
-                //    m_NextCanvas += 2;
-                //}
-                //else
-                //{
-                //    m_NextCanvas++;
-                //}
+                if (m_CurrentTable == 0 && m_CurrentImage == 2)
+                {
+                    m_NextImage += 2;
+                }
+                else
+                {
+                    m_NextImage++;
+                }
             }
         }
         else if (Input.GetKeyDown(KeyCode.Return))
@@ -117,7 +126,7 @@ imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMax.x, imageTable
             // pause Canvas
             if (m_CurrentTable == 0)
             {
-                switch (m_CurrentImages)
+                switch (m_CurrentImage)
                 {
                     case 0:
                         Resume();
@@ -126,7 +135,7 @@ imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMax.x, imageTable
                         Restage();
                         break;
                     case 2:
-                        Regame();
+                        NextUIActivation(true);
                         break;
                     case 3:
                         Setting();
@@ -138,37 +147,55 @@ imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMax.x, imageTable
             }
             else
             {
-                // regame Canvas
+                switch (m_CurrentImage)
+                {
+                    case 0:
+                        Regame();
+                        break;
+                    default:
+                        NextUIActivation(false);
+                        break;
+                }
+
             }
         }
 
 
-        //이미지 변경하겠다면
-        if (imageTable[m_CurrentTable].isChangeSize)
+        if (m_CurrentImage != m_NextImage)
         {
-            if (m_CurrentImages != m_NextImages)
-            {
-                //SetAnchor();
-            }
+            SetAnchor();
         }
     }
 
-    //void SetAnchor()
-    //{
-    //    //Reset Canvas 
-    //    pauseCanvases[m_CurrentCanvas].anchorMin = new Vector2(m_CurrentAnchor.x, m_CurrentAnchor.y);
-    //    pauseCanvases[m_CurrentCanvas].anchorMax = new Vector2(m_CurrentAnchor.z, m_CurrentAnchor.w);
+    void SetAnchor()
+    {
+        //현재 이미지 변경 (비활성화 Off)
+        imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage], out SpriteRenderer[] valuse);
+        m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuse[m_OffImageIndex].color;
 
-    //    //Set Canvas
-    //    m_CurrentCanvas = m_NextCanvas;
+        //현재 이미지 변경 (활성화 On)
+        imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_NextImage], out valuse);
+        m_ButtonImages[m_CurrentTable][m_NextImage].color = valuse[m_ONImageIndex].color;
 
-    //    m_CurrentAnchor = new Vector4(
-    //    pauseCanvases[m_NextCanvas].anchorMin.x, pauseCanvases[m_NextCanvas].anchorMin.y,
-    //    pauseCanvases[m_NextCanvas].anchorMax.x, pauseCanvases[m_NextCanvas].anchorMax.y);
+        //이미지 크기 변경을 하겠다면 
+        if (imageTable[m_CurrentTable].isChangeSize)
+        {
+            //현재 테이블중 현재이미지의 Anchor 값 초기화(축소)
+            imageTable[m_CurrentTable].buttonImages[m_CurrentImage].sizeDelta = m_CurrentSize;
+            imageTable[m_CurrentTable].buttonImages[m_CurrentImage].anchoredPosition = m_CurrentPosition;
 
-    //    pauseCanvases[m_NextCanvas].anchorMin -= anchorMin;
-    //    pauseCanvases[m_NextCanvas].anchorMax += anchorMax;
-    //}
+            //현재 테이블중 다음 이미지의 Anchor 값 저장
+            m_CurrentSize = imageTable[m_CurrentTable].buttonImages[m_NextImage].sizeDelta;
+            m_CurrentPosition = imageTable[m_CurrentTable].buttonImages[m_NextImage].anchoredPosition;
+
+            //현재 테이블중 다음이미지의 Anchor값 변경 (확대)
+            imageTable[m_CurrentTable].buttonImages[m_NextImage].sizeDelta += sizeDelta;
+            imageTable[m_CurrentTable].buttonImages[m_NextImage].anchoredPosition += new Vector2(-(sizeDelta.x * 0.5f), 0);
+        }
+
+        //다음 이미지로 변경
+        m_CurrentImage = m_NextImage;
+    }
 
     void Resume()
     {
@@ -179,6 +206,65 @@ imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMax.x, imageTable
     {
         SceneController.Instance.UnPause(false);
         SceneController.Instance.Restage();
+    }
+
+    void NextUIActivation(bool nextActivate)
+    {
+        if (nextActivate)
+        {
+            if (m_CurrentTable + 1 < canvases.Length)
+            {
+                m_ReturnImage = m_CurrentImage;
+
+                //현재 이미지 off
+                imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage],
+                    out SpriteRenderer[] valuese);
+                m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuese[m_OffImageIndex].color;
+
+                //현재 테이블 비활성
+                canvases[m_CurrentTable].SetActive(false);
+
+                m_CurrentTable++;
+
+                //다음 테이블 활성
+                canvases[m_CurrentTable].SetActive(true);
+
+                m_CurrentImage = 0;
+                m_NextImage = 0;
+
+                //바뀐 테이블 이미지 활성화
+                imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage],
+    out valuese);
+                m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuese[m_ONImageIndex].color;
+
+            }
+        }
+        else
+        {
+            if (0 <= m_CurrentTable - 1)
+            {
+                //바뀐 테이블 이미지 활성화
+                imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage],
+    out SpriteRenderer[] valuese);
+                m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuese[m_OffImageIndex].color;
+
+                //현재 테이블 활성
+                canvases[m_CurrentTable].SetActive(false);
+
+                m_CurrentTable--;
+
+                //다음 테이블 비활성
+                canvases[m_CurrentTable].SetActive(true);
+
+                m_CurrentImage = m_ReturnImage;
+                m_NextImage = m_ReturnImage;
+
+                //돌아갈 이미지 On
+                imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_ReturnImage],
+                    out valuese);
+                m_ButtonImages[m_CurrentTable][m_ReturnImage].color = valuese[m_ONImageIndex].color;
+            }
+        }
     }
 
     void Regame()
@@ -194,11 +280,11 @@ imageTable[m_CurrentTable].buttonImages[m_CurrentImages].anchorMax.x, imageTable
 
     void Exit()
     {
-//#if UNITY_EDITOR
-//        EditorApplication.isPlaying = false;
-//#else
-//        Application.Qait();
-//#endif
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
 }
