@@ -62,6 +62,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Coroutine m_JumpPadCoroutine;
     private float m_IdleElapsedTime;
     private Action m_HackController;
+    private Vector2 m_FlashPoint;
 
     private readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private readonly int m_HashDashingPara = Animator.StringToHash("Dashing");
@@ -73,6 +74,7 @@ public class PlayerBehaviour : MonoBehaviour
     private readonly int m_HashVerticalPara = Animator.StringToHash("Vertical");
     private readonly int m_HashBoringPara = Animator.StringToHash("Boring");
     private readonly int m_HashInteractPara = Animator.StringToHash("Interact");
+    private readonly int m_HashElectricContactPara = Animator.StringToHash("ElectricContact");
 
     private const float m_GroundedStickingVelocityModifier = 10f;
 
@@ -150,7 +152,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void TeleportToColliderSide()
     {
         Vector2 directon = dataBase.character.Velocity.x < 0 ? Vector2.left : Vector2.right;
-        Vector2 colliderSide = dataBase.character.Rigidbody2D.position + dataBase.collider.offset 
+        Vector2 colliderSide = dataBase.character.Rigidbody2D.position + dataBase.collider.offset
             + directon * (dataBase.collider.bounds.size.x * 0.5f);
 
         dataBase.character.Teleport(colliderSide);
@@ -189,6 +191,23 @@ public class PlayerBehaviour : MonoBehaviour
         UpdateFacing(facing);
 
         m_HackController = action;
+    }
+
+    public void OnFlash(Vector2 position)
+    {
+        dataBase.animator.SetBool(m_HashElectricContactPara, true);
+        m_FlashPoint = position;
+    }
+
+    public void OnFlashMove()
+    {
+        dataBase.animator.SetBool(m_HashElectricContactPara, false);
+        dataBase.character.Move(m_FlashPoint);
+    }
+
+    public bool GetFlash()
+    {
+        return dataBase.animator.GetBool(m_HashElectricContactPara);
     }
 
     public void MachineOperate()
@@ -542,6 +561,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void WallLeapMovement()
     {
+        if (!dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.WALL_JUMP))
+        {
+            return;
+        }
+
         int wallDirection = dataBase.character.collisionFlags.IsLeftSide ? -1 : 1;
 
         if (dataBase.playerInput.Horizontal.Value == wallDirection)

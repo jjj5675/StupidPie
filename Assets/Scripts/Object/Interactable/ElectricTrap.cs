@@ -15,7 +15,7 @@ public class ElectricTrap : MonoBehaviour
     public float transitionDistance;
 
     int m_PlayerLayerIndex;
-    Dictionary<Collider2D, PlayerDataBase> m_DataBaseCache = new Dictionary<Collider2D, PlayerDataBase>(2);
+    Dictionary<Collider2D, PlayerBehaviour> m_DataBaseCache = new Dictionary<Collider2D, PlayerBehaviour>(2);
     Tilemap m_Tilemap;
 
     Vector2Int[] tileWay;
@@ -45,18 +45,23 @@ public class ElectricTrap : MonoBehaviour
         {
             if (!m_DataBaseCache.ContainsKey(collision))
             {
-                m_DataBaseCache.Add(collision, collision.gameObject.GetComponent<PlayerBehaviour>().dataBase);
+                m_DataBaseCache.Add(collision, collision.gameObject.GetComponent<PlayerBehaviour>());
             }
 
-            if (m_DataBaseCache.TryGetValue(collision, out PlayerDataBase dataBase))
+            if (m_DataBaseCache.TryGetValue(collision, out PlayerBehaviour  behaviour))
             {
-                if (!dataBase)
+                if (!behaviour)
                 {
                     return;
                 }
 
-                if (dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+                if (behaviour.dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
                 {
+                    if(behaviour.GetFlash())
+                    {
+                        return;
+                    }
+
                     Vector3Int localPosition = m_Tilemap.WorldToCell(collision.transform.position);
 
                     for (int i = 0; i < tileWay.Length; i++)
@@ -69,16 +74,18 @@ public class ElectricTrap : MonoBehaviour
                         if (m_Tilemap.HasTile(tilePosition))
                         {
                             Vector3 worldPosition = m_Tilemap.CellToWorld(tilePosition);
+                            Vector2 moveVector;
 
                             if (worldPosition.x < collision.transform.position.x)
                             {
-                                dataBase.character.Move(Vector2.left * transitionDistance);
+                                moveVector = Vector2.left * transitionDistance;
                             }
                             else
                             {
-                                dataBase.character.Move(Vector2.right * transitionDistance);
+                                moveVector = Vector2.right * transitionDistance;
                             }
 
+                            behaviour.OnFlash(moveVector);
                             break;
                         }
 
@@ -86,7 +93,7 @@ public class ElectricTrap : MonoBehaviour
                 }
                 else
                 {
-                    dataBase.damageable.TakeDamage(null);
+                    behaviour.dataBase.damageable.TakeDamage(null);
                 }
             }
         }
