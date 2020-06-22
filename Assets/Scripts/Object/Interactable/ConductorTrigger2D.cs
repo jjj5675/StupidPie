@@ -7,11 +7,13 @@ public class ConductorTrigger2D : Platform
     public GameObject wireTilemap;
     public Transform facingLeftHackingPoint;
     public Transform facingRightHackingPoint;
+    public bool m_SpriteOriginallyFacesRight;
 
     public UnityEvent OnEnabled;
     public UnityEvent OnDisabled;
+    public GameObject hologram;
 
-    bool m_SpriteOriginallyFacesRight;
+
     Animator m_Animator;
     Collider2D m_WireCollider;
     int m_PlayerLayerIndex;
@@ -32,11 +34,14 @@ public class ConductorTrigger2D : Platform
         m_ContactFilter.layerMask = 1 << LayerMask.NameToLayer("Platform");
         Physics2D.queriesStartInColliders = false;
         GetComponent<Collider2D>().isTrigger = true;
-        m_Animator = GetComponentInChildren<Animator>();
+        m_Animator = GetComponent<Animator>();
 
-        if(!GetComponentInChildren<SpriteRenderer>().flipX)
+        if (m_SpriteOriginallyFacesRight)
         {
-            m_SpriteOriginallyFacesRight = true;
+            transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
+            Vector3 temp = facingLeftHackingPoint.position;
+            facingLeftHackingPoint.position = facingRightHackingPoint.position;
+            facingRightHackingPoint.position = temp;
         }
     }
 
@@ -137,7 +142,7 @@ public class ConductorTrigger2D : Platform
                         return;
                     }
 
-                    if(playerBehaviour.dataBase.animator.GetBool("Interact"))
+                    if (playerBehaviour.dataBase.animator.GetBool("Interact"))
                     {
                         return;
                     }
@@ -162,10 +167,16 @@ public class ConductorTrigger2D : Platform
                     playerBehaviour.dataBase.character.Move(velocity * Time.deltaTime);
 
                     playerBehaviour.OnHack(facingLeft, ConductorController);
+                    m_Animator.enabled = true;
                     m_Animator.SetTrigger(m_HashOperatePara);
                 }
             }
         }
+    }
+
+    public void OnHologram()
+    {
+        hologram.SetActive(true);
     }
 
     void ConductorController()

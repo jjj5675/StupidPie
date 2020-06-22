@@ -147,6 +147,15 @@ public class PlayerBehaviour : MonoBehaviour
         dataBase.character.Teleport(colliderBottom);
     }
 
+    public void TeleportToColliderSide()
+    {
+        Vector2 directon = dataBase.character.Velocity.x < 0 ? Vector2.left : Vector2.right;
+        Vector2 colliderSide = dataBase.character.Rigidbody2D.position + dataBase.collider.offset 
+            + directon * (dataBase.collider.bounds.size.x * 0.5f);
+
+        dataBase.character.Teleport(colliderSide);
+    }
+
     public void SetMoveVector(Vector2 newMovement)
     {
         m_MoveVector = newMovement;
