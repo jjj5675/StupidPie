@@ -87,7 +87,7 @@ public class OptionUI : MonoBehaviour
 
         //이미지 체인지 (활성화 ON)
         imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage], out SpriteRenderer[] valuse);
-        m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuse[m_ONImageIndex].color;
+        m_ButtonImages[m_CurrentTable][m_CurrentImage].sprite = valuse[m_ONImageIndex].sprite;
     }
 
     private void Update()
@@ -171,11 +171,11 @@ public class OptionUI : MonoBehaviour
     {
         //현재 이미지 변경 (비활성화 Off)
         imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage], out SpriteRenderer[] valuse);
-        m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuse[m_OffImageIndex].color;
+        m_ButtonImages[m_CurrentTable][m_CurrentImage].sprite = valuse[m_OffImageIndex].sprite;
 
         //현재 이미지 변경 (활성화 On)
         imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_NextImage], out valuse);
-        m_ButtonImages[m_CurrentTable][m_NextImage].color = valuse[m_ONImageIndex].color;
+        m_ButtonImages[m_CurrentTable][m_NextImage].sprite = valuse[m_ONImageIndex].sprite;
 
         //이미지 크기 변경을 하겠다면 
         if (imageTable[m_CurrentTable].isChangeSize)
@@ -219,7 +219,7 @@ public class OptionUI : MonoBehaviour
                 //현재 이미지 off
                 imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage],
                     out SpriteRenderer[] valuese);
-                m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuese[m_OffImageIndex].color;
+                m_ButtonImages[m_CurrentTable][m_CurrentImage].sprite = valuese[m_OffImageIndex].sprite;
 
                 //현재 테이블 비활성
                 canvases[m_CurrentTable].SetActive(false);
@@ -235,7 +235,7 @@ public class OptionUI : MonoBehaviour
                 //바뀐 테이블 이미지 활성화
                 imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage],
     out valuese);
-                m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuese[m_ONImageIndex].color;
+                m_ButtonImages[m_CurrentTable][m_CurrentImage].sprite = valuese[m_ONImageIndex].sprite;
 
             }
         }
@@ -246,7 +246,7 @@ public class OptionUI : MonoBehaviour
                 //바뀐 테이블 이미지 활성화
                 imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_CurrentImage],
     out SpriteRenderer[] valuese);
-                m_ButtonImages[m_CurrentTable][m_CurrentImage].color = valuese[m_OffImageIndex].color;
+                m_ButtonImages[m_CurrentTable][m_CurrentImage].sprite = valuese[m_OffImageIndex].sprite;
 
                 //현재 테이블 활성
                 canvases[m_CurrentTable].SetActive(false);
@@ -262,7 +262,7 @@ public class OptionUI : MonoBehaviour
                 //돌아갈 이미지 On
                 imageTable[m_CurrentTable].switchImagesDict.TryGetValue(m_ButtonImages[m_CurrentTable][m_ReturnImage],
                     out valuese);
-                m_ButtonImages[m_CurrentTable][m_ReturnImage].color = valuese[m_ONImageIndex].color;
+                m_ButtonImages[m_CurrentTable][m_ReturnImage].sprite = valuese[m_ONImageIndex].sprite;
             }
         }
     }
