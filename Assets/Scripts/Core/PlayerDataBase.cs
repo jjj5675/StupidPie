@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DataBase", menuName = "Data/PlayerData", order = 1)]
 public class PlayerDataBase : ScriptableObject
 {
-    public enum AbilityType { NONE, DASH, INTERACTION }
+    public enum AbilityType { NONE, DASH, INTERACTION, WALL_JUMP}
 
     public List<AbilityType> abilityTypes;
     [HideInInspector]
