@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -43,16 +44,16 @@ public class FallingPlatform : Platform
         m_StartingPosition = transform.position;
 
         var rootObj = gameObject.scene.GetRootGameObjects();
-        foreach(var go in rootObj)
+        foreach (var go in rootObj)
         {
-            if(go.name.Equals("CellController"))
+            if (go.name.Equals("CellController"))
             {
                 confinerBoundsMinY = go.GetComponent<CellController>().CurrentCell.ConfinerBounds.min.y;
                 break;
             }
         }
 
-        if(confinerBoundsMinY == 0)
+        if (confinerBoundsMinY == 0)
         {
             Debug.LogError("셀 바운즈 설정 에러");
         }
@@ -66,7 +67,7 @@ public class FallingPlatform : Platform
 
     private void OnDisable()
     {
-        if(m_DamageableCache.Count != 0)
+        if (m_DamageableCache.Count != 0)
         {
             m_DamageableCache.Clear();
         }
@@ -145,13 +146,13 @@ public class FallingPlatform : Platform
 
                     if (m_Velocity.y <= 0f && middleHitHeight < colliderHeight + m_GroundRaycastDistance)
                     {
-                        if(!m_DamageableCache.ContainsKey(m_FoundHits[i].collider))
+                        if (!m_DamageableCache.ContainsKey(m_FoundHits[i].collider))
                         {
                             m_DamageableCache.Add(m_FoundHits[i].collider, m_FoundHits[i].collider.GetComponent<Damageable>());
                         }
                         else
                         {
-                            if(m_DamageableCache.TryGetValue(m_FoundHits[i].collider, out Damageable damageable))
+                            if (m_DamageableCache.TryGetValue(m_FoundHits[i].collider, out Damageable damageable))
                             {
                                 if (damageable)
                                 {
@@ -162,17 +163,30 @@ public class FallingPlatform : Platform
                             }
                         }
 
+                        //while
+
                         float distance = m_FoundHits[i].distance;
 
-                        if (distance < 0.2f)
+
+
+
+                        if (distance < speed * Time.deltaTime)
                         {
+                            float diffY = m_Rigidbody2D.position.y - m_FoundHits[i].point.y;
+
+                            //m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + ( Vector2.down * distance));
+                            m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + (Vector2.down * diffY * 0.5f));
+
                             groundHitAudioPlayer.PlayRandomSound();
+
                             m_CanFall = false;
                             return;
                         }
                     }
                 }
             }
+
+
         }
     }
 
