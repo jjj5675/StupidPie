@@ -6,6 +6,7 @@ public class DeadSMB : SceneLinkedSMB<PlayerBehaviour>
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         m_MonoBehaviour.SetMoveVector(Vector2.zero);
+        m_MonoBehaviour.CheckForHack();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

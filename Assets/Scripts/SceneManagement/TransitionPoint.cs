@@ -55,13 +55,13 @@ public class TransitionPoint : MonoBehaviour
         }
     }
 
-    //void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (publisher.ColliderHasObserver(collision))
-    //    {
-    //        m_TransitioningPresentCount--;
-    //    }
-    //}
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (publisher.ColliderHasObserver(collision))
+        {
+            m_TransitioningPresentCount--;
+        }
+    }
 
     void TransitionInternal()
     {

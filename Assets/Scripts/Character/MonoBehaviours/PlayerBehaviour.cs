@@ -187,6 +187,26 @@ public class PlayerBehaviour : MonoBehaviour
         //}
     }
 
+
+    public void OnFlash(Vector2 position)
+    {
+        dataBase.animator.SetBool(m_HashElectricContactPara, true);
+        m_FlashPoint = position;
+        dataBase.playerInput.ReleaseControl(true);
+    }
+
+    //animtion Clip
+    public void OnFlashMove()
+    {
+        dataBase.animator.SetBool(m_HashElectricContactPara, false);
+        dataBase.character.Move(m_FlashPoint);
+        dataBase.playerInput.GainControl();
+    }
+
+    public bool GetFlash()
+    {
+        return dataBase.animator.GetBool(m_HashElectricContactPara);
+    }
     public void OnHack(bool facing, Action action)
     {
         dataBase.animator.SetBool(m_HashInteractPara, true);
@@ -195,23 +215,8 @@ public class PlayerBehaviour : MonoBehaviour
         m_HackController = action;
     }
 
-    public void OnFlash(Vector2 position)
-    {
-        dataBase.animator.SetBool(m_HashElectricContactPara, true);
-        m_FlashPoint = position;
-    }
-
-    public void OnFlashMove()
-    {
-        dataBase.animator.SetBool(m_HashElectricContactPara, false);
-        dataBase.character.Move(m_FlashPoint);
-    }
-
-    public bool GetFlash()
-    {
-        return dataBase.animator.GetBool(m_HashElectricContactPara);
-    }
-
+    //실제 Exit가 끝났는지 여부는 판단 x 진입하면 바로 실행
+    //animation Clip
     public void MachineOperate()
     {
         dataBase.animator.SetBool(m_HashInteractPara, false);
@@ -614,6 +619,15 @@ public class PlayerBehaviour : MonoBehaviour
 
         dataBase.animator.SetTrigger(m_HashDeadPara);
         StartCoroutine(DieRespawnCoroutine());
+    }
+
+    //Flash때도 체크
+    public void CheckForHack()
+    {
+        if(dataBase.animator.GetBool(m_HashInteractPara))
+        {
+            dataBase.animator.SetBool(m_HashInteractPara, false);
+        }
     }
 
     // fadeduration * 2 < invulnerabilityDuration

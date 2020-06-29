@@ -6,28 +6,6 @@ public class PlayerController2D : CharacterController2D
 {
     public float sideRaycastDistance;
 
-    //public bool wallTest;
-
-    //protected Vector2 m_BoxOffset;
-
-
-    //public Vector2 BoxOffset { get { return m_BoxOffset; } }
-
-    //public void SetBoxOffset()
-    //{
-    //    m_BoxOffset = m_Box.offset;
-    //}
-
-    //public void UpdateBoxOffset(float sign)
-    //{
-    //    if (!Mathf.Approximately(sign, Mathf.Sign(m_BoxOffset.x)))
-    //    {
-    //        m_BoxOffset.x = Mathf.Abs(m_Box.offset.x) * sign;
-    //    }
-
-    //    m_BoxOffset.y = m_Box.offset.y;
-    //}
-
     public override void CheckBoxHeightCollisions(bool bottom = true)
     {
         base.CheckBoxHeightCollisions(bottom);
@@ -41,40 +19,6 @@ public class PlayerController2D : CharacterController2D
             }
         }
     }
-
-    //public void UpdateRaycasting2(Vector2[] positions, Vector2 direction, float distance, int raycastCount)
-    //{
-    //    m_FoundHitList.Clear();
-
-    //    for(int i=0; i<m_HitBuffer.Length; i++)
-    //    {
-    //        m_HitBuffer[i] = new RaycastHit2D();
-    //    }
-
-    //    float minHitDistance = float.MaxValue;
-
-    //    for (int i = 0; i < raycastCount; i++)
-    //    {
-    //        int count = Physics2D.Raycast(positions[i], direction, m_ContactFilter2D, m_HitBuffer, distance);
-    //        Debug.DrawRay(positions[i], direction * distance, Color.red);
-
-    //        if(wallTest && count == 0)
-    //        {
-    //            Debug.Log("");
-    //        }
-
-    //        if (count > 0)
-    //        {
-    //            m_FoundHitList.Add(m_HitBuffer[0]);
-
-    //            if (m_HitBuffer[0].distance < minHitDistance)
-    //            {
-    //                m_FirstHitIndex = m_FoundHitList.Count - 1;
-    //                minHitDistance = m_HitBuffer[0].distance;
-    //            }
-    //        }
-    //    }
-    //}
 
     public override void CheckBoxWidthCollisions()
     {

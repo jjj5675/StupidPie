@@ -20,13 +20,14 @@ public class StartUI : MonoBehaviour
         {
             if (!m_IsTransitioning)
             {
+                // 로그 종료
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     cutsceneDirector.Stop();
                     SceneController.Instance.TransitionToScene(transitionPoint);
                     m_IsTransitioning = true;
                 }
-                else if (Input.anyKeyDown)
+                else if (Input.anyKeyDown)  //다음 로그 이동
                 {
                     cutsceneDirector.Next();
                     if (cutsceneDirector.End)

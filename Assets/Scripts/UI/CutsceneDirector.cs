@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Linq;
 
 public class CutsceneDirector : MonoBehaviour
 {
@@ -64,6 +65,16 @@ public class CutsceneDirector : MonoBehaviour
         {
             return;
         }
+
+        //바로 넘기지 말고 일단 전부 보여주는 로직 추가
+        //아직 모든 텍스트를 출력하지 않았다.
+        if (writeText.text.Count() != clipTable.readTexts[m_CurrentTextCount].text.Count())
+        {
+            Stop();
+            writeText.text = clipTable.readTexts[m_CurrentTextCount].text;
+            return;
+        }
+
 
         //다음 Text를 가져온다.
         m_CurrentTextCount++;
