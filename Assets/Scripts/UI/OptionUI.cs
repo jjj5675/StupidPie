@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -23,6 +24,10 @@ public class OptionUI : MonoBehaviour
     public GameObject[] canvases;
 
     public Vector2 sizeDelta;
+
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI scoreText;
+
 
     //테이블 개수, 테이블의 이미지 갯수 (딕셔너리 키값)
     protected List<List<Image>> m_ButtonImages;
@@ -67,6 +72,9 @@ public class OptionUI : MonoBehaviour
     void Start()
     {
         SetButtonImage();
+
+        timerText.text = SceneController.Instance.menuActivityController.TimerUI.minuteAndSecondsText.text + SceneController.Instance.menuActivityController.TimerUI.milliSecondsText.text;
+        scoreText.text = Publisher.Instance.Observers[0].PlayerInfo.scoreable.scoreData.newScore.ToString();
     }
 
     void SetButtonImage()
