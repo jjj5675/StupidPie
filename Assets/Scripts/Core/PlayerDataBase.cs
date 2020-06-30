@@ -19,8 +19,10 @@ public class PlayerDataBase : ScriptableObject
     public Collider2D collider;
     [HideInInspector]
     public CharacterController2D character;
+    [HideInInspector]
+    public Scoreable scoreable;
 
-    public void SetDate(Transform transform, PlayerInput playerInput, Damageable damageable, Animator animator, Collider2D collider, CharacterController2D character)
+    public void SetDate(Transform transform, PlayerInput playerInput, Damageable damageable, Animator animator, Collider2D collider, CharacterController2D character, Scoreable scoreable)
     {
         this.transform = transform;
         this.playerInput = playerInput;
@@ -28,6 +30,7 @@ public class PlayerDataBase : ScriptableObject
         this.animator = animator;
         this.collider = collider;
         this.character = character;
+        this.scoreable = scoreable;
 
         if(abilityTypes.Contains(AbilityType.DASH))
         {

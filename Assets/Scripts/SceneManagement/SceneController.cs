@@ -37,8 +37,8 @@ public class SceneController : MonoBehaviour
     public Cell rootCell;
     public CellTransitionDestination.DestinationTag initalCellTransitionDestinationTag;
     public Publisher publisher;
-    public TimerUI timerUI;
     public ScreenManager screenManager;
+    public MenuActivityController menuActivityController;
 
     private Scene m_CurrentZoneScene;
     private bool m_Transitioning;
@@ -93,14 +93,14 @@ public class SceneController : MonoBehaviour
 
     public void Restage()
     {
-        timerUI.StopTimer();
+        menuActivityController.TimerUI.StopTimer();
         publisher.SetAnimState(false, true);
         StartCoroutine(InTransition(true, false, cellController.LastEnteringDestination));
     }
 
     public void Regame()
     {
-        timerUI.StopTimer();
+        menuActivityController.TimerUI.StopTimer();
         publisher.SetAnimState(false, true);
         rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
         StartCoroutine(InTransition(true, true, cellTransitionDestination));
@@ -121,7 +121,7 @@ public class SceneController : MonoBehaviour
         publisher = FindObjectOfType<Publisher>();
         cellController = FindObjectOfType<CellController>();
         screenManager = FindObjectOfType<ScreenManager>();
-        timerUI = FindObjectOfType<TimerUI>();
+        menuActivityController = FindObjectOfType<MenuActivityController>();
 
         publisher.GainOrReleaseControl(false);
         cellController.GetRootCell(out rootCell);
@@ -159,7 +159,7 @@ public class SceneController : MonoBehaviour
             screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
         }
 
-        timerUI.ResetTimer();
+        menuActivityController.TimerUI.ResetTimer();
 
         if (fade)
         {
@@ -167,7 +167,7 @@ public class SceneController : MonoBehaviour
         }
 
         publisher.GainOrReleaseControl(true);
-        timerUI.StartTimer();
+        menuActivityController.TimerUI.StartTimer();
         m_Transitioning = false;
     }
 }

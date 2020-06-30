@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 4717500339395800551}
   - component: {fileID: 4717500339395800550}
   - component: {fileID: 4717500339395800545}
+  - component: {fileID: 5113367450926263710}
   m_Layer: 9
   m_Name: Seri
   m_TagString: Player
@@ -472,6 +473,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5113367450926263710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717500339395800544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d07b91fc6d74884591132f708e2e1e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreData: {fileID: 11400000, guid: 1fe2a36bdf836dc429ab0a6daecf3850, type: 2}
+  OnScoreSet:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5892966237679560495
 GameObject:
   m_ObjectHideFlags: 0

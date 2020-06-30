@@ -9,26 +9,23 @@ public class ScorePickup : MonoBehaviour
     }
 
     public int scoreAmount = 1;
-    public ScoreData scoreData;
     public UnityEvent onGivingScore;
     public UnityEvent onEnableScore;
 
     [HideInInspector]
     public PickupState pickupState;
-    int m_PlayerLayerIndex;
 
     private void Start()
     {
-        m_PlayerLayerIndex = LayerMask.NameToLayer("Player");
         pickupState = PickupState.NOT_GAIN;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == m_PlayerLayerIndex)
+        if(Publisher.Instance.TryGetObserver(collision, out Observer observer))
         {
             pickupState = PickupState.GAIN;
-            scoreData.GainScore(scoreAmount);
+            observer.PlayerInfo.scoreable.GainScore(scoreAmount);
             onGivingScore.Invoke();
         }
     }
