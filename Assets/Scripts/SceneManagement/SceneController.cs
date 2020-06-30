@@ -78,7 +78,9 @@ public class SceneController : MonoBehaviour
         }
 
         StartCoroutine(UnpauseCoroutine(inputControl));
+        menuActivityController.SetActive(true);
     }
+
     IEnumerator UnpauseCoroutine(bool inputControl)
     {
         Time.timeScale = 1;
