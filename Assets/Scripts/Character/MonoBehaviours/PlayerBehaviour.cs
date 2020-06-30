@@ -98,8 +98,6 @@ public class PlayerBehaviour : MonoBehaviour
         m_OriginallyGravity = m_CurrentGravity;
         m_JumpVelocity = Mathf.Abs(m_CurrentGravity) * timeToJumpApex;
 
-        Debug.Log(m_JumpVelocity);
-
         m_TimeToLeapHeight = -wallLeapVelocity.y / m_CurrentGravity;
         m_OriginallyAirborneAccelProp = airborneAccelProportion;
 

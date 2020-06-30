@@ -31,7 +31,6 @@ public abstract class CharacterController2D : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_Box = GetComponent<BoxCollider2D>();
-
         m_CurrentPostion = m_Rigidbody2D.position;
         m_PreviousPosition = m_Rigidbody2D.position;
 
