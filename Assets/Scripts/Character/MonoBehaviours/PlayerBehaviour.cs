@@ -83,7 +83,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Awake()
     {
-        dataBase.SetDate(transform, GetComponent<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>());
+        dataBase.SetDate(transform, GetComponent<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>(), GetComponent<Scoreable>());
         m_Observer = new Observer(dataBase);
         m_Observer.Subscribe(publisher);
     }
@@ -490,6 +490,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         return spriteRenderer.flipX != spriteOriginallyFacesRight ? -1f : 1f;
     }
+
 
     public void CheckForGrabbingWall()
     {

@@ -486,6 +486,7 @@ GameObject:
   - component: {fileID: 7666998537461105928}
   - component: {fileID: 7666998537461105930}
   - component: {fileID: 7666998537461106163}
+  - component: {fileID: 1914034950512473281}
   m_Layer: 9
   m_Name: Ires
   m_TagString: Player
@@ -751,3 +752,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1914034950512473281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7666998537461105933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d07b91fc6d74884591132f708e2e1e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreData: {fileID: 11400000, guid: 1fe2a36bdf836dc429ab0a6daecf3850, type: 2}
+  OnScoreSet:
+    m_PersistentCalls:
+      m_Calls: []

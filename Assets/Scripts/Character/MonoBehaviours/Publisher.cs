@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class Publisher : MonoBehaviour
 {
+    static private Publisher s_Instance;
+
+    static public Publisher Instance { get { return s_Instance; } }
+
     private List<Observer> m_Observers;
 
     public List<Observer> Observers { get { return m_Observers; } }
@@ -10,6 +14,7 @@ public class Publisher : MonoBehaviour
     public Publisher()
     {
         m_Observers = new List<Observer>();
+        s_Instance = this;
     }
 
     public Observer.Unsubscriber Subscribe(Observer observer)
@@ -32,6 +37,21 @@ public class Publisher : MonoBehaviour
             }
         }
 
+        return false;
+    }
+
+    public bool TryGetObserver(Collider2D collider, out Observer observer)
+    {
+        foreach (var o in m_Observers)
+        {
+            if(o.PlayerInfo.collider == collider)
+            {
+                observer = o;
+                return true;
+            }
+        }
+
+        observer = null;
         return false;
     }
 

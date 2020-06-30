@@ -52,6 +52,8 @@ public class Cell : MonoBehaviour
             }
         }
 
+        Scoreable scoreable = Publisher.Instance.Observers[0].PlayerInfo.scoreable;
+
         for (int i = 0; i < m_ScorePickups.Length; i++)
         {
             if (m_ScorePickups[i] != null)
@@ -60,17 +62,25 @@ public class Cell : MonoBehaviour
                 {
                     if(transition)
                     {
-                        m_ScorePickups[i].scoreData.SaveData();
                         m_ScorePickups[i] = null;
                     }
                     else
                     {
                         m_ScorePickups[i].pickupState = ScorePickup.PickupState.NOT_GAIN;
                         m_ScorePickups[i].onEnableScore.Invoke();
-                        m_ScorePickups[i].scoreData.ResetData();
                     }
                 }
             }
         }
+
+        if(transition)
+        {
+            scoreable.SaveScore();  
+        }
+        else
+        {
+            scoreable.SetScore(scoreable.scoreData.savedScore);
+        }
+
     }
 }
