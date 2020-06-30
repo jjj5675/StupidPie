@@ -8,7 +8,6 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public PlayerDataBase dataBase;
     public CellController cellController;
-    public Publisher publisher;
     public SpriteRenderer spriteRenderer;
     public Dashable dashable;
 
@@ -85,7 +84,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         dataBase.SetDate(transform, GetComponent<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>(), GetComponent<Scoreable>());
         m_Observer = new Observer(dataBase);
-        m_Observer.Subscribe(publisher);
+        m_Observer.Subscribe(Publisher.Instance);
     }
 
     // Start is called before the first frame update
@@ -122,8 +121,8 @@ public class PlayerBehaviour : MonoBehaviour
                     return;
                 }
 
-                publisher.GainOrReleaseControl(false);
-                publisher.GainPause();
+                Publisher.Instance.GainOrReleaseControl(false);
+                Publisher.Instance.GainPause();
                 m_InPause = true;
                 Time.timeScale = 0;
                 UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("UIMenus", UnityEngine.SceneManagement.LoadSceneMode.Additive);
@@ -607,8 +606,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Respawn()
     {
-        publisher.SetAnimState(true, false);
-        publisher.SetObservers(true, true, cellController.LastEnteringDestination.locations);
+        Publisher.Instance.SetAnimState(true, false);
+        Publisher.Instance.SetObservers(true, true, cellController.LastEnteringDestination.locations);
         cellController.CurrentCell.ResetCell(false);
     }
 
@@ -635,13 +634,13 @@ public class PlayerBehaviour : MonoBehaviour
     // fadeduration * 2 < invulnerabilityDuration
     IEnumerator DieRespawnCoroutine()
     {
-        publisher.GainOrReleaseControl(false);
+        Publisher.Instance.GainOrReleaseControl(false);
         yield return new WaitForSeconds(1.0f);
         yield return StartCoroutine(ScreenFader.FadeSceneOut());
         Respawn();
         yield return new WaitForEndOfFrame();
         yield return StartCoroutine(ScreenFader.FadeSceneIn());
-        publisher.GainOrReleaseControl(true);
+        Publisher.Instance.GainOrReleaseControl(true);
     }
 
     public bool CheckForJumpPadCollisionEnter()
