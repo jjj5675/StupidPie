@@ -127,6 +127,7 @@ public class PlayerBehaviour : MonoBehaviour
                 m_InPause = true;
                 Time.timeScale = 0;
                 UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("UIMenus", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                SceneController.Instance.menuActivityController.SetActive(false);
             }
         }
 
