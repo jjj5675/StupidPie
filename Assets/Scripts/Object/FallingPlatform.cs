@@ -33,7 +33,7 @@ public class FallingPlatform : Platform
 
         m_GroundRaycastDistance = 0.00001f;
         m_RaycastDistance = m_Box.size.y * 0.5f + m_GroundRaycastDistance * 2f;
-        m_RaycastSize = new Vector2(m_Box.size.x * 0.5f, m_RaycastDistance);
+        m_RaycastSize = new Vector2(m_Box.size.x * 0.9f, m_RaycastDistance);
 
         if (platformCatcher == null)
         {
@@ -163,19 +163,13 @@ public class FallingPlatform : Platform
                             }
                         }
 
-                        //while
-
                         float distance = m_FoundHits[i].distance;
-
-
-
 
                         if (distance < speed * Time.deltaTime)
                         {
-                            float diffY = m_Rigidbody2D.position.y - m_FoundHits[i].point.y;
+                            float diffY = raycastStart.y - m_FoundHits[i].point.y;
 
-                            //m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + ( Vector2.down * distance));
-                            m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + (Vector2.down * diffY * 0.5f));
+                            m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + (Vector2.down * diffY));
 
                             groundHitAudioPlayer.PlayRandomSound();
 
