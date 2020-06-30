@@ -36,7 +36,6 @@ public class SceneController : MonoBehaviour
     public CellController cellController;
     public Cell rootCell;
     public CellTransitionDestination.DestinationTag initalCellTransitionDestinationTag;
-    public Publisher publisher;
     public ScreenManager screenManager;
     public MenuActivityController menuActivityController;
 
@@ -64,9 +63,9 @@ public class SceneController : MonoBehaviour
         {
             screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
         }
-        if (publisher)
+        if (Publisher.Instance)
         {
-            publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
+            Publisher.Instance.SetObservers(false, true, cellController.LastEnteringDestination.locations);
         }
     }
 
@@ -87,7 +86,7 @@ public class SceneController : MonoBehaviour
         SceneManager.UnloadSceneAsync("UIMenus");
         if (inputControl)
         {
-            publisher.GainOrReleaseControl(true);
+            Publisher.Instance.GainOrReleaseControl(true);
         }
         yield return new WaitForFixedUpdate();
         yield return new WaitForEndOfFrame();
@@ -96,14 +95,14 @@ public class SceneController : MonoBehaviour
     public void Restage()
     {
         menuActivityController.TimerUI.StopTimer();
-        publisher.SetAnimState(false, true);
+        Publisher.Instance.SetAnimState(false, true);
         StartCoroutine(InTransition(true, false, cellController.LastEnteringDestination));
     }
 
     public void Regame()
     {
         menuActivityController.TimerUI.StopTimer();
-        publisher.SetAnimState(false, true);
+        Publisher.Instance.SetAnimState(false, true);
         rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
         StartCoroutine(InTransition(true, true, cellTransitionDestination));
     }
@@ -120,35 +119,34 @@ public class SceneController : MonoBehaviour
         yield return StartCoroutine(ScreenFader.FadeSceneOut(ScreenFader.FadeType.Black));
         yield return SceneManager.LoadSceneAsync(newSceneName);
 
-        publisher = FindObjectOfType<Publisher>();
         cellController = FindObjectOfType<CellController>();
         screenManager = FindObjectOfType<ScreenManager>();
         menuActivityController = FindObjectOfType<MenuActivityController>();
 
-        publisher.GainOrReleaseControl(false);
+        Publisher.Instance.GainOrReleaseControl(false);
         cellController.GetRootCell(out rootCell);
         cellController.SetCell(rootCell, destinationTag);
-        publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
+        Publisher.Instance.SetObservers(false, true, cellController.LastEnteringDestination.locations);
         screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
 
         yield return StartCoroutine(ScreenFader.FadeSceneIn());
 
-        publisher.GainOrReleaseControl(true);
+        Publisher.Instance.GainOrReleaseControl(true);
         m_Transitioning = false;
     }
 
     private IEnumerator InTransition(bool fade, bool cameraSetting, CellTransitionDestination entrance)
     {
         m_Transitioning = true;
-        publisher.GainOrReleaseControl(false);
+        Publisher.Instance.GainOrReleaseControl(false);
 
         if (fade)
         {
             yield return ScreenFader.FadeSceneOut();
         }
 
-        publisher.SetAnimState(true, false);
-        publisher.SetObservers(true, true, entrance.locations);
+        Publisher.Instance.SetAnimState(true, false);
+        Publisher.Instance.SetObservers(true, true, entrance.locations);
         cellController.CurrentCell.ResetCell(false);
 
         if (cameraSetting)
@@ -168,7 +166,7 @@ public class SceneController : MonoBehaviour
             yield return ScreenFader.FadeSceneIn();
         }
 
-        publisher.GainOrReleaseControl(true);
+        Publisher.Instance.GainOrReleaseControl(true);
         menuActivityController.TimerUI.StartTimer();
         m_Transitioning = false;
     }

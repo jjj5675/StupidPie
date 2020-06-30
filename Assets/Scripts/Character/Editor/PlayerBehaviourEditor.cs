@@ -6,7 +6,6 @@ public class PlayerBehaviourEditor : Editor
 {
     SerializedProperty m_PlayerDataBaseProp;
     SerializedProperty m_CellControllerProp;
-    SerializedProperty m_PublisherProp;
     SerializedProperty m_SpriteRendererProp;
     SerializedProperty m_DashableProp;
 
@@ -46,7 +45,6 @@ public class PlayerBehaviourEditor : Editor
 
     readonly GUIContent m_PlayerDataBaseContent = new GUIContent("Player DataBase");
     readonly GUIContent m_CellControllerContent = new GUIContent("Cell Controller");
-    readonly GUIContent m_PublisherContent = new GUIContent("Publisher");
     readonly GUIContent m_SpriteRendererContent = new GUIContent("Sprite Renderer");
     readonly GUIContent m_DashableContent = new GUIContent("Dashable");
 
@@ -89,7 +87,6 @@ public class PlayerBehaviourEditor : Editor
     {
         m_PlayerDataBaseProp = serializedObject.FindProperty("dataBase");
         m_CellControllerProp = serializedObject.FindProperty("cellController");
-        m_PublisherProp = serializedObject.FindProperty("publisher");
         m_SpriteRendererProp = serializedObject.FindProperty("spriteRenderer");
         m_DashableProp = serializedObject.FindProperty("dashable");
 
@@ -146,7 +143,6 @@ public class PlayerBehaviourEditor : Editor
         {
             EditorGUILayout.PropertyField(m_PlayerDataBaseProp, m_PlayerDataBaseContent);
             EditorGUILayout.PropertyField(m_CellControllerProp, m_CellControllerContent);
-            EditorGUILayout.PropertyField(m_PublisherProp, m_PublisherContent);
             EditorGUILayout.PropertyField(m_SpriteRendererProp, m_SpriteRendererContent);
             EditorGUILayout.PropertyField(m_DashableProp, m_DashableContent);
         }

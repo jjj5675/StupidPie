@@ -18,7 +18,6 @@ public class TransitionPoint : MonoBehaviour
     public TransitionType transitionType;
     public Cell transitionCell;
     public CellTransitionDestination.DestinationTag transitionDestinationTag;
-    public Publisher publisher;
     public TransitionWhen transitionWhen;
     public bool resetInputValueOnTransition = true;
     public CellController cellController;
@@ -33,22 +32,22 @@ public class TransitionPoint : MonoBehaviour
         if(m_TransitioningPresent)
         {
             m_TransitioningPresent = false;
-            publisher.GainOrReleaseControl(true);
+            Publisher.Instance.GainOrReleaseControl(true);
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(publisher.ColliderHasObserver(collision))
+        if(Publisher.Instance.ColliderHasObserver(collision))
         {
             m_TransitioningPresentCount++;
         }
 
-        if(publisher.Observers.Count <= m_TransitioningPresentCount && transitionWhen == TransitionWhen.OnTriggerEnter)
+        if(Publisher.Instance.Observers.Count <= m_TransitioningPresentCount && transitionWhen == TransitionWhen.OnTriggerEnter)
         {
             cellController.SetCell(transitionCell, transitionDestinationTag);
             screenManager.autoCameraSetup.SwapVCam(cellController.CurrentCell.confinerCollider);
-            publisher.GainOrReleaseControl(false);
+            Publisher.Instance.GainOrReleaseControl(false);
             m_TransitioningPresent = true;
 
             TransitionInternal();
@@ -57,7 +56,7 @@ public class TransitionPoint : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (publisher.ColliderHasObserver(collision))
+        if (Publisher.Instance.ColliderHasObserver(collision))
         {
             m_TransitioningPresentCount--;
         }
@@ -67,7 +66,7 @@ public class TransitionPoint : MonoBehaviour
     {
         if(transitionType == TransitionType.SameScene)
         {
-            publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
+            Publisher.Instance.SetObservers(false, true, cellController.LastEnteringDestination.locations);
         }
     }
 }
