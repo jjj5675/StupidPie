@@ -12,10 +12,12 @@ public class TriggerPlatform : Platform
     protected ContactFilter2D m_OverlapCharacterContactFilter;
     protected SpikeTrigger[] m_SpikeTriggers;
     protected Tilemap m_Tilemap;
+    protected int m_PlayerLayerIndex;
 
     void Awake()
     {
         m_Tilemap = GetComponent<Tilemap>();
+        m_PlayerLayerIndex = LayerMask.NameToLayer("Player");
     }
 
     protected override void Initialise()
