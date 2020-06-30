@@ -17,13 +17,12 @@ public class FallingPlatform : Platform
     protected BoxCollider2D m_Box;
     protected float m_CurrentDuration = 0;
     protected Vector3 m_StartingPosition;
-    protected RaycastHit2D[] m_FoundHits;
+    protected RaycastHit2D[] m_FoundHits = new RaycastHit2D[10];
     protected Vector2 m_RaycastSize;
     protected float m_GroundRaycastDistance;
     protected float m_RaycastDistance;
     protected bool m_IsGrounded;
     protected float confinerBoundsMinY;
-    protected Dictionary<Collider2D, Damageable> m_DamageableCache;
 
     protected override void Initialise()
     {
@@ -59,19 +58,8 @@ public class FallingPlatform : Platform
         }
     }
 
-    private void OnEnable()
-    {
-        m_DamageableCache = new Dictionary<Collider2D, Damageable>(10);
-        m_FoundHits = new RaycastHit2D[10];
-    }
-
     private void OnDisable()
     {
-        if (m_DamageableCache.Count != 0)
-        {
-            m_DamageableCache.Clear();
-        }
-
         System.Array.Clear(m_FoundHits, 0, m_FoundHits.Length);
     }
 
@@ -88,6 +76,9 @@ public class FallingPlatform : Platform
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!isMovingAtStart)
+            return;
+
         if (!m_CanFall)
         {
             return;
@@ -146,21 +137,11 @@ public class FallingPlatform : Platform
 
                     if (m_Velocity.y <= 0f && middleHitHeight < colliderHeight + m_GroundRaycastDistance)
                     {
-                        if (!m_DamageableCache.ContainsKey(m_FoundHits[i].collider))
+                        if(Publisher.Instance.TryGetObserver(m_FoundHits[i].collider, out Observer observer))
                         {
-                            m_DamageableCache.Add(m_FoundHits[i].collider, m_FoundHits[i].collider.GetComponent<Damageable>());
-                        }
-                        else
-                        {
-                            if (m_DamageableCache.TryGetValue(m_FoundHits[i].collider, out Damageable damageable))
-                            {
-                                if (damageable)
-                                {
-                                    damageable.TakeDamage(null);
-                                    m_CanFall = false;
-                                    return;
-                                }
-                            }
+                            observer.PlayerInfo.damageable.TakeDamage(null);
+                            m_CanFall = false;
+                            return;
                         }
 
                         float distance = m_FoundHits[i].distance;

@@ -135,10 +135,15 @@ public class TriggerPlatform : Platform
     //ON -> OFF
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        if(!Publisher.Instance.TryGetObserver(collision.collider, out Observer observer))
         {
             return;
         }
+
+        if(!observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        {
+            return;
+        }    
 
         if (!m_Started)
         {
@@ -150,7 +155,12 @@ public class TriggerPlatform : Platform
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (!collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        if (!Publisher.Instance.TryGetObserver(collider, out Observer observer))
+        {
+            return;
+        }
+
+        if (!observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
         {
             return;
         }
@@ -168,7 +178,12 @@ public class TriggerPlatform : Platform
     //OFF -> ON
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (!collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        if (!Publisher.Instance.TryGetObserver(collider, out Observer observer))
+        {
+            return;
+        }
+
+        if (!observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
         {
             return;
         }
@@ -185,10 +200,15 @@ public class TriggerPlatform : Platform
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (!collision.gameObject.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        if(!Publisher.Instance.TryGetObserver(collision.collider, out Observer observer))
         {
             return;
         }
+
+        if(!observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        {
+            return;
+        }   
 
         if (m_Started)
         {

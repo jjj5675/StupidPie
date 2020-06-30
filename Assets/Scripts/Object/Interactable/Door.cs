@@ -11,8 +11,6 @@ public class Door : MonoBehaviour
     ContactFilter2D m_ContactFilter = new ContactFilter2D();
     Collider2D[] m_OverlapBuffer = new Collider2D[5];
 
-    Dictionary<Collider2D, PlayerDataBase> m_DataBaseCache = new Dictionary<Collider2D, PlayerDataBase>(2);
-
     protected readonly int m_HashOpenPara = Animator.StringToHash("Opened");
     protected readonly int m_HashClosePara = Animator.StringToHash("Closed");
 
@@ -73,19 +71,9 @@ public class Door : MonoBehaviour
 
             for (int i = 0; i < count; i++)
             {
-                if (!m_DataBaseCache.ContainsKey(m_OverlapBuffer[i]))
+                if(Publisher.Instance.TryGetObserver(m_OverlapBuffer[i], out Observer observer))
                 {
-                    m_DataBaseCache.Add(m_OverlapBuffer[i], m_OverlapBuffer[i].GetComponent<PlayerBehaviour>().dataBase);
-                }
-
-                if (m_DataBaseCache.TryGetValue(m_OverlapBuffer[i], out PlayerDataBase dataBase))
-                {
-                    if (!dataBase)
-                    {
-                        return;
-                    }
-
-                    dataBase.damageable.TakeDamage(null);
+                    observer.PlayerInfo.damageable.TakeDamage(null);
                 }
             }
 

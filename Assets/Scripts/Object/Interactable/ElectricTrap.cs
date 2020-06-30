@@ -14,7 +14,6 @@ public class ElectricTrap : MonoBehaviour
 
     public float transitionDistance;
 
-    int m_PlayerLayerIndex;
     Dictionary<Collider2D, PlayerBehaviour> m_DataBaseCache = new Dictionary<Collider2D, PlayerBehaviour>(2);
     Tilemap m_Tilemap;
 
@@ -22,7 +21,6 @@ public class ElectricTrap : MonoBehaviour
 
     private void Awake()
     {
-        m_PlayerLayerIndex = LayerMask.NameToLayer("Player");
         GetComponent<CompositeCollider2D>().isTrigger = true;
         m_Tilemap = GetComponent<Tilemap>();
 
@@ -41,14 +39,14 @@ public class ElectricTrap : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (m_PlayerLayerIndex == collision.gameObject.layer)
+        if (Publisher.Instance.ColliderHasObserver(collision))
         {
             if (!m_DataBaseCache.ContainsKey(collision))
             {
                 m_DataBaseCache.Add(collision, collision.gameObject.GetComponent<PlayerBehaviour>());
             }
 
-            if (m_DataBaseCache.TryGetValue(collision, out PlayerBehaviour  behaviour))
+            if (m_DataBaseCache.TryGetValue(collision, out PlayerBehaviour behaviour))
             {
                 if (!behaviour)
                 {

@@ -17,7 +17,6 @@ public class SpikeTrigger : Platform
     protected Animator m_Animator;
     protected readonly int m_HashTriggerEnablePara = Animator.StringToHash("TriggerEnable");
     protected readonly int m_HashTriggerDisablePara = Animator.StringToHash("TriggerDisable");
-    protected int m_PlayerLayerIndex;
 
     public bool ChangeOnce { get; set; } = false;
 
@@ -25,7 +24,6 @@ public class SpikeTrigger : Platform
     {
         m_Box = GetComponent<BoxCollider2D>();
         m_Animator = GetComponentInChildren<Animator>();
-        m_PlayerLayerIndex = LayerMask.NameToLayer("Player");
     }
 
     protected override void Initialise()
@@ -194,9 +192,9 @@ public class SpikeTrigger : Platform
             return;
         }
 
-        if (collider.gameObject.layer == m_PlayerLayerIndex)
+        if (Publisher.Instance.TryGetObserver(collider, out Observer observer))
         {
-            if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+            if (observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
             {
                 m_CurrentTriggerState = TriggerState.ENTER;
 
@@ -220,9 +218,9 @@ public class SpikeTrigger : Platform
             return;
         }
 
-        if (collider.gameObject.layer == m_PlayerLayerIndex)
+        if (Publisher.Instance.TryGetObserver(collider, out Observer observer))
         {
-            if (collider.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+            if (observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
             {
                 m_CurrentTriggerState = TriggerState.EXIT;
 

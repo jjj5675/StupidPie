@@ -16,7 +16,6 @@ public class ConductorTrigger2D : Platform
 
     Animator m_Animator;
     Collider2D m_WireCollider;
-    int m_PlayerLayerIndex;
     bool m_TriggerEnabled = false;
     Collider2D[] m_OverlapBuffer;
     ContactFilter2D m_ContactFilter = new ContactFilter2D();
@@ -28,7 +27,6 @@ public class ConductorTrigger2D : Platform
     private void Awake()
     {
         m_WireCollider = wireTilemap.GetComponent<CompositeCollider2D>();
-        m_PlayerLayerIndex = LayerMask.NameToLayer("Player");
         m_ContactFilter.useLayerMask = true;
         m_ContactFilter.useTriggers = true;
         m_ContactFilter.layerMask = 1 << LayerMask.NameToLayer("Platform");
@@ -115,7 +113,7 @@ public class ConductorTrigger2D : Platform
     //오브젝트 위로 UI 띄우기
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (m_PlayerLayerIndex == collision.gameObject.layer)
+        if (Publisher.Instance.ColliderHasObserver(collision))
         {
             if (!m_DataBaseCache.ContainsKey(collision))
             {
@@ -126,7 +124,7 @@ public class ConductorTrigger2D : Platform
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (m_PlayerLayerIndex == collision.gameObject.layer)
+        if (Publisher.Instance.ColliderHasObserver(collision))
         {
             if (m_DataBaseCache.TryGetValue(collision, out PlayerBehaviour playerBehaviour))
             {
