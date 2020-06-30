@@ -76,9 +76,6 @@ public class FallingPlatform : Platform
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!isMovingAtStart)
-            return;
-
         if (!m_CanFall)
         {
             return;
@@ -146,7 +143,7 @@ public class FallingPlatform : Platform
 
                         float distance = m_FoundHits[i].distance;
 
-                        if (distance < speed * Time.deltaTime)
+                        if (distance * 0.6f < speed * Time.deltaTime)
                         {
                             float diffY = raycastStart.y - m_FoundHits[i].point.y;
 
