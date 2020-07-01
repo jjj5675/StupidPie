@@ -38,6 +38,7 @@ public class SceneController : MonoBehaviour
     public CellTransitionDestination.DestinationTag initalCellTransitionDestinationTag;
     public ScreenManager screenManager;
     public MenuActivityController menuActivityController;
+    public ParallaxScroller parallaxScroller;
 
     private Scene m_CurrentZoneScene;
     private bool m_Transitioning;
@@ -104,7 +105,7 @@ public class SceneController : MonoBehaviour
         menuActivityController.TimerUI.StopTimer();
         Publisher.Instance.SetAnimState(false, true);
         rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
-        StartCoroutine(InTransition(true, true, cellTransitionDestination));
+        StartCoroutine(InTransition(true, true, cellTransitionDestination, true));
     }
 
     public void TransitionToScene(TransitionPoint transitionPoint)
@@ -135,7 +136,7 @@ public class SceneController : MonoBehaviour
         m_Transitioning = false;
     }
 
-    private IEnumerator InTransition(bool fade, bool cameraSetting, CellTransitionDestination entrance)
+    private IEnumerator InTransition(bool fade, bool cameraSetting, CellTransitionDestination entrance, bool resetParallax = false)
     {
         m_Transitioning = true;
         Publisher.Instance.GainOrReleaseControl(false);
@@ -157,6 +158,11 @@ public class SceneController : MonoBehaviour
                 cellController.DisablePreviousCell();
             }
             screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
+        }
+
+        if(resetParallax)
+        {
+            parallaxScroller.Initialize();
         }
 
         menuActivityController.TimerUI.ResetTimer();
