@@ -10,6 +10,7 @@ public class PlayerBehaviour : MonoBehaviour
     public CellController cellController;
     public SpriteRenderer spriteRenderer;
     public Dashable dashable;
+    public GameObject debugMenu;
 
     public float moveSpeed;
     public float groundAcceleration;
@@ -111,6 +112,21 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
+        if(dataBase.playerInput.DebugMenuOpen.Down)
+        {
+            if(!debugMenu.activeSelf)
+            {
+                Publisher.Instance.GainOrReleaseControl(false);
+                dataBase.playerInput.DebugMenuOpen.GainControl();
+                debugMenu.SetActive(true);
+            }
+            else
+            {
+                Publisher.Instance.GainOrReleaseControl(true);
+                debugMenu.SetActive(false);
+            }
+        }
+
         if (dataBase.playerInput.Pause.Down)
         {
             if (!m_InPause)
