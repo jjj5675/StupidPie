@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  offset: {x: 0, y: 0}
-  size: {x: 0.87, y: 0.6}
+  offset: {x: 0, y: -0.175}
+  size: {x: 0.4, y: 0.3}
   hitLayerMask:
     serializedVersion: 2
     m_Bits: 512
