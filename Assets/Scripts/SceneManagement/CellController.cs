@@ -13,8 +13,6 @@ public class CellController : MonoBehaviour
     public Cell PreviousCell { get { return m_PreviousCell; } }
     public CellTransitionDestination LastEnteringDestination { get { return m_LastEnteringDestination; } }
 
-    public List<Cell> CellCache { get { return m_CellCache; } }
-
     void Awake()
     {
         PopulateCellList(ref m_CellCache);

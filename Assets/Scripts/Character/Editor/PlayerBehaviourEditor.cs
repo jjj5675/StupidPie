@@ -8,7 +8,6 @@ public class PlayerBehaviourEditor : Editor
     SerializedProperty m_CellControllerProp;
     SerializedProperty m_SpriteRendererProp;
     SerializedProperty m_DashableProp;
-    SerializedProperty m_DebugMenuProp;
 
     SerializedProperty m_MoveSpeedProp;
     SerializedProperty m_GroundAccelerationProp;
@@ -48,7 +47,6 @@ public class PlayerBehaviourEditor : Editor
     readonly GUIContent m_CellControllerContent = new GUIContent("Cell Controller");
     readonly GUIContent m_SpriteRendererContent = new GUIContent("Sprite Renderer");
     readonly GUIContent m_DashableContent = new GUIContent("Dashable");
-    readonly GUIContent m_DebugMenuContent = new GUIContent("Debug Menu");
 
     readonly GUIContent m_MoveSpeedContent = new GUIContent("Move Speed");
     readonly GUIContent m_GroundAccelerationContent = new GUIContent("Ground Acceleration");
@@ -91,7 +89,6 @@ public class PlayerBehaviourEditor : Editor
         m_CellControllerProp = serializedObject.FindProperty("cellController");
         m_SpriteRendererProp = serializedObject.FindProperty("spriteRenderer");
         m_DashableProp = serializedObject.FindProperty("dashable");
-        m_DebugMenuProp = serializedObject.FindProperty("debugMenu");
 
         m_MoveSpeedProp = serializedObject.FindProperty("moveSpeed");
         m_GroundAccelerationProp = serializedObject.FindProperty("groundAcceleration");
@@ -148,7 +145,6 @@ public class PlayerBehaviourEditor : Editor
             EditorGUILayout.PropertyField(m_CellControllerProp, m_CellControllerContent);
             EditorGUILayout.PropertyField(m_SpriteRendererProp, m_SpriteRendererContent);
             EditorGUILayout.PropertyField(m_DashableProp, m_DashableContent);
-            EditorGUILayout.PropertyField(m_DebugMenuProp, m_DebugMenuContent);
         }
 
         EditorGUI.indentLevel--;
