@@ -458,6 +458,11 @@ public class PlayerBehaviour : MonoBehaviour
         m_MoveVector += m_DashDeceleration * (-m_DashDirection) * Time.deltaTime;
     }
 
+    public void SignalFlipX()
+    {
+        spriteRenderer.flipX = !spriteRenderer.flipX;
+    }
+
     public void UpdateFacing()
     {
         bool faceLeft = dataBase.playerInput.Horizontal.Value < 0f;
