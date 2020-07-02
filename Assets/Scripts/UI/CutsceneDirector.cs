@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Linq;
+using UnityEngine.Events;
 
 public class CutsceneDirector : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class CutsceneDirector : MonoBehaviour
     public float writeDelay = 0.1f;
 
     public Image cutSceneImage;
-
+    public UnityEvent Ended;
     protected int m_CurrentClip = 0;
     protected int m_CharacterCount;
     protected int m_CurrentTextCount = 0;
@@ -43,7 +44,32 @@ public class CutsceneDirector : MonoBehaviour
     protected bool m_IsTurning = false;
     protected int m_DelayTextCount = 5;
 
-    public bool End { get { return m_End; } }
+    private void Awake()
+    {
+        Play();
+    }
+
+    private void Update()
+    {
+        if (!m_End)
+        {
+            // 로그 종료
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Stop();
+                Ended.Invoke();
+            }
+            else if (Input.anyKeyDown)  //다음 로그 이동
+            {
+                Next();
+
+                if (m_End)
+                {
+                    Ended.Invoke();
+                }
+            }
+        }
+    }
 
     public void Play()
     {
@@ -113,6 +139,7 @@ public class CutsceneDirector : MonoBehaviour
         {
             StopCoroutine(m_WriteCoroutine);
             m_WriteCoroutine = null;
+            m_End = true;
         }
     }
 

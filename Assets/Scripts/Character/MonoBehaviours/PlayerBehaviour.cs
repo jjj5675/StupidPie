@@ -84,7 +84,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         dataBase.SetDate(transform, GetComponent<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>(), GetComponent<Scoreable>());
         m_Observer = new Observer(dataBase);
-        m_Observer.Subscribe(Publisher.Instance);
+        var publisher = FindObjectOfType<Publisher>();
+        m_Observer.Subscribe(publisher);
     }
 
     // Start is called before the first frame update

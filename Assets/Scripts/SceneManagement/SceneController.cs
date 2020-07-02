@@ -123,16 +123,18 @@ public class SceneController : MonoBehaviour
         cellController = FindObjectOfType<CellController>();
         screenManager = FindObjectOfType<ScreenManager>();
         menuActivityController = FindObjectOfType<MenuActivityController>();
+        parallaxScroller = FindObjectOfType<ParallaxScroller>();
+        var publisher = FindObjectOfType<Publisher>();
 
-        Publisher.Instance.GainOrReleaseControl(false);
+        publisher.GainOrReleaseControl(false);
         cellController.GetRootCell(out rootCell);
         cellController.SetCell(rootCell, destinationTag);
-        Publisher.Instance.SetObservers(false, true, cellController.LastEnteringDestination.locations);
+        publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
         screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
 
         yield return StartCoroutine(ScreenFader.FadeSceneIn());
 
-        Publisher.Instance.GainOrReleaseControl(true);
+        publisher.GainOrReleaseControl(true);
         m_Transitioning = false;
     }
 

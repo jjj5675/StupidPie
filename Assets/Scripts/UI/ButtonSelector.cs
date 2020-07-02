@@ -49,6 +49,7 @@ public class ButtonSelector : MonoBehaviour
 
     protected Vector2 m_CurrentDeltaSize;
     protected Vector2 m_CurrentAnchoredPosition;
+    protected float m_HalfScreenWidth;
 
     //off
     private readonly int m_OffImageIndex = 0;
@@ -73,6 +74,8 @@ public class ButtonSelector : MonoBehaviour
 
             m_ButtonImages.Add(new List<Image>(imageTable[i].switchImagesDict.Keys));
         }
+
+        m_HalfScreenWidth = Screen.width * 0.5f;
     }
 
     void Start()
@@ -90,14 +93,7 @@ public class ButtonSelector : MonoBehaviour
         {
             if (m_CurrentImage != 0)
             {
-                if (m_CurrentCanvas == 0 && m_CurrentImage == 4)
-                {
-                    m_NextImage -= 2;
-                }
-                else
-                {
-                    m_NextImage--;
-                }
+                m_NextImage--;
             }
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow))
@@ -105,14 +101,7 @@ public class ButtonSelector : MonoBehaviour
             //현재 테이블 버튼갯수만큼
             if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
             {
-                if (m_CurrentCanvas == 0 && m_CurrentImage == 2)
-                {
-                    m_NextImage += 2;
-                }
-                else
-                {
-                    m_NextImage++;
-                }
+                m_NextImage++;
             }
         }
         else if (Input.GetKeyDown(KeyCode.Return))
@@ -151,7 +140,15 @@ public class ButtonSelector : MonoBehaviour
 
                 //현재 이미지의 Anchor 값 변경
                 imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].sizeDelta += imageTable[m_CurrentCanvas].sizeDelta;
-                imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].anchoredPosition += new Vector2(-(imageTable[m_CurrentCanvas].sizeDelta.x * 0.5f), 0);
+
+                if (m_HalfScreenWidth <= imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].anchoredPosition.x)
+                {
+                    imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].anchoredPosition += new Vector2(-(imageTable[m_CurrentCanvas].sizeDelta.x * 0.5f), 0);
+                }
+                else
+                {
+                    imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].anchoredPosition += new Vector2((imageTable[m_CurrentCanvas].sizeDelta.x * 0.5f), 0);
+                }
             }
         }
     }
@@ -180,7 +177,7 @@ public class ButtonSelector : MonoBehaviour
             int index = canvases.IndexOf(canvas);
 
             // 이전 캔버스와 이동할 캔버스가 같으면 이전 캔버스로 돌아간다.
-            if(m_StackOfButton.Count != 0 && m_StackOfButton.Peek().canvasIndex == index)
+            if (m_StackOfButton.Count != 0 && m_StackOfButton.Peek().canvasIndex == index)
             {
                 var prevButton = m_StackOfButton.Pop();
 

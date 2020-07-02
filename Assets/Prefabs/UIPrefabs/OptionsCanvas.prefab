@@ -1591,7 +1591,7 @@ GameObject:
   - component: {fileID: 120435076139004947}
   - component: {fileID: 8916384314121417657}
   m_Layer: 5
-  m_Name: RestageImage
+  m_Name: RestageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1951,7 +1951,7 @@ GameObject:
   - component: {fileID: 3292276752309829663}
   - component: {fileID: 4613153928927494432}
   m_Layer: 5
-  m_Name: ExitImage
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2026,7 +2026,7 @@ GameObject:
   - component: {fileID: 271443441705798554}
   - component: {fileID: 4081601808292161549}
   m_Layer: 5
-  m_Name: SettingImage
+  m_Name: SettingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2235,7 +2235,7 @@ GameObject:
   - component: {fileID: 4774207342375478267}
   - component: {fileID: 4778024953499804549}
   m_Layer: 5
-  m_Name: RegameImage
+  m_Name: RegameButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2405,7 +2405,7 @@ GameObject:
   - component: {fileID: 5427292441190258138}
   - component: {fileID: 2965974661094882916}
   m_Layer: 5
-  m_Name: ResumeImage
+  m_Name: ResumeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
