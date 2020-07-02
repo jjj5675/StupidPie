@@ -141,7 +141,7 @@ PrefabInstance:
     - target: {fileID: 7796949771813041592, guid: 4669a6b4aadd6e745b6e7ad86b969cdd,
         type: 3}
       propertyPath: newSceneName
-      value: SampleScene
+      value: Zone1
       objectReference: {fileID: 0}
     - target: {fileID: 7796949771813041598, guid: 4669a6b4aadd6e745b6e7ad86b969cdd,
         type: 3}
