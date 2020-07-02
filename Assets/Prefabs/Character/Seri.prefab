@@ -426,9 +426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc69faa0cc53bc74bb769b4a9ba5908b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMenuOpen:
-    key: 0
-    m_Enabled: 0
   Pause:
     key: 0
     m_Enabled: 1

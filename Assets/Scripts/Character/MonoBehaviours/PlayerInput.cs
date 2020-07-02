@@ -2,7 +2,6 @@
 
 public class PlayerInput : InputComponent
 {
-    public InputButton DebugMenuOpen = new InputButton(KeyCode.F12);
     public InputButton Pause = new InputButton(KeyCode.Escape);
     public InputButton Jump = new InputButton(KeyCode.Z);
     public InputButton Dash = new InputButton(KeyCode.X);
@@ -22,8 +21,6 @@ public class PlayerInput : InputComponent
         Interact.Get(fixedUpdateHappened);
         Horizontal.Get();
         Vertical.Get();
-
-        DebugMenuOpen.Get(fixedUpdateHappened);
     }
 
     public override void GainControl()
@@ -36,8 +33,6 @@ public class PlayerInput : InputComponent
         GainControl(Interact);
         GainControl(Horizontal);
         GainControl(Vertical);
-
-        GainControl(DebugMenuOpen);
     }
 
     public override void ReleaseControl(bool resetValuse = true)
@@ -50,8 +45,6 @@ public class PlayerInput : InputComponent
         ReleaseControl(Interact, resetValuse);
         ReleaseControl(Horizontal, resetValuse);
         ReleaseControl(Vertical, resetValuse);
-
-        ReleaseControl(DebugMenuOpen, resetValuse);
     }
 
     public bool CheckAxisInputsNone()
