@@ -7,13 +7,12 @@ public class Publisher : MonoBehaviour
 
     static public Publisher Instance { get { return s_Instance; } }
 
-    private List<Observer> m_Observers;
+    private List<Observer> m_Observers = new List<Observer>();
 
     public List<Observer> Observers { get { return m_Observers; } }
 
-    public Publisher()
+    private void Awake()
     {
-        m_Observers = new List<Observer>();
         s_Instance = this;
     }
 
