@@ -2870,6 +2870,7 @@ GameObject:
   - component: {fileID: 9112999546697996098}
   - component: {fileID: 9112999546697996093}
   - component: {fileID: 4077327191476558451}
+  - component: {fileID: 4787839286472739619}
   m_Layer: 5
   m_Name: OptionsCanvas
   m_TagString: Untagged
@@ -2971,6 +2972,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b3042a5c041cf4ead6b847b673c61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerText: {fileID: 9149870357364096721}
+  scoreText: {fileID: 8428882130051078292}
+--- !u!114 &4787839286472739619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112999546697996092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f3dfd310edf06478180be40807a615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   imageTable:
   - buttonImages:
     - {fileID: 1119396270049865772}
@@ -2978,14 +2993,106 @@ MonoBehaviour:
     - {fileID: 6480039572799882401}
     - {fileID: 2874430821004214560}
     - {fileID: 7736937560395117557}
+    OnPressed:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4077327191476558451}
+          m_MethodName: Resume
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4077327191476558451}
+          m_MethodName: Restage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4787839286472739619}
+          m_MethodName: Move
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2309901991297339037}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Canvas, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4077327191476558451}
+          m_MethodName: Setting
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4077327191476558451}
+          m_MethodName: Exit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    sizeDelta: {x: 40, y: 20}
     isChangeSize: 1
   - buttonImages:
     - {fileID: 1429778179034836331}
     - {fileID: 306238876300689259}
-    isChangeSize: 0
+    OnPressed:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4077327191476558451}
+          m_MethodName: Regame
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4787839286472739619}
+          m_MethodName: Move
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 7752851971575439502}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Canvas, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    sizeDelta: {x: 40, y: 20}
+    isChangeSize: 1
   canvases:
-  - {fileID: 1063801454092059087}
-  - {fileID: 1908812713476161755}
-  sizeDelta: {x: 49, y: 14}
-  timerText: {fileID: 9149870357364096721}
-  scoreText: {fileID: 8428882130051078292}
+  - {fileID: 7752851971575439502}
+  - {fileID: 2309901991297339037}
