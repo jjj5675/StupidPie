@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841d71582ed2ca5409fa0537814849dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMovingAtStart: 1
-  switchChangeDuration: 3
+  isMovingAtStart: 0
+  switchChangeDuration: 1.5
   whiteSpriteExitTime: 0.5
   edgeCollider: {fileID: 0}
   overlapColliderMask:
