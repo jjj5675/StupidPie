@@ -64,57 +64,57 @@ public class PlayerController2D : CharacterController2D
 
             if (m_FoundHitList.Count != 0)
             {
-                if(faceLeft)
-                {
-                    collisionFlags.IsLeftSide = true;
-                }
-                else
-                {
-                    collisionFlags.IsRightSide = true;
-                }
+                //if(faceLeft)
+                //{
+                //    collisionFlags.IsLeftSide = true;
+                //}
+                //else
+                //{
+                //    collisionFlags.IsRightSide = true;
+                //}
 
-                if (collisionFlags.CheckForWidth() && PhysicsHelper.ColliderHasJumpPad(m_FoundHitList[m_FirstHitIndex].collider))
-                {
-                    collisionFlags.inContactJumppad = true;
-                    m_ContactCollider = m_FoundHitList[m_FirstHitIndex].collider;
-                }
+                //if (collisionFlags.CheckForWidth() && PhysicsHelper.ColliderHasJumpPad(m_FoundHitList[m_FirstHitIndex].collider))
+                //{
+                //    collisionFlags.inContactJumppad = true;
+                //    m_ContactCollider = m_FoundHitList[m_FirstHitIndex].collider;
+                //}
 
-                //hitNormal = m_FoundHitList[m_FirstHitIndex].normal;
+                hitNormal = m_FoundHitList[m_FirstHitIndex].normal;
             }
 
-            //if (Mathf.Approximately(hitNormal.x, 0) && Mathf.Approximately(hitNormal.y, 0))
-            //{
-            //    //리셋
-            //    collisionFlags.ResetWidth();
-            //}
-            //else
-            //{
-            //    if (m_Box != null)
-            //    {
-            //        if (m_FoundHitList[m_FirstHitIndex].collider != null)
-            //        {
-            //            float boxWidth = m_Rigidbody2D.position.x + m_Box.offset.x + (m_Box.size.x * 0.5f * raycastDirection.x);
-            //            float middleHitWidth = m_FoundHitList[m_FirstHitIndex].point.x;
+            if (Mathf.Approximately(hitNormal.x, 0) && Mathf.Approximately(hitNormal.y, 0))
+            {
+                //리셋
+                collisionFlags.ResetWidth();
+            }
+            else
+            {
+                if (m_Box != null)
+                {
+                    if (m_FoundHitList[m_FirstHitIndex].collider != null)
+                    {
+                        float boxWidth = m_Rigidbody2D.position.x + m_Box.offset.x + (m_Box.size.x * 0.5f * raycastDirection.x);
+                        float middleHitWidth = m_FoundHitList[m_FirstHitIndex].point.x;
 
-            //            if (faceRight)
-            //            {
-            //                bool stuck = middleHitWidth < boxWidth + sideRaycastDistance;
-            //                collisionFlags.IsRightSide = stuck;
-            //            }
-            //            else if (faceLeft)
-            //            {
-            //                bool stuck = boxWidth - sideRaycastDistance < middleHitWidth;
-            //                collisionFlags.IsLeftSide = stuck;
-            //            }
+                        if (faceRight)
+                        {
+                            bool stuck = middleHitWidth < boxWidth + sideRaycastDistance;
+                            collisionFlags.IsRightSide = stuck;
+                        }
+                        else if (faceLeft)
+                        {
+                            bool stuck = boxWidth - sideRaycastDistance < middleHitWidth;
+                            collisionFlags.IsLeftSide = stuck;
+                        }
 
-            //            if (collisionFlags.CheckForWidth() && PhysicsHelper.ColliderHasJumpPad(m_FoundHitList[m_FirstHitIndex].collider))
-            //            {
-            //                collisionFlags.inContactJumppad = true;
-            //                m_ContactCollider = m_FoundHitList[m_FirstHitIndex].collider;
-            //            }
-            //        }
-            //    }
-            //}
+                        if (collisionFlags.CheckForWidth() && PhysicsHelper.ColliderHasJumpPad(m_FoundHitList[m_FirstHitIndex].collider))
+                        {
+                            collisionFlags.inContactJumppad = true;
+                            m_ContactCollider = m_FoundHitList[m_FirstHitIndex].collider;
+                        }
+                    }
+                }
+            }
         }
 
     }
