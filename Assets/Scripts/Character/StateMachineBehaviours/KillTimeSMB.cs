@@ -12,6 +12,7 @@ public class KillTimeSMB : SceneLinkedSMB<PlayerBehaviour>
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         m_MonoBehaviour.CheckForBoring();
+        m_MonoBehaviour.CheckForGrounded();
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
