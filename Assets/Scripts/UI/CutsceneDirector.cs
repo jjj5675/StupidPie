@@ -96,7 +96,12 @@ public class CutsceneDirector : MonoBehaviour
         //아직 모든 텍스트를 출력하지 않았다.
         if (writeText.text.Count() != clipTable.readTexts[m_CurrentTextCount].text.Count())
         {
-            Stop();
+            if (m_WriteCoroutine != null)
+            {
+                StopCoroutine(m_WriteCoroutine);
+                m_WriteCoroutine = null;
+            }
+
             writeText.text = clipTable.readTexts[m_CurrentTextCount].text;
             return;
         }
