@@ -70,10 +70,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e59352504d6994488f984576f60eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newSceneName: Start
   transitionType: 2
   transitionCell: {fileID: 0}
   transitionDestinationTag: 0
-  publisher: {fileID: 0}
   transitionWhen: 2
   resetInputValueOnTransition: 1
   cellController: {fileID: 0}
+  screenManager: {fileID: 0}
