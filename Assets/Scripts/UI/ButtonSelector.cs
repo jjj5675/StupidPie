@@ -49,12 +49,10 @@ public class ButtonSelector : MonoBehaviour
 
     protected Vector2 m_CurrentDeltaSize;
     protected Vector2 m_CurrentAnchoredPosition;
-    protected float m_HalfScreenWidth;
 
     //off
     private readonly int m_OffImageIndex = 0;
     private readonly int m_ONImageIndex = 1;
-
 
     private void Awake()
     {
@@ -74,8 +72,6 @@ public class ButtonSelector : MonoBehaviour
 
             m_ButtonImages.Add(new List<Image>(imageTable[i].switchImagesDict.Keys));
         }
-
-        m_HalfScreenWidth = Screen.width * 0.5f;
     }
 
     void Start()
@@ -141,7 +137,7 @@ public class ButtonSelector : MonoBehaviour
                 //현재 이미지의 Anchor 값 변경
                 imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].sizeDelta += imageTable[m_CurrentCanvas].sizeDelta;
 
-                if (m_HalfScreenWidth <= imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].anchoredPosition.x)
+                if (0 <= imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].anchoredPosition.x)
                 {
                     imageTable[m_CurrentCanvas].buttonImages[m_CurrentImage].anchoredPosition += new Vector2(-(imageTable[m_CurrentCanvas].sizeDelta.x * 0.5f), 0);
                 }
