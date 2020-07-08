@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
@@ -32,16 +31,22 @@ public class DialogueManager : MonoBehaviour
         return s_Instance = gameObject.AddComponent<DialogueManager>();
     }
 
-    public List<OriginalPhrases> phrases = new List<OriginalPhrases>();
-    public string path;
+    public List<OriginalPhrases> phrases;
+    public string textFilePath;
 
-    private void Awake()
+    public List<Phrase> this[string key]
     {
-        CSVReader.Read(ref phrases, path);
-
-        for(int i=0; i<phrases[0].phrases.Count; i++)
+        get
         {
-            print(phrases[0].phrases[i]);
+            foreach(var item in phrases)
+            {
+                if(item.key == key)
+                {
+                    return item.phrases;
+                }
+            }
+
+            return null;
         }
     }
 

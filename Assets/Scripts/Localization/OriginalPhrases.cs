@@ -1,22 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
 public class OriginalPhrases : ScriptableObject
 {
     public string key;
-    public List<object> phrases = new List<object>();
+    public List<Phrase> phrases = new List<Phrase>();
+}
 
-    public List<object> this[string key]
+[Serializable]
+public class Phrase
+{
+    [HideInInspector]
+    public string name;
+    public string value;
+
+    public Phrase(string name, string value)
     {
-        get
-        {
-            if(this.key == key)
-            {
-                return phrases;
-            }
-
-            return null;
-        }
+        this.name = name;
+        this.value = value;
     }
 }

@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -12,6 +11,12 @@ public class CSVReader
 
     public static bool Read(ref List<OriginalPhrases> phrases, string file)
     {
+        foreach(var item in phrases)
+        {
+            item.key = "";
+            item.phrases.Clear();
+        }
+
         //데이터 로드
         TextAsset data = Resources.Load(file) as TextAsset;
 
@@ -26,9 +31,9 @@ public class CSVReader
         //1행의 헤더부분을 나누기 ex) 연출1, 2, 3...
         var header = Regex.Split(lines[0], SPLIT_RE);
 
-        if(phrases.Count < header.Length)
+        if(phrases.Count < header.Length * 0.5f)
         {
-            System.Array.Resize(ref header, phrases.Count);
+            Array.Resize(ref header, phrases.Count * 2);
         }
 
         //1행(헤더)를 제외한 나머지 행들의 갯수 만큼 반복
@@ -42,33 +47,29 @@ public class CSVReader
                 continue;
             }
 
-            //헤더를 순회 
-            for(int k = 0; k< header.Length && k < valuse.Length; k++)
+            //헤더를 순회 Name 갯수는 제외
+            for(int k = 0; k< header.Length && k < valuse.Length; k += 2)
             {
-                // 키 값을 헤더값으로 초기화
-                if(phrases[k].key != header[k])
+                int objectIndex = Convert.ToInt32(k * 0.5f);
+
+                if(valuse[k] == "")
                 {
-                    phrases[k].key = header[k];
+                    continue;
+                }
+
+                // 키 값을 헤더값으로 초기화
+                if(phrases[objectIndex].key != header[k])
+                {
+                    phrases[objectIndex].key = header[k];
                 }
 
                 string value = valuse[k];
                 value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
-                object finalValue = value;
-                int n;
-                float f;
 
-                if(int.TryParse(value, out n))
+                if (phrases[objectIndex].key == header[k])
                 {
-                    finalValue = n;
-                }
-                else if(float.TryParse(value, out f))
-                {
-                    finalValue = f;
-                }
-
-                if(phrases[k].key == header[k])
-                {
-                    phrases[k].phrases.Add(finalValue);
+                    Phrase phrase = new Phrase(valuse[k + 1], value);
+                    phrases[objectIndex].phrases.Add(phrase);
                 }
             }
         }
