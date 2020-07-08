@@ -26,6 +26,11 @@ public class CSVReader
         //1행의 헤더부분을 나누기 ex) 연출1, 2, 3...
         var header = Regex.Split(lines[0], SPLIT_RE);
 
+        if(phrases.Count < header.Length)
+        {
+            System.Array.Resize(ref header, phrases.Count);
+        }
+
         //1행(헤더)를 제외한 나머지 행들의 갯수 만큼 반복
         for (int i = 1; i < lines.Length; i++)
         {
