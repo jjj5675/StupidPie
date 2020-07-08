@@ -32,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     public string textFilePath;
-    public List<OriginalPhrases> phrases;
+    public List<Phrases> phrases;
 
     public List<Phrase> this[string key]
     {

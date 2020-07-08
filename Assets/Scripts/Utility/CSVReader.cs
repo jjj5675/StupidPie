@@ -9,7 +9,7 @@ public class CSVReader
     static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
     static char[] TRIM_CHARS = { '\"' };
 
-    public static bool Read(ref List<OriginalPhrases> phrases, string file)
+    public static bool Read(ref List<Phrases> phrases, string file)
     {
         foreach(var item in phrases)
         {
