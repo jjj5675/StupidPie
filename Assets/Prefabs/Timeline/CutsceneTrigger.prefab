@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 386072969649111722}
   - component: {fileID: 386072969649111721}
+  - component: {fileID: 6743457286974874017}
   - component: {fileID: 386072969649111720}
   m_Layer: 0
   m_Name: CutsceneTrigger
@@ -47,7 +48,24 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 5
+--- !u!320 &6743457286974874017
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386072969649111735}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
 --- !u!114 &386072969649111720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,10 +79,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggeringGameObject: []
-  director: {fileID: 0}
+  director: {fileID: 6743457286974874017}
   OnDirectorPlay:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6743457286974874017}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDirectorFinish:
     m_PersistentCalls:
       m_Calls: []
