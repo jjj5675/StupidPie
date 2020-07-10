@@ -15,25 +15,18 @@ public class DialogueBehaviour : PlayableBehaviour
     public string phraseKey;
     public int textIndex;
     public DialogueCanvasController.Portraits portrait;
-    public bool pause;
-    [HideInInspector]
-    public DirectorTrigger directorTrigger;
+    public bool pause = false;
 
     private DialogueCanvasController m_DialogueCanvas;
     private PlayableDirector m_Director;
+    private TrackAsset m_TrackAsset;
 
     private bool m_IsClipPlayed = false;
-    private bool m_CanPause;
-    private float m_CurrentTime;
+    private bool m_CanPause = false;
 
     public override void OnPlayableCreate(Playable playable)
     {
         m_Director = (playable.GetGraph().GetResolver() as PlayableDirector);
-
-        if (directorTrigger == null)
-        {
-            directorTrigger = m_Director.gameObject.GetComponent<DirectorTrigger>();
-        }
 
         if (m_DialogueCanvas != null)
         {
@@ -47,6 +40,7 @@ public class DialogueBehaviour : PlayableBehaviour
         {
             if (track is DialogueTrack)
             {
+                m_TrackAsset = track;
                 var binding = m_Director.GetGenericBinding(track) as DialogueCanvasController;
                 m_DialogueCanvas = binding;
                 m_DialogueCanvas.SetHashParameter();
@@ -80,9 +74,16 @@ public class DialogueBehaviour : PlayableBehaviour
         {
             m_CanPause = false;
             m_Director.playableGraph.GetRootPlayable(0).SetSpeed(0d);
-            directorTrigger.ActiveCoroutine(false);
-            m_CurrentTime = (float)playable.GetTime();
-            m_DialogueCanvas.Resume(ResumeTimeline);
+            m_DialogueCanvas.SendResumeAction(ResumeTimeline);
+        }
+
+        //Dialogue Track is Done
+        if (info.evaluationType == FrameData.EvaluationType.Playback)
+        {
+            if (m_TrackAsset.end <= m_Director.time)
+            {
+                m_DialogueCanvas.DeactivateCanvasWithDelay(1f);
+            }
         }
 
         m_IsClipPlayed = false;
@@ -91,6 +92,5 @@ public class DialogueBehaviour : PlayableBehaviour
     void ResumeTimeline()
     {
         m_Director.playableGraph.GetRootPlayable(0).SetSpeed(1d);
-        directorTrigger.ActiveCoroutine(true, m_CurrentTime);
     }
 }

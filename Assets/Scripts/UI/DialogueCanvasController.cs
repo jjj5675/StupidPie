@@ -24,42 +24,40 @@ public class DialogueCanvasController : MonoBehaviour
 
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI mainText;
-    
+
     public List<PortraitAnimator> portraitAnimators;
 
     private readonly int m_HashActivePara = Animator.StringToHash("Active");
 
     private Dictionary<Portraits, int> m_FaceAnimHashParameters = new Dictionary<Portraits, int>();
     private Coroutine m_DeactiveCoroutine;
-    private Action m_ResumeTimeline;
+    private Action Resume;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (m_ResumeTimeline != null)
+            if (Resume != null)
             {
-                m_ResumeTimeline.Invoke();
+                Resume.Invoke();
             }
         }
     }
 
-    IEnumerator SetAnimatorParameterWithDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        canvasAnimator.SetBool(m_HashActivePara, false);
-        gameObject.SetActive(false);
-    }
-
     public void ActivateCanvasWithTranslatedText()
     {
-        if(m_DeactiveCoroutine != null)
+        if (m_DeactiveCoroutine != null)
         {
             StopCoroutine(m_DeactiveCoroutine);
             m_DeactiveCoroutine = null;
         }
 
         gameObject.SetActive(true);
+    }
+    IEnumerator SetAnimatorParameterWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canvasAnimator.SetBool(m_HashActivePara, false);
     }
 
     public void DeactivateCanvasWithDelay(float delay)
@@ -69,7 +67,7 @@ public class DialogueCanvasController : MonoBehaviour
 
     public void SetHashParameter()
     {
-        if(m_FaceAnimHashParameters.Count != 0)
+        if (m_FaceAnimHashParameters.Count != 0)
         {
             return;
         }
@@ -82,6 +80,12 @@ public class DialogueCanvasController : MonoBehaviour
 
     public void Next(string phraseKey, int index, Portraits portrait)
     {
+        if(!DialogueManager.Instance.CheckForTextRead())
+        {
+            Debug.LogError("Translator의 Read 버튼을 눌러 텍스트를 읽어와야 합니다.");
+            return;
+        }
+
         Phrase phrase = DialogueManager.Instance[phraseKey][index];
 
         nameText.text = phrase.name;
@@ -89,7 +93,7 @@ public class DialogueCanvasController : MonoBehaviour
 
         foreach (var portraitAnimator in portraitAnimators)
         {
-            if(portraitAnimator.name == nameText.text)
+            if (portraitAnimator.name == nameText.text)
             {
                 faceAnimator.runtimeAnimatorController = portraitAnimator.runtimeAnimator;
                 m_FaceAnimHashParameters.TryGetValue(portrait, out int hashPara);
@@ -101,8 +105,8 @@ public class DialogueCanvasController : MonoBehaviour
         canvasAnimator.SetBool(m_HashActivePara, true);
     }
 
-    public void Resume(Action action)
+    public void SendResumeAction(Action action)
     {
-        m_ResumeTimeline = action;
+        Resume = action;
     }
 }

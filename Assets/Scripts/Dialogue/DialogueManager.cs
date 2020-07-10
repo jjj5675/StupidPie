@@ -50,4 +50,17 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public bool CheckForTextRead()
+    {
+        foreach(var phrase in phrases)
+        {
+            if(phrase.phrases.Count == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

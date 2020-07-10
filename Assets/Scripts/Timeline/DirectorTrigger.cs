@@ -13,7 +13,6 @@ public class DirectorTrigger : MonoBehaviour
     public UnityEvent OnDirectorFinish;
 
     protected bool m_AlreadTriggered;
-    protected Coroutine m_ActiveCoroutine;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,28 +29,11 @@ public class DirectorTrigger : MonoBehaviour
         director.Play();
         m_AlreadTriggered = true;
         OnDirectorPlay.Invoke();
-        m_ActiveCoroutine = StartCoroutine(Finish((float)director.duration));
+        Invoke("FinishInvoke", (float)director.duration);
     }
 
-    IEnumerator Finish(float duration)
+    void FinishInvoke(float duration)
     {
-        yield return new WaitForSeconds(duration);
         OnDirectorFinish.Invoke();
-    }
-
-    public void ActiveCoroutine(bool active, float currentTime = 0f)
-    {
-        if (active)
-        {
-            m_ActiveCoroutine = StartCoroutine(Finish((float)director.duration - currentTime));
-        }
-        else
-        {
-            if (m_ActiveCoroutine != null)
-            {
-                StopCoroutine(m_ActiveCoroutine);
-                m_ActiveCoroutine = null;
-            }
-        }
     }
 }
