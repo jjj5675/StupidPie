@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8393966697408030729}
   - component: {fileID: 7707978094644179346}
   - component: {fileID: 1531241922188182635}
+  - component: {fileID: 6693630569556286549}
   m_Layer: 0
   m_Name: face
   m_TagString: Untagged
@@ -73,6 +74,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &6693630569556286549
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870843013625158202}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4039651262990856066
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +417,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039ad84a4583b5040994711c82e0039e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 8502676280262212967}
+  canvasAnimator: {fileID: 8502676280262212967}
+  faceAnimator: {fileID: 6693630569556286549}
+  runtimeFaceAnimator1: {fileID: 9100000, guid: 2fcf061d17682ed478b05b4d8cdd7aa6,
+    type: 2}
+  runtimeFaceAnimator2: {fileID: 22100000, guid: c186869857dcd9649a68df19404e6595,
+    type: 2}
   nameText: {fileID: 3655896442276300637}
   mainText: {fileID: 4276349685476315345}
 --- !u!95 &8502676280262212967

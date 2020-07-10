@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
@@ -12,6 +13,7 @@ public class DirectorTrigger : MonoBehaviour
     public UnityEvent OnDirectorFinish;
 
     protected bool m_AlreadTriggered;
+    protected Coroutine m_ActiveCoroutine;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,12 +30,28 @@ public class DirectorTrigger : MonoBehaviour
         director.Play();
         m_AlreadTriggered = true;
         OnDirectorPlay.Invoke();
-        Invoke("FinishInvoke", (float)director.duration);
+        m_ActiveCoroutine = StartCoroutine(Finish((float)director.duration));
     }
 
-    void FinishInvoke()
+    IEnumerator Finish(float duration)
     {
+        yield return new WaitForSeconds(duration);
         OnDirectorFinish.Invoke();
     }
 
+    public void ActiveCoroutine(bool active, float currentTime = 0f)
+    {
+        if (active)
+        {
+            m_ActiveCoroutine = StartCoroutine(Finish((float)director.duration - currentTime));
+        }
+        else
+        {
+            if (m_ActiveCoroutine != null)
+            {
+                StopCoroutine(m_ActiveCoroutine);
+                m_ActiveCoroutine = null;
+            }
+        }
+    }
 }
