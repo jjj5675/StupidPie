@@ -13,11 +13,13 @@ public class Phrases : ScriptableObject
 public class Phrase
 {
     public string name;
+    public string portrait;
     public string value;
 
-    public Phrase(string name, string value)
+    public Phrase(string name, string portrait, string value)
     {
         this.name = name;
+        this.portrait = portrait;
         this.value = value;
     }
 }

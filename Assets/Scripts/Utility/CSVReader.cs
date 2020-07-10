@@ -31,9 +31,9 @@ public class CSVReader
         //1행의 헤더부분을 나누기 ex) 연출1, 2, 3...
         var header = Regex.Split(lines[0], SPLIT_RE);
 
-        if(phrases.Count < header.Length * 0.5f)
+        if(phrases.Count * 3 < header.Length)
         {
-            Array.Resize(ref header, phrases.Count * 2);
+            Array.Resize(ref header, phrases.Count * 3);
         }
 
         //1행(헤더)를 제외한 나머지 행들의 갯수 만큼 반복
@@ -48,9 +48,9 @@ public class CSVReader
             }
 
             //헤더를 순회 Name 갯수는 제외
-            for(int k = 0; k< header.Length && k < valuse.Length; k += 2)
+            for(int k = 0; k< header.Length && k < valuse.Length; k += 3)
             {
-                int objectIndex = Convert.ToInt32(k * 0.5f);
+                int objectIndex = Convert.ToInt32(k / 3f);
 
                 if(valuse[k] == "")
                 {
@@ -68,7 +68,7 @@ public class CSVReader
 
                 if (phrases[objectIndex].key == header[k])
                 {
-                    Phrase phrase = new Phrase(valuse[k + 1], value);
+                    Phrase phrase = new Phrase(valuse[k + 1], valuse[k + 2], value);
                     phrases[objectIndex].phrases.Add(phrase);
                 }
             }

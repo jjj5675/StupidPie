@@ -101,7 +101,6 @@ MonoBehaviour:
   template:
     phraseKey: Tutorial A-1
     textIndex: 4
-    portrait: 2
     pause: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -212,11 +211,11 @@ MonoBehaviour:
     m_Recordable: 0
     m_PostExtrapolationMode: 1
     m_PreExtrapolationMode: 1
-    m_PostExtrapolationTime: 0.5666666666666667
+    m_PostExtrapolationTime: 0.5666666666666642
     m_PreExtrapolationTime: 0
     m_DisplayName: FadeOut
   - m_Version: 1
-    m_Start: 1.5666666666666667
+    m_Start: 1.5666666666666642
     m_ClipIn: 0
     m_Asset: {fileID: -3579375483555913418}
     m_Duration: 1
@@ -375,7 +374,6 @@ MonoBehaviour:
   template:
     phraseKey: Tutorial A-1
     textIndex: 2
-    portrait: 0
     pause: 1
 --- !u!114 &3653274746333819694
 MonoBehaviour:
@@ -392,7 +390,6 @@ MonoBehaviour:
   template:
     phraseKey: Tutorial A-1
     textIndex: 3
-    portrait: 1
     pause: 1
 --- !u!114 &4239832768056035120
 MonoBehaviour:
@@ -801,7 +798,6 @@ MonoBehaviour:
   template:
     phraseKey: Tutorial A-1
     textIndex: 1
-    portrait: 1
     pause: 1
 --- !u!114 &8120712657025639957
 MonoBehaviour:
@@ -818,7 +814,6 @@ MonoBehaviour:
   template:
     phraseKey: Tutorial A-1
     textIndex: 0
-    portrait: 0
     pause: 1
 --- !u!114 &8513955365330334783
 MonoBehaviour:

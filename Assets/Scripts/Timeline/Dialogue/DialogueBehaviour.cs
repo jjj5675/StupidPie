@@ -14,7 +14,6 @@ public class DialogueBehaviour : PlayableBehaviour
 {
     public string phraseKey;
     public int textIndex;
-    public DialogueCanvasController.Portraits portrait;
     public bool pause = false;
 
     private DialogueCanvasController m_DialogueCanvas;
@@ -38,7 +37,6 @@ public class DialogueBehaviour : PlayableBehaviour
                 m_TrackAsset = track;
                 var binding = m_Director.GetGenericBinding(track) as DialogueCanvasController;
                 m_DialogueCanvas = binding;
-                m_DialogueCanvas.SetHashParameter();
                 break;
             }
         }
@@ -48,7 +46,7 @@ public class DialogueBehaviour : PlayableBehaviour
     {
         if (!m_IsClipPlayed && 0 < info.weight)
         {
-            m_DialogueCanvas.Next(phraseKey, textIndex, portrait);
+            m_DialogueCanvas.Next(phraseKey, textIndex);
 
             if (Application.isPlaying)
             {
