@@ -75,6 +75,7 @@ public class DialogueBehaviour : PlayableBehaviour
         {
             if (m_TrackAsset.end <= m_Director.time)
             {
+                m_DialogueCanvas.SendResumeAction(null);
                 m_DialogueCanvas.DeactivateCanvasWithDelay(1f);
             }
         }
