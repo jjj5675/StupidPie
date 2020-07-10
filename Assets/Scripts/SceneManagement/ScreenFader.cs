@@ -87,4 +87,20 @@ public class ScreenFader : MonoBehaviour
         canvasGroup.gameObject.SetActive(true);
         yield return Instance.StartCoroutine(Instance.Fade(1f, canvasGroup));
     }
+
+    public void FadeOut(bool fadeOut)
+    {
+        CanvasGroup canvasGroup = Instance.blackCanvasGroup;
+
+        if (fadeOut)
+        {
+            canvasGroup.gameObject.SetActive(true);
+            Instance.StartCoroutine(Instance.Fade(1f, canvasGroup));
+        }
+        else
+        {
+            Instance.StartCoroutine(Instance.Fade(0f, canvasGroup));
+            canvasGroup.gameObject.SetActive(false);
+        }
+    }
 }

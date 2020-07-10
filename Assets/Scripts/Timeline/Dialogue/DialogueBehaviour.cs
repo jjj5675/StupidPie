@@ -28,11 +28,6 @@ public class DialogueBehaviour : PlayableBehaviour
     {
         m_Director = (playable.GetGraph().GetResolver() as PlayableDirector);
 
-        if (m_DialogueCanvas != null)
-        {
-            return;
-        }
-
         TimelineAsset timelineAsset = m_Director.playableAsset as TimelineAsset;
         var trackAssets = timelineAsset.GetOutputTracks();
 

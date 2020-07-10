@@ -54,6 +54,7 @@ public class DialogueCanvasController : MonoBehaviour
 
         gameObject.SetActive(true);
     }
+
     IEnumerator SetAnimatorParameterWithDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -85,6 +86,8 @@ public class DialogueCanvasController : MonoBehaviour
             Debug.LogError("Translator의 Read 버튼을 눌러 텍스트를 읽어와야 합니다.");
             return;
         }
+
+        gameObject.SetActive(true);
 
         Phrase phrase = DialogueManager.Instance[phraseKey][index];
 
