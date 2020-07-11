@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 51fd79ce121dfd1419f65910a74f642d, type: 3}
+  - {fileID: 8300000, guid: a18ca1cc691716340be67b0fb6b09542, type: 3}
   randomizePitch: 1
   pitchRange: 0.3
 --- !u!1 &4857776030176761430
@@ -658,6 +658,7 @@ MonoBehaviour:
   cellController: {fileID: 0}
   spriteRenderer: {fileID: 7666998537461105931}
   dashable: {fileID: 7666998537461105928}
+  debugMenu: {fileID: 0}
   moveSpeed: 5
   groundAcceleration: 100
   groundDeceleration: 100
@@ -705,6 +706,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc69faa0cc53bc74bb769b4a9ba5908b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugMenuOpen:
+    key: 293
+    m_Enabled: 1
   Pause:
     key: 27
     m_Enabled: 1
