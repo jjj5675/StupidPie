@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: c10fc705f4fea714b8a88b0c811e6854, type: 3}
+  - {fileID: 8300000, guid: 44cad2981aa0f7f4fabfa2be8e34aaf4, type: 3}
   randomizePitch: 1
   pitchRange: 0.3
 --- !u!1 &6098756807666833710
@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 090df578ec839cb44b3aff958ec37833, type: 3}
+  - {fileID: 8300000, guid: a4103317e6edcff4da3606c9fc8df3bd, type: 3}
   randomizePitch: 1
   pitchRange: 0.3
 --- !u!1 &7666998537461105933
@@ -670,9 +670,9 @@ MonoBehaviour:
   airborneAccelProportion: 1
   airborneDecelProportion: 0.7
   wallLeapVelocity: {x: 7, y: 10}
-  slidingSpeed: 5
+  slidingSpeed: 3
   slidingByWaitTime: 0
-  maxSlidingSpeed: 20
+  maxSlidingSpeed: 5.75
   slidingSpeedDecelProportion: 0.5
   spriteOriginallyFacesRight: 1
   maxIdleDuration: 5
