@@ -77,6 +77,7 @@ public class DialogueBehaviour : PlayableBehaviour
             {
                 m_DialogueCanvas.SendResumeAction(null);
                 m_DialogueCanvas.DeactivateCanvasWithDelay(1f);
+                UIManager.Instance.ToggleHUDCanvas(true);
             }
         }
 

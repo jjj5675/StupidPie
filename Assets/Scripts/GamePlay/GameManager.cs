@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    //GameMode, GameState 필요
+    //GameMode, GameState
+    public enum GameMode
+    { 
+        Gameplay, Cutscene, SceneLoading
+    }
 }

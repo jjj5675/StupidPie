@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,7 +36,6 @@ public class SceneController : MonoBehaviour
     public Cell rootCell;
     public CellTransitionDestination.DestinationTag initalCellTransitionDestinationTag;
     public ScreenManager screenManager;
-    public MenuActivityController menuActivityController;
     public ParallaxScroller parallaxScroller;
 
     private Scene m_CurrentZoneScene;
@@ -78,7 +76,7 @@ public class SceneController : MonoBehaviour
         }
 
         StartCoroutine(UnpauseCoroutine(inputControl));
-        menuActivityController.SetActive(true);
+        UIManager.Instance.ToggleHUDCanvas(true);
     }
 
     IEnumerator UnpauseCoroutine(bool inputControl)
@@ -95,14 +93,14 @@ public class SceneController : MonoBehaviour
 
     public void Restage()
     {
-        menuActivityController.TimerUI.StopTimer();
+        UIManager.Instance.TimerUI.StopTimer();
         Publisher.Instance.SetAnimState(false, true);
         StartCoroutine(InTransition(true, false, cellController.LastEnteringDestination));
     }
 
     public void Regame()
     {
-        menuActivityController.TimerUI.StopTimer();
+        UIManager.Instance.TimerUI.StopTimer();
         Publisher.Instance.SetAnimState(false, true);
         rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
         StartCoroutine(InTransition(true, true, cellTransitionDestination, true));
@@ -122,7 +120,6 @@ public class SceneController : MonoBehaviour
 
         cellController = FindObjectOfType<CellController>();
         screenManager = FindObjectOfType<ScreenManager>();
-        menuActivityController = FindObjectOfType<MenuActivityController>();
         parallaxScroller = FindObjectOfType<ParallaxScroller>();
         var publisher = FindObjectOfType<Publisher>();
 
@@ -167,7 +164,7 @@ public class SceneController : MonoBehaviour
             parallaxScroller.Initialize();
         }
 
-        menuActivityController.TimerUI.ResetTimer();
+        UIManager.Instance.TimerUI.ResetTimer();
 
         if (fade)
         {
@@ -175,7 +172,7 @@ public class SceneController : MonoBehaviour
         }
 
         Publisher.Instance.GainOrReleaseControl(true);
-        menuActivityController.TimerUI.StartTimer();
+        UIManager.Instance.TimerUI.StartTimer();
         m_Transitioning = false;
     }
 }

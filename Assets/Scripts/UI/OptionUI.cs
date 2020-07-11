@@ -11,8 +11,8 @@ public class OptionUI : MonoBehaviour
 
     void Start()
     {
-        timerText.text = SceneController.Instance.menuActivityController.TimerUI.minuteAndSecondsText.text + SceneController.Instance.menuActivityController.TimerUI.milliSecondsText.text;
-        scoreText.text = Publisher.Instance.Observers[0].PlayerInfo.scoreable.scoreData.newScore.ToString();
+        UIManager.Instance.SetHUDMessage(ref timerText, ref scoreText);
+        //scoreText.text = Publisher.Instance.Observers[0].PlayerInfo.scoreable.scoreData.newScore.ToString();
     }
 
     public void Resume()
