@@ -68,8 +68,6 @@ public class DialogueCanvasController : MonoBehaviour
             return;
         }
 
-        gameObject.SetActive(true);
-
         Phrase phrase = DialogueManager.Instance[phraseKey][index];
 
         nameText.text = phrase.name;
@@ -84,7 +82,7 @@ public class DialogueCanvasController : MonoBehaviour
             }
         }
 
-        canvasAnimator.SetBool(m_HashActivePara, true);
+        //canvasAnimator.SetBool(m_HashActivePara, true);
     }
 
     public void SendResumeAction(Action action)

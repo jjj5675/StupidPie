@@ -562,6 +562,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScreenFader
       objectReference: {fileID: 0}
+    - target: {fileID: 8730170837712130939, guid: 839bac3faa0d2a54ca5c00fe13572092,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730170837712130941, guid: 839bac3faa0d2a54ca5c00fe13572092,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8730170837712130942, guid: 839bac3faa0d2a54ca5c00fe13572092,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 839bac3faa0d2a54ca5c00fe13572092, type: 3}
 --- !u!1 &1518556164
