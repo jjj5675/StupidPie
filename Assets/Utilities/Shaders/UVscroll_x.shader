@@ -1,9 +1,9 @@
-﻿Shader "Custom/cloudy"
+﻿Shader "Custom/UVscroll_x"
 {
     Properties
     {
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_CloudSpeed("구름 속도", float) = 0.5
+		_CloudSpeed("UV.u 스크롤 속도", float) = 0.5
     }
     SubShader
     {
