@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 090df578ec839cb44b3aff958ec37833, type: 3}
+  - {fileID: 8300000, guid: 5f87eef5a22e7da4caaedbb8bbe1540f, type: 3}
   randomizePitch: 1
   pitchRange: 0.3
 --- !u!1 &4717500339395800544
@@ -368,6 +368,7 @@ MonoBehaviour:
   cellController: {fileID: 0}
   spriteRenderer: {fileID: 4717500339395800569}
   dashable: {fileID: 4717500339395800551}
+  debugMenu: {fileID: 0}
   moveSpeed: 5
   groundAcceleration: 100
   groundDeceleration: 100
@@ -379,9 +380,9 @@ MonoBehaviour:
   airborneAccelProportion: 1
   airborneDecelProportion: 0.7
   wallLeapVelocity: {x: 7, y: 10}
-  slidingSpeed: 5
+  slidingSpeed: 3
   slidingByWaitTime: 0
-  maxSlidingSpeed: 20
+  maxSlidingSpeed: 5.75
   slidingSpeedDecelProportion: 0.5
   spriteOriginallyFacesRight: 1
   maxIdleDuration: 5
@@ -426,6 +427,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc69faa0cc53bc74bb769b4a9ba5908b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugMenuOpen:
+    key: 293
+    m_Enabled: 1
   Pause:
     key: 0
     m_Enabled: 1
@@ -630,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: c10fc705f4fea714b8a88b0c811e6854, type: 3}
+  - {fileID: 8300000, guid: 44cad2981aa0f7f4fabfa2be8e34aaf4, type: 3}
   randomizePitch: 1
   pitchRange: 0.3
 --- !u!1 &8019412161609224370
@@ -775,6 +779,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 51fd79ce121dfd1419f65910a74f642d, type: 3}
+  - {fileID: 8300000, guid: d27239c4c7f5e804587bf01f3f38b2ed, type: 3}
   randomizePitch: 1
   pitchRange: 0.3
