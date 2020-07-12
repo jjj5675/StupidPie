@@ -13,6 +13,7 @@ public class Dashable : MonoBehaviour
 
     private float m_DashunableTimer;
     private DashState m_CurrentDashState;
+    public GhostPool ghostPool;
 
     public DashState CurrentDashState { get { return m_CurrentDashState; } }
 
@@ -37,11 +38,14 @@ public class Dashable : MonoBehaviour
 
     public void DisableDashability()
     {
+        ghostPool.StopSpawnGhost();
         SetState(DashState.Cooldown);
     }
 
     public void EnableDashability(float duration, bool grounded)
     {
+        ghostPool.StartSpawnGhost();
+
         if (grounded)
         {
             SetState(DashState.Dashing);
