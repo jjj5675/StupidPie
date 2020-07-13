@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c97932c31ce2748a74eac74caaf66f, type: 3}
   m_Name: ScoreData
   m_EditorClassIdentifier: 
-  scoreUI: {fileID: 0}
-  newScore: 1
-  savedScore: 1
+  newScore: 30
+  savedScore: 0
