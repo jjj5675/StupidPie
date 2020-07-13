@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dffd9930ce36b4e49ab7aa3082faba70, type: 3}
   m_Name: Phrases 5
   m_EditorClassIdentifier: 
-  key: Tutorial A-4
+  key: Tutorial A-5
   phrases:
   - name: "\uC544\uC774\uB808\uC2A4"
     portrait: 
