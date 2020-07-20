@@ -68,10 +68,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 2.716666666666667
+    m_Start: 4.25
     m_ClipIn: 0
     m_Asset: {fileID: -6684239668376969327}
-    m_Duration: 9.366666666666662
+    m_Duration: 7.466666666666659
     m_TimeScale: 1
     m_ParentTrack: {fileID: -8786097330273576139}
     m_EaseInDuration: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: DialogueClip(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
-    phraseKey: Tutorial A-4
+    phraseKey: Tutorial A-5
     textIndex: 2
     pause: 1
 --- !u!114 &-6747741468759120117
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: DialogueClip(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
-    phraseKey: Tutorial A-4
+    phraseKey: Tutorial A-5
     textIndex: 5
     pause: 1
 --- !u!114 &-6684239668376969327
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0fc6f5187a81dc47999eefade6f0935, type: 3}
-  m_Name: Track Group
+  m_Name: Dialogue
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: DialogueClip(Clone)
   m_EditorClassIdentifier: 
   template:
-    phraseKey: Tutorial A-4
+    phraseKey: Tutorial A-5
     textIndex: 1
     pause: 1
 --- !u!114 &-4046487362246756451
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: DialogueClip(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
-    phraseKey: Tutorial A-4
+    phraseKey: Tutorial A-5
     textIndex: 3
     pause: 1
 --- !u!114 &-1222070442910133619
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 2.716666666666667
+    m_Start: 4.25
     m_ClipIn: 0
     m_Asset: {fileID: -568149199664981680}
     m_Duration: 0.75
@@ -411,7 +411,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 3.95
+    m_Start: 5.566666666666666
     m_ClipIn: 0
     m_Asset: {fileID: -5709760510607605672}
     m_Duration: 0.36666666666666625
@@ -480,7 +480,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 7.183333333333334
+    m_Start: 6.816666666666666
     m_ClipIn: 0
     m_Asset: {fileID: -6810363616073854997}
     m_Duration: 0.38333333333333286
@@ -549,7 +549,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 7.95
+    m_Start: 7.583333333333334
     m_ClipIn: 0
     m_Asset: {fileID: -1861182783037622485}
     m_Duration: 0.39999999999999947
@@ -618,7 +618,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 8.566666666666666
+    m_Start: 8.199999999999998
     m_ClipIn: 0
     m_Asset: {fileID: 8464194855601617027}
     m_Duration: 2.0500000000000007
@@ -687,7 +687,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 11.05
+    m_Start: 10.683333333333335
     m_ClipIn: 0
     m_Asset: {fileID: -6747741468759120117}
     m_Duration: 0.39999999999999947
@@ -756,7 +756,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 11.68333333333333
+    m_Start: 11.316666666666665
     m_ClipIn: 0
     m_Asset: {fileID: 3167661685638793512}
     m_Duration: 0.39999999999999947
@@ -836,7 +836,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0fc6f5187a81dc47999eefade6f0935, type: 3}
-  m_Name: Track Group (1)
+  m_Name: ani
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -864,7 +864,7 @@ MonoBehaviour:
   m_Name: DialogueClip
   m_EditorClassIdentifier: 
   template:
-    phraseKey: Tutorial A-4
+    phraseKey: Tutorial A-5
     textIndex: 0
     pause: 1
 --- !u!114 &11400000
@@ -967,10 +967,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 2.716666666666667
+    m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: -2797461227127155229}
-    m_Duration: 4.116666666666666
+    m_Duration: 3.566666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: 2311149760258507877}
     m_EaseInDuration: 0
@@ -1050,7 +1050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
   m_Name: Signal Emitter
   m_EditorClassIdentifier: 
-  m_Time: 12.083333333333329
+  m_Time: 11.716666666666665
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 60f0c62484e73e546b5a6b4be76a3bb9, type: 2}
@@ -1076,10 +1076,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 2.716666666666667
+    m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: -8512352906025827021}
-    m_Duration: 2.3499999999999996
+    m_Duration: 1.4166666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: 2747273634990080424}
     m_EaseInDuration: 0
@@ -1141,14 +1141,14 @@ MonoBehaviour:
     m_Recordable: 0
     m_PostExtrapolationMode: 1
     m_PreExtrapolationMode: 1
-    m_PostExtrapolationTime: 0.7666666666666666
-    m_PreExtrapolationTime: 2.716666666666667
+    m_PostExtrapolationTime: 0.6500000000000001
+    m_PreExtrapolationTime: 0
     m_DisplayName: FadeOut
   - m_Version: 1
-    m_Start: 5.833333333333333
+    m_Start: 2.066666666666667
     m_ClipIn: 0
     m_Asset: {fileID: -4046487362246756451}
-    m_Duration: 1
+    m_Duration: 1.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 2747273634990080424}
     m_EaseInDuration: 0
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   m_Name: DialogueClip(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
-    phraseKey: Tutorial A-4
+    phraseKey: Tutorial A-5
     textIndex: 6
     pause: 0
 --- !u!114 &4180989323957214534
@@ -1285,7 +1285,7 @@ MonoBehaviour:
   m_Name: DialogueClip(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
-    phraseKey: Tutorial A-4
+    phraseKey: Tutorial A-5
     textIndex: 4
     pause: 1
 --- !u!114 &8660105680499395401
@@ -1310,16 +1310,16 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 2.716666666666667
+    m_Start: 1.7
     m_ClipIn: 0
     m_Asset: {fileID: 1868498283509032394}
-    m_Duration: 7.9
+    m_Duration: 8.549999999999995
     m_TimeScale: 1
     m_ParentTrack: {fileID: 8660105680499395401}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 2.0500000000000007
+    m_BlendOutDuration: 2.049999999999997
     m_MixInCurve:
       serializedVersion: 2
       m_Curve: []
@@ -1361,15 +1361,15 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: CMCutscene1Cam6
   - m_Version: 1
-    m_Start: 8.566666666666666
+    m_Start: 8.199999999999998
     m_ClipIn: 0
     m_Asset: {fileID: 538339905364955005}
-    m_Duration: 3.516666666666662
+    m_Duration: 3.900000000000002
     m_TimeScale: 1
     m_ParentTrack: {fileID: 8660105680499395401}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 2.0500000000000007
+    m_BlendInDuration: 2.049999999999997
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
