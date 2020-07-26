@@ -122,4 +122,59 @@ public abstract class Platform : MonoBehaviour
     {
         m_Started = false;
     }
+
+    /// <summary>
+    /// ///////
+    /// </summary>
+
+    public Vector2 liftSpeed;
+
+    protected List<StaticMover> m_StaticMovers = new List<StaticMover>();
+
+    private Vector2 m_MovementCounter;
+
+    public void MoveStaticMovers(Vector2 amount)
+    {
+        foreach (StaticMover staticMover in m_StaticMovers)
+        {
+            staticMover.Move(amount);
+        }
+    }
+
+    public bool MoveVCollideSolids(float moveV)
+    {
+        if(Time.deltaTime == 0f)
+        {
+            liftSpeed.y = 0f;
+        }
+        else
+        {
+            liftSpeed.y = moveV / Time.deltaTime;
+        }
+
+        m_MovementCounter.y = m_MovementCounter.y + moveV;
+        int num = Mathf.RoundToInt(m_MovementCounter.y);
+
+        if(num != 0)
+        {
+            m_MovementCounter.y = m_MovementCounter.y - num;
+            return MoveVExactCollideSolids(num);
+        }
+
+        return false;
+    }
+
+    public bool MoveVExactCollideSolids(int moveV)
+    {
+        float y = transform.position.y;
+        float num = Mathf.Sign(moveV);
+        int num2 = 0;
+        Platform platform = null;
+
+        while(moveV != 0)
+        {
+
+        }
+        return true;
+    }
 }
