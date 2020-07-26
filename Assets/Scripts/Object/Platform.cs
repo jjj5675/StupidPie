@@ -133,6 +133,8 @@ public abstract class Platform : MonoBehaviour
 
     private Vector2 m_MovementCounter;
 
+    public virtual void MoveVExact(int move) { }
+
     public void MoveStaticMovers(Vector2 amount)
     {
         foreach (StaticMover staticMover in m_StaticMovers)
@@ -141,7 +143,7 @@ public abstract class Platform : MonoBehaviour
         }
     }
 
-    public bool MoveVCollideSolids(float moveV)
+    public bool MoveVCollideSolids(float moveV, Collider2D self, ContactFilter2D contactFilter)
     {
         if(Time.deltaTime == 0f)
         {
@@ -158,23 +160,37 @@ public abstract class Platform : MonoBehaviour
         if(num != 0)
         {
             m_MovementCounter.y = m_MovementCounter.y - num;
-            return MoveVExactCollideSolids(num);
+            return MoveVExactCollideSolids(num, self, contactFilter);
         }
 
         return false;
     }
 
-    public bool MoveVExactCollideSolids(int moveV)
+    public bool MoveVExactCollideSolids(int moveV, Collider2D self, ContactFilter2D contactFilter)
     {
         float y = transform.position.y;
-        float num = Mathf.Sign(moveV);
+        int num = (int)Mathf.Sign(moveV);
         int num2 = 0;
-        Platform platform = null;
+        List<Collider2D> results = new List<Collider2D>();
 
         while(moveV != 0)
         {
+            transform.position += Vector3.up * num;
+            self.OverlapCollider(contactFilter, results);
 
+            if(results.Count != 0)
+            {
+                break;
+            }
+
+            num2 += num;
+            moveV -= num;
+            transform.position = new Vector3(transform.position.x, transform.position.y + num, transform.position.z);
         }
-        return true;
+
+        transform.position = new Vector3(transform.position.x, y, transform.position.z);
+        MoveVExact(num2);
+
+        return results.Count != 0;
     }
 }

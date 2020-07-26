@@ -99,15 +99,29 @@ public class FallingPlatform : Platform
 
                 m_Velocity += Vector2.down * distanceToGo * Time.deltaTime;
 
-                m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
+                ContactFilter2D contactFilter = new ContactFilter2D();
+                contactFilter.layerMask = 1 << LayerMask.NameToLayer("Platform");
+                contactFilter.useLayerMask = true;
 
-                if (0 < platformCatcher.CaughtObjectCount)
+                if (MoveVCollideSolids(m_Velocity.y, m_Box, contactFilter))
                 {
-                    platformCatcher.MoveCaughtObjects(m_Velocity);
+                    m_CanFall = false;
+                    m_Velocity = Vector2.zero;
+                }
+                else
+                {
+                    m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
+
+                    if (0 < platformCatcher.CaughtObjectCount)
+                    {
+                        platformCatcher.MoveCaughtObjects(m_Velocity);
+                    }
                 }
             }
 
-            CheckBottomEndCollider();
+            //CheckBottomEndCollider();
+
+
 
             if (transform.position.y < confinerBoundsMinY)
             {
