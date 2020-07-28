@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.Tilemaps;
 
 public abstract class Platform : MonoBehaviour
@@ -145,7 +146,7 @@ public abstract class Platform : MonoBehaviour
 
     public bool MoveVCollideSolids(float moveV, Collider2D self, ContactFilter2D contactFilter)
     {
-        if(Time.deltaTime == 0f)
+        if (Time.deltaTime == 0f)
         {
             liftSpeed.y = 0f;
         }
@@ -157,7 +158,7 @@ public abstract class Platform : MonoBehaviour
         m_MovementCounter.y = m_MovementCounter.y + moveV;
         int num = Mathf.RoundToInt(m_MovementCounter.y);
 
-        if(num != 0)
+        if (num != 0)
         {
             m_MovementCounter.y = m_MovementCounter.y - num;
             return MoveVExactCollideSolids(num, self, contactFilter);
@@ -168,29 +169,80 @@ public abstract class Platform : MonoBehaviour
 
     public bool MoveVExactCollideSolids(int moveV, Collider2D self, ContactFilter2D contactFilter)
     {
-        float y = transform.position.y;
+        float y = self.offset.y;
         int num = (int)Mathf.Sign(moveV);
         int num2 = 0;
         List<Collider2D> results = new List<Collider2D>();
+        Collider2D solid = null;
 
-        while(moveV != 0)
+        while (moveV != 0)
         {
-            transform.position += Vector3.up * num;
+            self.offset += Vector2.up * num;
             self.OverlapCollider(contactFilter, results);
 
-            if(results.Count != 0)
+            if (results.Count != 0)
             {
-                break;
+                int i = 0;
+
+                do
+                {
+                    if (results[i].GetType() == typeof(CompositeCollider2D))
+                    {
+                        var tileMap = results[i].GetComponent<Tilemap>();
+
+                        if (tileMap != null)
+                        {
+                            Vector2Int[] way = new Vector2Int[]
+                            {
+                                new Vector2Int(-1,0),
+                                new Vector2Int(1,0),
+                                new Vector2Int(0,-1),
+                                new Vector2Int(0,1),
+                                new Vector2Int(-1,1),
+                                new Vector2Int(-1,-1),
+                                new Vector2Int(1,1),
+                                new Vector2Int(1,-1)
+                            };
+
+                            Vector3Int localPos = tileMap.WorldToCell(transform.TransformPoint(results[i].bounds.center));
+
+                            for(int k = 0; k<way.Length; k++)
+                            {
+                                int nx = localPos.x + way[k].x;
+                                int ny = localPos.y + way[k].y;
+
+                                Vector3Int tilePos = new Vector3Int(nx, ny, localPos.z);
+
+                                if(tileMap.HasTile(tilePos))
+                                {
+                                    Vector2 size = results[i].bounds.size;
+
+                                    Vector3Int topRight = tileMap.WorldToCell(new Vector3(localPos.x + size.x * 0.5f, localPos.y + size.y * 0.5f));
+                                    Vector3Int bottomLeft = tileMap.WorldToCell(new Vector3(localPos.x - size.x * 0.5f, localPos.y - size.y * 0.5f));
+
+                                    if(bottomLeft.y > tilePos.y + 0.5f && topRight.y < tilePos.y - 0.5f)
+                                    {
+                                        solid = results[i];
+                                        break;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
+                    i++;
+                } while (solid == null && i < results.Count);
             }
 
             num2 += num;
             moveV -= num;
-            transform.position = new Vector3(transform.position.x, transform.position.y + num, transform.position.z);
+            self.offset = new Vector2(self.offset.x, self.offset.y + num);
         }
 
-        transform.position = new Vector3(transform.position.x, y, transform.position.z);
+        self.offset = new Vector2(self.offset.x, y);
         MoveVExact(num2);
 
-        return results.Count != 0;
+        return solid != null;
     }
 }
