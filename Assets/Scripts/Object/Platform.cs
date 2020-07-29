@@ -144,6 +144,110 @@ public abstract class Platform : MonoBehaviour
         }
     }
 
+    public bool Intersects(Bounds a, Tilemap b)
+    {
+        return (a.min.x < b.transform.position.x + b.size.x) && (b.transform.position.x < a.max.x) 
+            && (a.min.y < b.transform.position.y + b.size.y) && (b.transform.position.y < a.max.y);
+    }
+
+    public bool Collide(Collider2D self, Collider2D other)
+    {
+        //if(other is BoxCollider2D)
+        //{
+        //    return Collide(other as BoxCollider2D);
+        //}
+        if(other is TilemapCollider2D)
+        {
+            return Collide(self, other as TilemapCollider2D);
+        }
+        //if(other is CircleCollider2D)
+        //{
+        //    return Collide(other as CircleCollider2D);
+        //}
+        throw new System.Exception("해당 충돌체 타입에 맞는 충돌은 구현되지 않습니다.");
+    }
+
+    //bool Collide(BoxCollider2D box)
+    //{
+    //    return true;
+    //}
+    bool Collide(Collider2D a, TilemapCollider2D b)
+    {
+        Tilemap tilemap = b.GetComponent<Tilemap>();
+
+        if (Intersects(a.bounds, tilemap))
+        {
+            int num = (int)((a.bounds.min.x - tilemap.transform.position.x) / tilemap.size.x);
+            int num2 = (int)((a.bounds.max.y - tilemap.transform.position.y) / tilemap.size.y);
+            int width = (int)((a.bounds.max.x - tilemap.transform.position.x - 1f) / tilemap.size.x) - num + 1;
+            int height = (int)((a.bounds.min.y - tilemap.transform.position.y - 1f) / tilemap.size.y) - num2 + 1;
+            return CheckRect(num, num2, width, height, tilemap);
+        }
+
+        return true;
+    }
+
+    bool CheckRect(int x, int y, int width, int height, Tilemap tilemap)
+    {
+        if(x < 0)
+        {
+            width += x;
+            x = 0;
+        }
+        if(y<0)
+        {
+            height += y;
+            y = 0;
+        }
+        if(x+width > tilemap.size.x)
+        {
+            width = tilemap.size.x - x;
+        }
+        if(y+height > tilemap.size.y)
+        {
+            height = tilemap.size.y - y;
+        }
+        for(int i=0; i<width; i++)
+        {
+            for(int j=0; j<height; j++)
+            {
+                if(tilemap.HasTile(new Vector3Int(x + i, y + j, 0)))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    //bool Collide(CircleCollider2D circle)
+    //{
+    //    return true;
+    //}
+
+    public Collider2D First(Collider2D a, IEnumerable<Collider2D> b)
+    {
+        foreach(var entity in b)
+        {
+            if(a != null && entity != null && (a!= entity && entity.enabled) && Collide(a, entity))
+            {
+                return entity;
+            }
+        }
+        return null;
+    }
+
+    public Collider2D CollideFirst(Collider2D a, IEnumerable<Collider2D> b, Vector2 at)
+    {
+        Vector2 position = a.transform.position;
+        a.transform.position = at;
+        Collider2D result = First(a, b);
+        a.transform.position = position;
+        return result;
+    }
+
+
     public bool MoveVCollideSolids(float moveV, Collider2D self, ContactFilter2D contactFilter)
     {
         if (Time.deltaTime == 0f)
@@ -204,7 +308,8 @@ public abstract class Platform : MonoBehaviour
                                 new Vector2Int(1,-1)
                             };
 
-                            Vector3Int localPos = tileMap.WorldToCell(transform.TransformPoint(results[i].bounds.center));
+
+                            Vector3Int localPos = tileMap.WorldToCell(self.bounds.center);
 
                             for(int k = 0; k<way.Length; k++)
                             {
@@ -215,17 +320,18 @@ public abstract class Platform : MonoBehaviour
 
                                 if(tileMap.HasTile(tilePos))
                                 {
-                                    Vector2 size = results[i].bounds.size;
+                                    Vector2 size = self.bounds.size;
 
-                                    Vector3Int topRight = tileMap.WorldToCell(new Vector3(localPos.x + size.x * 0.5f, localPos.y + size.y * 0.5f));
-                                    Vector3Int bottomLeft = tileMap.WorldToCell(new Vector3(localPos.x - size.x * 0.5f, localPos.y - size.y * 0.5f));
+                                    Vector3 worldTilePos = tileMap.CellToWorld(tilePos);
 
-                                    if(bottomLeft.y > tilePos.y + 0.5f && topRight.y < tilePos.y - 0.5f)
+                                    Vector2 topRight = new Vector2(localPos.x + size.x * 0.5f, localPos.y + size.y * 0.5f);
+                                    Vector2 bottomLeft = new Vector2(localPos.x - size.x * 0.5f, localPos.y - size.y * 0.5f);
+
+                                    if(bottomLeft.y < worldTilePos.y + 0.5f && topRight.y > worldTilePos.y - 0.5f)
                                     {
                                         solid = results[i];
                                         break;
                                     }
-
                                 }
                             }
                         }
