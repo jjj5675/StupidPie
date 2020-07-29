@@ -146,7 +146,7 @@ public abstract class Platform : MonoBehaviour
 
     public bool Intersects(Bounds a, Tilemap b)
     {
-        return (a.min.x < b.transform.position.x + b.size.x) && (b.transform.position.x < a.max.x) 
+        return (a.min.x < b.transform.position.x + b.size.x) && (b.transform.position.x < a.max.x)
             && (a.min.y < b.transform.position.y + b.size.y) && (b.transform.position.y < a.max.y);
     }
 
@@ -156,9 +156,9 @@ public abstract class Platform : MonoBehaviour
         //{
         //    return Collide(other as BoxCollider2D);
         //}
-        if(other is TilemapCollider2D)
+        if (other is CompositeCollider2D)
         {
-            return Collide(self, other as TilemapCollider2D);
+            return Collide(self, other.GetComponent<TilemapCollider2D>());
         }
         //if(other is CircleCollider2D)
         //{
@@ -184,34 +184,34 @@ public abstract class Platform : MonoBehaviour
             return CheckRect(num, num2, width, height, tilemap);
         }
 
-        return true;
+        return false;
     }
 
     bool CheckRect(int x, int y, int width, int height, Tilemap tilemap)
     {
-        if(x < 0)
+        if (x < 0)
         {
             width += x;
             x = 0;
         }
-        if(y<0)
+        if (y < 0)
         {
             height += y;
             y = 0;
         }
-        if(x+width > tilemap.size.x)
+        if (x + width > tilemap.size.x)
         {
             width = tilemap.size.x - x;
         }
-        if(y+height > tilemap.size.y)
+        if (y + height > tilemap.size.y)
         {
             height = tilemap.size.y - y;
         }
-        for(int i=0; i<width; i++)
+        for (int i = 0; i < width; i++)
         {
-            for(int j=0; j<height; j++)
+            for (int j = 0; j < height; j++)
             {
-                if(tilemap.HasTile(new Vector3Int(x + i, y + j, 0)))
+                if (tilemap.HasTile(new Vector3Int(x + i, y + j, 0)))
                 {
                     return true;
                 }
@@ -228,9 +228,9 @@ public abstract class Platform : MonoBehaviour
 
     public Collider2D First(Collider2D a, IEnumerable<Collider2D> b)
     {
-        foreach(var entity in b)
+        foreach (var entity in b)
         {
-            if(a != null && entity != null && (a!= entity && entity.enabled) && Collide(a, entity))
+            if (a != null && entity != null && (a != entity && entity.enabled) && Collide(a, entity))
             {
                 return entity;
             }
@@ -274,6 +274,7 @@ public abstract class Platform : MonoBehaviour
     public bool MoveVExactCollideSolids(int moveV, Collider2D self, ContactFilter2D contactFilter)
     {
         float y = self.offset.y;
+        //float y = transform.position.y;
         int num = (int)Mathf.Sign(moveV);
         int num2 = 0;
         List<Collider2D> results = new List<Collider2D>();
@@ -286,67 +287,22 @@ public abstract class Platform : MonoBehaviour
 
             if (results.Count != 0)
             {
-                int i = 0;
+                solid = CollideFirst(self, results, transform.position + Vector3.up * (float)num);
 
-                do
+                if(solid != null)
                 {
-                    if (results[i].GetType() == typeof(CompositeCollider2D))
-                    {
-                        var tileMap = results[i].GetComponent<Tilemap>();
-
-                        if (tileMap != null)
-                        {
-                            Vector2Int[] way = new Vector2Int[]
-                            {
-                                new Vector2Int(-1,0),
-                                new Vector2Int(1,0),
-                                new Vector2Int(0,-1),
-                                new Vector2Int(0,1),
-                                new Vector2Int(-1,1),
-                                new Vector2Int(-1,-1),
-                                new Vector2Int(1,1),
-                                new Vector2Int(1,-1)
-                            };
-
-
-                            Vector3Int localPos = tileMap.WorldToCell(self.bounds.center);
-
-                            for(int k = 0; k<way.Length; k++)
-                            {
-                                int nx = localPos.x + way[k].x;
-                                int ny = localPos.y + way[k].y;
-
-                                Vector3Int tilePos = new Vector3Int(nx, ny, localPos.z);
-
-                                if(tileMap.HasTile(tilePos))
-                                {
-                                    Vector2 size = self.bounds.size;
-
-                                    Vector3 worldTilePos = tileMap.CellToWorld(tilePos);
-
-                                    Vector2 topRight = new Vector2(localPos.x + size.x * 0.5f, localPos.y + size.y * 0.5f);
-                                    Vector2 bottomLeft = new Vector2(localPos.x - size.x * 0.5f, localPos.y - size.y * 0.5f);
-
-                                    if(bottomLeft.y < worldTilePos.y + 0.5f && topRight.y > worldTilePos.y - 0.5f)
-                                    {
-                                        solid = results[i];
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    i++;
-                } while (solid == null && i < results.Count);
+                    break;
+                }
             }
 
             num2 += num;
             moveV -= num;
+            //transform.position = new Vector3(transform.position.x, transform.position.y + (float)num, transform.position.z);
             self.offset = new Vector2(self.offset.x, self.offset.y + num);
         }
 
         self.offset = new Vector2(self.offset.x, y);
+        //transform.position = new Vector3(transform.position.x, y, transform.position.z);
         MoveVExact(num2);
 
         return solid != null;
