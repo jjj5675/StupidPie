@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class FallingPlatform : Platform
 {
     public PlatformCatcher platformCatcher;
     public float speed = 1.0f;
-    public float maxSpeed = 160;
+    public float maxSpeed = 0;
     public float waitFallingTime;
     public RandomAudioPlayer groundHitAudioPlayer;
 
     protected Rigidbody2D m_Rigidbody2D;
-    protected bool m_CanFall = false;
+    protected bool m_CanFall = true;
     protected Vector2 m_Velocity;
     protected BoxCollider2D m_Box;
     protected float m_CurrentDuration = 0;
@@ -24,13 +23,12 @@ public class FallingPlatform : Platform
     protected float m_RaycastDistance;
     protected bool m_IsGrounded;
     protected float confinerBoundsMinY;
-    protected bool m_Grounded = false;
 
     protected override void Initialise()
     {
         m_Box = GetComponent<BoxCollider2D>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-        m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
 
         m_GroundRaycastDistance = 0.00001f;
         m_RaycastDistance = m_Box.size.y * 0.5f + m_GroundRaycastDistance * 2f;
@@ -41,6 +39,7 @@ public class FallingPlatform : Platform
             platformCatcher = GetComponent<PlatformCatcher>();
         }
 
+        m_PlatformType = PlatformType.FALLING;
         m_StartingPosition = transform.position;
 
         var rootObj = gameObject.scene.GetRootGameObjects();
@@ -66,59 +65,59 @@ public class FallingPlatform : Platform
 
     public override void ResetPlatform()
     {
-        m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
         transform.position = m_StartingPosition;
         m_Rigidbody2D.position = m_StartingPosition;
+        m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
         m_Velocity = Vector2.zero;
         m_CurrentDuration = 0;
-        m_CanFall = false;
-        m_Grounded = false;
+        m_CanFall = true;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!m_Grounded && 0 < platformCatcher.CaughtObjectCount)
-        {
-            m_CanFall = true;
-        }
-
         if (!m_CanFall)
         {
             return;
         }
 
-        if (m_CurrentDuration < waitFallingTime)
+        if (0 < platformCatcher.CaughtObjectCount)
         {
-            m_CurrentDuration += Time.deltaTime;
+            m_Rigidbody2D.isKinematic = true;
         }
 
-        if (waitFallingTime <= m_CurrentDuration)
+        if (m_Rigidbody2D.isKinematic)
         {
-            float distanceToGo = speed * Time.deltaTime;
-
-            m_Velocity += Vector2.down * distanceToGo * Time.deltaTime;
-
-            m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
-
-            if (0 < platformCatcher.CaughtObjectCount)
+            if (m_CurrentDuration < waitFallingTime)
             {
-                platformCatcher.MoveCaughtObjects(m_Velocity);
+                m_CurrentDuration += Time.deltaTime;
             }
 
-            if(CheckBottomEndCollider())
+            if (waitFallingTime <= m_CurrentDuration)
             {
-                m_Grounded = true;
-            }
-        }
+                float distanceToGo = speed * Time.deltaTime;
 
-        if (transform.position.y < confinerBoundsMinY)
-        {
-            m_CanFall = false;
-            m_Velocity = Vector2.zero;
+                m_Velocity += Vector2.down * distanceToGo * Time.deltaTime;
+
+                m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + m_Velocity);
+
+                if (0 < platformCatcher.CaughtObjectCount)
+                {
+                    platformCatcher.MoveCaughtObjects(m_Velocity);
+                }
+            }
+
+            CheckBottomEndCollider();
+
+            if (transform.position.y < confinerBoundsMinY)
+            {
+                m_CanFall = false;
+                m_Velocity = Vector2.zero;
+            }
         }
     }
-    bool CheckBottomEndCollider()
+
+    void CheckBottomEndCollider()
     {
         if (m_Box != null)
         {
@@ -135,10 +134,11 @@ public class FallingPlatform : Platform
 
                     if (m_Velocity.y <= 0f && middleHitHeight < colliderHeight + m_GroundRaycastDistance)
                     {
-                        if (Publisher.Instance.TryGetObserver(m_FoundHits[i].collider, out Observer observer))
+                        if(Publisher.Instance.TryGetObserver(m_FoundHits[i].collider, out Observer observer))
                         {
                             observer.PlayerInfo.damageable.TakeDamage(null);
-                            return false;
+                            m_CanFall = false;
+                            return;
                         }
 
                         float distance = m_FoundHits[i].distance;
@@ -152,27 +152,25 @@ public class FallingPlatform : Platform
                             groundHitAudioPlayer.PlayRandomSound();
 
                             m_CanFall = false;
-                            m_Velocity = Vector2.zero;
-                            return true;
+                            return;
                         }
                     }
                 }
             }
+
+
         }
-
-        return false;
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+
+    //    if (m_Rigidbody2D != null)
+    //    {
+    //        Vector2 raycastStart = m_Rigidbody2D.position + m_Box.offset + Vector2.down * m_Box.size.y * 0.5f;
+
+    //        Gizmos.DrawCube(raycastStart, m_RaycastSize);
+    //    }
+    //}
 }
-
-//private void OnDrawGizmos()
-//{
-//    Gizmos.color = Color.red;
-
-//    if (m_Rigidbody2D != null)
-//    {
-//        Vector2 raycastStart = m_Rigidbody2D.position + m_Box.offset + Vector2.down * m_Box.size.y * 0.5f;
-
-//        Gizmos.DrawCube(raycastStart, m_RaycastSize);
-//    }
-//}
-//}

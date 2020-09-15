@@ -37,6 +37,7 @@ public class JumpPad : Platform
             m_TargetPosition.x = 0;
         }
 
+        m_PlatformType = PlatformType.JUMPING;
     }
 
     public override void ResetPlatform()

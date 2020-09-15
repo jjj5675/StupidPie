@@ -23,6 +23,7 @@ public class LightingPlatform : Platform
             m_Started = false;
         }
 
+        m_PlatformType = PlatformType.LIGHTING;
     }
 
     public override void ResetPlatform()

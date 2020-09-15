@@ -54,6 +54,7 @@ public class SpikeTrigger : Platform
             damager.DisableOnDamage();
         }
 
+        m_PlatformType = PlatformType.SPIKE_TRIGGER;
         m_CurrentTriggerState = TriggerState.EXIT;
         m_Box.isTrigger = true;
     }
