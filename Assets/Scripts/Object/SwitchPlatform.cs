@@ -34,7 +34,6 @@ public class SwitchPlatform : Platform
             edgeCollider = GetComponent<EdgeCollider2D>();
         }
 
-        m_PlatformType = PlatformType.SWITCH;
         edgeCollider.enabled = false;
 
         m_OverlapCharacterContactFilter.layerMask = overlapColliderMask;

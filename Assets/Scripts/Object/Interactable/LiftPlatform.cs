@@ -70,8 +70,6 @@ public class LiftPlatform : Platform
         {
             m_Started = false;
         }
-
-        m_PlatformType = PlatformType.MOVING;
     }
 
     public override void ResetPlatform()
