@@ -43,7 +43,6 @@ public class ReturningPlatform : Platform
         }
 
         m_Returnable = false;
-        m_PlatformType = PlatformType.RETURN;
     }
 
     public override void ResetPlatform()

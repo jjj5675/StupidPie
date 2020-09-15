@@ -4,11 +4,6 @@ using UnityEngine.Tilemaps;
 
 public abstract class Platform : MonoBehaviour
 {
-    public enum PlatformType
-    {
-        NONE, LIGHTING, MOVING, RETURN, OBSTACLE_TRIGGER, FALLING, JUMPING, SWITCH, SPIKE_TRIGGER
-    }
-
     protected enum TriggerState
     {
         ENTER, EXIT
@@ -16,7 +11,6 @@ public abstract class Platform : MonoBehaviour
 
     public bool isMovingAtStart = true;
 
-    protected PlatformType m_PlatformType;
     protected TriggerState m_CurrentTriggerState;
     protected bool m_Started = false;
 
@@ -122,4 +116,19 @@ public abstract class Platform : MonoBehaviour
     {
         m_Started = false;
     }
+
+    /// <summary>
+    /// ///////
+    /// </summary>
+
+    protected List<StaticMover> m_StaticMovers = new List<StaticMover>();
+
+    public void MoveStaticMovers(Vector2 amount)
+    {
+        foreach (StaticMover staticMover in m_StaticMovers)
+        {
+            staticMover.Move(amount);
+        }
+    }
+
 }
