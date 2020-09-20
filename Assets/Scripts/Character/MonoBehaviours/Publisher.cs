@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+//퍼블리셔는 저장된 옵저버 들에 대한 전체적인 통제를 담당하는 클래스.
 public class Publisher : MonoBehaviour
 {
     static private Publisher s_Instance;
@@ -11,11 +12,13 @@ public class Publisher : MonoBehaviour
 
     public List<Observer> Observers { get { return m_Observers; } }
 
+    //싱글톤
     private void Awake()
     {
         s_Instance = this;
     }
 
+    //옵저버를 추가하는 구문. 
     public Observer.Unsubscriber Subscribe(Observer observer)
     {
         if (!m_Observers.Contains(observer))
@@ -26,6 +29,8 @@ public class Publisher : MonoBehaviour
         return new Observer.Unsubscriber(m_Observers, observer);
     }
 
+
+    //충돌 검출을 위한 함수. 충돌한 컬라이더가 플레이어의 것인지 판단한다.
     public bool ColliderHasObserver(Collider2D collider)
     {
         foreach(var observer in m_Observers)
@@ -58,13 +63,18 @@ public class Publisher : MonoBehaviour
     {
         foreach(var observer in m_Observers)
         {
-            if(gain)
+            PlayerInput[] inp;
+            inp = observer.GetInput();
+            foreach (PlayerInput inps in inp)
             {
-                observer.GetInput().GainControl();
-            }
-            else
-            {
-                observer.GetInput().ReleaseControl(true);
+                if (gain)
+                {
+                    inps.GainControl();
+                }
+                else
+                {
+                    inps.ReleaseControl(true);
+                }
             }
         }
     }
@@ -73,7 +83,12 @@ public class Publisher : MonoBehaviour
     {
         foreach(var observer in m_Observers)
         {
-            observer.GetInput().Pause.GainControl();
+            PlayerInput[] inp;
+            inp = observer.GetInput();
+            foreach (PlayerInput inps in inp)
+            {
+                inps.Pause.GainControl();
+            }
         }
     }
 

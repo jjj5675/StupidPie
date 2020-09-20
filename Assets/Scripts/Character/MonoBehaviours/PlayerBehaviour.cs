@@ -83,19 +83,25 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Awake()
     {
-        dataBase.SetDate(transform, GetComponent<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>(), GetComponent<Scoreable>());
+        dataBase.SetDate(transform, GetComponents<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>(), GetComponent<Scoreable>());
+        //컴파일 시작시 초기화 구문. 컨트롤러 설정, 데미지 상호작용여부, 애니메이션, 컬라이더, 스코어링, 캐릭터컨트롤러(물리부) 초기화. 
+        //함수 자체가 초기화 함수임. f12 참조바람
         m_Observer = new Observer(dataBase);
         var publisher = FindObjectOfType<Publisher>();
+        //옵저버 클래스를 하나 생성해서 초기화 해 주고, 현 씬 내의 퍼블리셔를 넣어줌.
         m_Observer.Subscribe(publisher);
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        //애니메이션 링크를 초기화.
         SceneLinkedSMB<PlayerBehaviour>.Initialise(dataBase.animator, this);
 
+        //스프라이트의 좌우를 초기화.
         spriteRenderer.flipX = spriteOriginallyFacesRight;
 
+        //물리부 초기화.
         m_CurrentGravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         m_OriginallyGravity = m_CurrentGravity;
         m_JumpVelocity = Mathf.Abs(m_CurrentGravity) * timeToJumpApex;
@@ -110,47 +116,58 @@ public class PlayerBehaviour : MonoBehaviour
         m_WallLeapingEndWait = new WaitForSeconds(m_TimeToLeapHeight);
     }
 
+    //업데이트 부에서는 픽스드 타임과 무관한 시스템 업데이트를 담당함.
     void Update()
     {
-        if (dataBase.playerInput.DebugMenuOpen.Down)
+        foreach (PlayerInput inp in dataBase.playerInput)
         {
-            if (!debugMenu.activeSelf)
+            if (!inp.Pause.Down && !inp.DebugMenuOpen.Down)
+                continue;
+            //f12 디버그 메뉴 활성화 코드. 
+            if (inp.DebugMenuOpen.Down)
             {
-                Publisher.Instance.GainOrReleaseControl(false);
-                dataBase.playerInput.DebugMenuOpen.GainControl();
-                debugMenu.SetActive(true);
-            }
-            else
-            {
-                Publisher.Instance.GainOrReleaseControl(true);
-                debugMenu.SetActive(false);
-            }
-        }
-
-        if (dataBase.playerInput.Pause.Down)
-        {
-            if (!m_InPause)
-            {
-                if (ScreenFader.IsFading)
+                if (!debugMenu.activeSelf)
                 {
-                    return;
+                    Publisher.Instance.GainOrReleaseControl(false);
+                    inp.DebugMenuOpen.GainControl();
+                    debugMenu.SetActive(true);
                 }
-
-                Publisher.Instance.GainOrReleaseControl(false);
-                Publisher.Instance.GainPause();
-                m_InPause = true;
-                Time.timeScale = 0;
-                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("UIMenus", UnityEngine.SceneManagement.LoadSceneMode.Additive);
-                UIManager.Instance.ToggleHUDCanvas(false);
+                else
+                {
+                    Publisher.Instance.GainOrReleaseControl(true);
+                    debugMenu.SetActive(false);
+                }
             }
-        }
 
+            //정지버튼 활성화. 
+            if (inp.Pause.Down)
+            {
+                if (!m_InPause)
+                {
+                    if (ScreenFader.IsFading)
+                    {
+                        return;
+                    }
+
+                    Publisher.Instance.GainOrReleaseControl(false);
+                    Publisher.Instance.GainPause();
+                    m_InPause = true;
+                    Time.timeScale = 0;
+                    //메뉴 씬을 로드하되, 기존 씬을 닫지 않는다.
+                    UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("UIMenus", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+                    UIManager.Instance.ToggleHUDCanvas(false);
+                }
+            }
+            break;
+        }
+        //퍼즈를 끝냈을 때 다시 움직이도록 함.
         if (m_InPause && Time.timeScale == 1)
         {
             m_InPause = false;
         }
     }
 
+    //픽스드 업데이트. 인풋에 의한 움직임과, 속도값을 파라미터로 하는 애니메이션 컨트롤
     void FixedUpdate()
     {
         dataBase.character.Move(m_MoveVector * Time.deltaTime);
@@ -175,27 +192,39 @@ public class PlayerBehaviour : MonoBehaviour
         dataBase.character.Teleport(colliderSide);
     }
 
+    //이동 벡터를 파라미터로 이동벡터를 저장합니다. 실시간 저장.
     public void SetMoveVector(Vector2 newMovement)
     {
         m_MoveVector = newMovement;
     }
 
+    //수직 이동에 사용하는 특수 함수
     public void SetVerticalMovement(float newVerticalMovement)
     {
         m_MoveVector.y = newVerticalMovement;
     }
 
+    //수평 이동에 사용하는 특수 함수.
     public void SetHorizontalMovement(float newHorizontalMovement)
     {
         m_MoveVector.x = newHorizontalMovement;
     }
 
+
     public void GroundedHorizontalMovement()
     {
-        float desiredSpeed = dataBase.playerInput.Horizontal.Value * moveSpeed;
-        float acceleration = dataBase.playerInput.Horizontal.ReceivingInput ? groundAcceleration : groundDeceleration;
+        float desiredSpeed = 0; ;
+        float acceleration=0;
+        foreach (PlayerInput inp in dataBase.playerInput)
+        {
+            
+            desiredSpeed = inp.Horizontal.Value * moveSpeed;
+            acceleration = inp.Horizontal.ReceivingInput ? groundAcceleration : groundDeceleration;
+            
+            if (inp.Horizontal.ReceivingInput)
+                break;
+        }
         m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
-
         //if (m_CharacterController2D.collisionFlags.CheckForHorizontal())
         //{
         //    m_MoveVector.x = (m_CharacterController2D.sideRaycastDistance + m_Box.size.x * 0.5f) * PlayerInput.Instance.Horizontal.Value;
@@ -207,7 +236,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         dataBase.animator.SetBool(m_HashElectricContactPara, true);
         m_FlashPoint = position;
-        dataBase.playerInput.ReleaseControl(true);
+        foreach (PlayerInput inp in dataBase.playerInput)
+        {
+            
+            inp.ReleaseControl(true);
+        };
     }
 
     //animtion Clip
@@ -215,7 +248,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         dataBase.animator.SetBool(m_HashElectricContactPara, false);
         dataBase.character.Move(m_FlashPoint);
-        dataBase.playerInput.GainControl();
+        foreach (PlayerInput inp in dataBase.playerInput)
+        {
+            
+            inp.GainControl();
+        }
     }
 
     public bool GetFlash()
@@ -240,13 +277,17 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void CheckForIdleElapsed()
     {
-        Vector2 v = dataBase.playerInput.AxisInputsValue();
         m_IdleElapsedTime += Time.deltaTime;
-
-        if (v.x != 0 || v.y != 0 || dataBase.playerInput.Jump.Down)
+        foreach (PlayerInput inp in dataBase.playerInput)
         {
-            m_IdleElapsedTime = 0;
-            return;
+            Vector2 v = inp.AxisInputsValue();
+
+            if (v.x != 0 || v.y != 0 || inp.Jump.Down)
+            {
+                m_IdleElapsedTime = 0;
+                return;
+            }
+           
         }
 
         if (m_IdleElapsedTime > maxIdleDuration)
@@ -257,12 +298,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void CheckForBoring()
     {
-        Vector2 v = dataBase.playerInput.AxisInputsValue();
-
-        if (v.x != 0 || v.y != 0 || dataBase.playerInput.Jump.Down)
+        foreach (PlayerInput inp in dataBase.playerInput)
         {
-            m_IdleElapsedTime = 0;
-            dataBase.animator.SetBool(m_HashBoringPara, false);
+            Vector2 v = inp.AxisInputsValue();
+
+            if (v.x != 0 || v.y != 0 || inp.Jump.Down)
+            {
+                m_IdleElapsedTime = 0;
+                dataBase.animator.SetBool(m_HashBoringPara, false);
+            }
         }
     }
 
@@ -294,7 +338,16 @@ public class PlayerBehaviour : MonoBehaviour
 
     public bool CheckForJumpInput()
     {
-        return dataBase.playerInput.Jump.Down;
+        bool returnVal = false;
+        foreach(PlayerInput inp in dataBase.playerInput)
+        {
+            if(inp.Jump.Down)
+            {
+                returnVal = true;
+                break;
+            }
+        }
+        return returnVal;
     }
 
     public bool CheckForUseableXAxis()
@@ -335,18 +388,23 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void AirborneHorizontalMovement()
     {
-        float desiredSpeed = dataBase.playerInput.Horizontal.Value * moveSpeed;
+        foreach (PlayerInput inp in dataBase.playerInput)
+        {
+            if (!inp.Horizontal.ReceivingInput)
+                continue;
+            float desiredSpeed = inp.Horizontal.Value * moveSpeed;
 
-        float acceleration;
+            float acceleration;
 
-        if (!dataBase.playerInput.Horizontal.ReceivingInput)
-            acceleration = groundAcceleration * airborneAccelProportion;
-        else
-            acceleration = groundDeceleration * airborneDecelProportion;
+            if (!inp.Horizontal.ReceivingInput)
+                acceleration = groundAcceleration * airborneAccelProportion;
+            else
+                acceleration = groundDeceleration * airborneDecelProportion;
 
-        m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
+            m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
 
-
+            break;
+        }
         //if (m_CharacterController2D.collisionFlags.CheckForHorizontal())
         //{
         //    m_MoveVector.x = (m_CharacterController2D.sideRaycastDistance + m_Box.size.x * 0.5f) * PlayerInput.Instance.Horizontal.Value;
@@ -366,7 +424,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     public bool CheckForDashInput()
     {
-        bool inputDash = dataBase.playerInput.Dash.Down;
+        bool inputDash = false;
+        foreach(PlayerInput inp in dataBase.playerInput)
+        {
+            if (inp.Dash.Down)
+                inputDash = true;
+        }
 
         if (inputDash)
         {
@@ -386,28 +449,37 @@ public class PlayerBehaviour : MonoBehaviour
 
     void CalculateDashVelocity(out Vector2 movement)
     {
-        bool inputNone = dataBase.playerInput.CheckAxisInputsNone();
-        Vector2 dashDirection = dataBase.playerInput.AxisInputsValue();
-        dashDirection.Normalize();
-        m_DashDirection = dashDirection;
+        movement = Vector2.zero;
+        foreach(PlayerInput inp in dataBase.playerInput)
+        {
+            bool inputNone = inp.CheckAxisInputsNone();
 
-        if (inputNone)
-        {
-            movement = m_DashVelocity * GetFacing() * Vector2.right;
-            m_DashDirection.x = Mathf.Sign(movement.x);
-        }
-        else
-        {
-            movement = m_DashVelocity * dashDirection;
-        }
 
-        if (!Mathf.Approximately(m_DashDirection.x, 0) && !Mathf.Approximately(m_DashDirection.y, 0))
-        {
-            m_IsParabolaDash = true;
-        }
-        else
-        {
-            m_IsParabolaDash = false;
+            Vector2 dashDirection = inp.AxisInputsValue();
+            dashDirection.Normalize();
+            m_DashDirection = dashDirection;
+
+            if (inputNone)
+            {
+                movement = m_DashVelocity * GetFacing() * Vector2.right;
+                m_DashDirection.x = Mathf.Sign(movement.x);
+            }
+            else
+            {
+                movement = m_DashVelocity * dashDirection;
+            }
+
+            if (!Mathf.Approximately(m_DashDirection.x, 0) && !Mathf.Approximately(m_DashDirection.y, 0))
+            {
+                m_IsParabolaDash = true;
+            }
+            else
+            {
+                m_IsParabolaDash = false;
+            }
+
+            if (inputNone)
+                break;
         }
     }
 
@@ -481,16 +553,19 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void UpdateFacing()
     {
-        bool faceLeft = dataBase.playerInput.Horizontal.Value < 0f;
-        bool faceRight = dataBase.playerInput.Horizontal.Value > 0f;
+        foreach (PlayerInput inp in dataBase.playerInput)
+        {
+            bool faceLeft = inp.Horizontal.Value < 0f;
+            bool faceRight = inp.Horizontal.Value > 0f;
 
-        if (faceLeft)
-        {
-            spriteRenderer.flipX = !spriteOriginallyFacesRight;
-        }
-        else if (faceRight)
-        {
-            spriteRenderer.flipX = spriteOriginallyFacesRight;
+            if (faceLeft)
+            {
+                spriteRenderer.flipX = !spriteOriginallyFacesRight;
+            }
+            else if (faceRight)
+            {
+                spriteRenderer.flipX = spriteOriginallyFacesRight;
+            }
         }
     }
 
@@ -574,7 +649,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void GrabbingWallHorizontalMovement()
     {
-        m_MoveVector.x = dataBase.playerInput.Horizontal.Value;
+        foreach (PlayerInput inp in dataBase.playerInput)
+        {
+            if(inp.Horizontal.ReceivingInput)
+              m_MoveVector.x = inp.Horizontal.Value;
+        }
     }
 
     public void SlidingMovement()
@@ -596,20 +675,24 @@ public class PlayerBehaviour : MonoBehaviour
 
         int wallDirection = dataBase.character.collisionFlags.IsLeftSide ? -1 : 1;
 
-        if (dataBase.playerInput.Horizontal.Value == wallDirection)
+        foreach (PlayerInput inp in dataBase.playerInput)
         {
-            m_MoveVector.x = -wallDirection * wallLeapVelocity.x;
-            m_MoveVector.y = wallLeapVelocity.y;
-            UpdateFacing(-wallDirection < 0);
-
-            m_UseableXAxis = false;
-
-            if (m_WallLeapCoroutine != null)
+            if (inp.Horizontal.Value == wallDirection)
             {
-                StopCoroutine(m_WallLeapCoroutine);
-            }
+                m_MoveVector.x = -wallDirection * wallLeapVelocity.x;
+                m_MoveVector.y = wallLeapVelocity.y;
+                UpdateFacing(-wallDirection < 0);
 
-            m_WallLeapCoroutine = StartCoroutine(WaitForWallLeapingEnd(m_WallLeapingEndWait));
+                m_UseableXAxis = false;
+
+                if (m_WallLeapCoroutine != null)
+                {
+                    StopCoroutine(m_WallLeapCoroutine);
+                }
+
+                m_WallLeapCoroutine = StartCoroutine(WaitForWallLeapingEnd(m_WallLeapingEndWait));
+                break;
+            }
         }
     }
 
@@ -633,13 +716,17 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void OnDie()
     {
-        if (!dataBase.playerInput.HaveControl)
+        foreach (PlayerInput inp in dataBase.playerInput)
         {
-            return;
-        }
+            if (!inp.HaveControl)
+            {
+                return;
+            }
 
-        dataBase.animator.SetTrigger(m_HashDeadPara);
-        StartCoroutine(DieRespawnCoroutine());
+            dataBase.animator.SetTrigger(m_HashDeadPara);
+            StartCoroutine(DieRespawnCoroutine());
+            break;
+        }
     }
 
     //Flash때도 체크

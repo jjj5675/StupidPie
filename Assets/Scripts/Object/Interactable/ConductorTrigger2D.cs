@@ -133,7 +133,16 @@ public class ConductorTrigger2D : Platform
                     return;
                 }
 
-                if (playerBehaviour.dataBase.playerInput.Interact.Down)
+                bool iterating = false;
+                foreach (PlayerInput inp in playerBehaviour.dataBase.playerInput)
+                {
+                    if (inp.Interact.Down)
+                    {
+                        iterating = true;
+                        break;
+                    }
+                }
+                if (iterating)
                 {
                     if (!playerBehaviour.dataBase.character.collisionFlags.IsGrounded)
                     {

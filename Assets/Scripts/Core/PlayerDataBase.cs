@@ -10,7 +10,7 @@ public class PlayerDataBase : ScriptableObject
     [HideInInspector]
     public Transform transform;
     [HideInInspector]
-    public PlayerInput playerInput;
+    public PlayerInput[] playerInput;
     [HideInInspector]
     public Damageable damageable;
     [HideInInspector]
@@ -22,7 +22,7 @@ public class PlayerDataBase : ScriptableObject
     [HideInInspector]
     public Scoreable scoreable;
 
-    public void SetDate(Transform transform, PlayerInput playerInput, Damageable damageable, Animator animator, Collider2D collider, CharacterController2D character, Scoreable scoreable)
+    public void SetDate(Transform transform, PlayerInput[] playerInput, Damageable damageable, Animator animator, Collider2D collider, CharacterController2D character, Scoreable scoreable)
     {
         this.transform = transform;
         this.playerInput = playerInput;
@@ -32,22 +32,25 @@ public class PlayerDataBase : ScriptableObject
         this.character = character;
         this.scoreable = scoreable;
 
-        if(abilityTypes.Contains(AbilityType.DASH))
+        foreach (PlayerInput inp in this.playerInput)
         {
-            this.playerInput.Dash.Enable();
-        }
-        else
-        {
-            this.playerInput.Dash.Disable();
-        }
+            if (abilityTypes.Contains(AbilityType.DASH))
+            {
+                inp.Dash.Enable();
+            }
+            else
+            {
+                inp.Dash.Disable();
+            }
 
-        if (abilityTypes.Contains(AbilityType.INTERACTION))
-        {
-            this.playerInput.Interact.Enable();
-        }
-        else
-        {
-            this.playerInput.Interact.Disable();
+            if (abilityTypes.Contains(AbilityType.INTERACTION))
+            {
+                inp.Interact.Enable();
+            }
+            else
+            {
+                inp.Interact.Disable();
+            }
         }
     }
 }
