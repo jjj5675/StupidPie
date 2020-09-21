@@ -126,13 +126,13 @@ MonoBehaviour:
     m_Start: 1.3833333333333333
     m_ClipIn: 0
     m_Asset: {fileID: -8972423228371098546}
-    m_Duration: 4.666666666666666
+    m_Duration: 6.583333333333334
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7838253978084488268}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: 0.5166666666666666
-    m_BlendOutDuration: 4.149999999999999
+    m_BlendOutDuration: 0.4666666666666668
     m_MixInCurve:
       serializedVersion: 2
       m_Curve: []
@@ -156,15 +156,15 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: CMCutscene1Cam8
   - m_Version: 1
-    m_Start: 6.283333333333333
+    m_Start: 7.5
     m_ClipIn: 0
     m_Asset: {fileID: 5648680224944981574}
-    m_Duration: 0.6833333333333336
+    m_Duration: 0.9000000000000004
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7838253978084488268}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.23333333333333428
+    m_BlendInDuration: 0.4666666666666668
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -188,39 +188,6 @@ MonoBehaviour:
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
     m_DisplayName: CM vcam - Main
-  - m_Version: 1
-    m_Start: 1.9
-    m_ClipIn: 0
-    m_Asset: {fileID: 6368660519055873958}
-    m_Duration: 4.616666666666667
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: -7838253978084488268}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: 4.149999999999999
-    m_BlendOutDuration: 0.23333333333333428
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: CMCutscene1Cam9
   m_Markers:
     m_Objects: []
 --- !u!114 &-7076810802579076410
@@ -1157,19 +1124,3 @@ MonoBehaviour:
     phraseKey: Tutorial A-8
     textIndex: 4
     pause: 1
---- !u!114 &6368660519055873958
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
-  m_Name: CinemachineShot(Clone)(Clone)
-  m_EditorClassIdentifier: 
-  DisplayName: 
-  VirtualCamera:
-    exposedName: 2f6a6f4cb3123fb48b4391d3ccfa6c44
-    defaultValue: {fileID: 0}
