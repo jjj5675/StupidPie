@@ -295,7 +295,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: CM vcam - Seri
+    m_DisplayName: CMCutscene1Cam2
   - m_Version: 1
     m_Start: 23.633333333333333
     m_ClipIn: 0
