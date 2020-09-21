@@ -9,6 +9,8 @@ public class SpikeTrigger : Platform
     public Damager damager;
     //public UnityEvent OnEabled;
     //public UnityEvent OnDisabled;
+    public AudioSource OnSound;
+    public AudioSource OffSound;
 
     protected BoxCollider2D m_Box;
     protected SpikeTrigger[] m_SpikeTriggers;
@@ -197,7 +199,7 @@ public class SpikeTrigger : Platform
             if (observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
             {
                 m_CurrentTriggerState = TriggerState.ENTER;
-
+                OffSound.Play();
                 if (m_Started)
                 {
                     DisableOverlapDamagers(true);
@@ -227,7 +229,7 @@ public class SpikeTrigger : Platform
                 if (Resettable)
                 {
                     ChangeOnce = false;
-
+                    OnSound.Play();
                     if (m_Started)
                     {
                         EnableOverlapDamagers(false, false);

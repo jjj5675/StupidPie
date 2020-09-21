@@ -13,6 +13,8 @@ public class ConductorTrigger2D : Platform
     public UnityEvent OnDisabled;
     public GameObject hologram;
 
+    public AudioSource OnSound;
+    public AudioSource OffSound;
 
     Animator m_Animator;
     Collider2D m_WireCollider;
@@ -119,6 +121,13 @@ public class ConductorTrigger2D : Platform
             {
                 m_DataBaseCache.Add(collision, collision.GetComponent<PlayerBehaviour>());
             }
+            if(collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+            {
+                if (!m_TriggerEnabled)
+                    OnSound.Play();
+                else
+                    OffSound.Play();
+            }
         }
     }
 
@@ -191,11 +200,13 @@ public class ConductorTrigger2D : Platform
         if (!m_TriggerEnabled)
         {
             m_TriggerEnabled = true;
+            //OnSound.Play();
             OnEnabled.Invoke();
         }
         else
         {
             m_TriggerEnabled = false;
+            //OffSound.Play();
             OnDisabled.Invoke();
 
             foreach (var platform in m_PlatformCache)

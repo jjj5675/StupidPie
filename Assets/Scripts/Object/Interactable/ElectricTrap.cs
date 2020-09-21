@@ -13,6 +13,7 @@ public class ElectricTrap : MonoBehaviour
     */
 
     public float transitionDistance;
+    public RandomAudioPlayer randomPlayer;
 
     Dictionary<Collider2D, PlayerBehaviour> m_DataBaseCache = new Dictionary<Collider2D, PlayerBehaviour>(2);
     Tilemap m_Tilemap;
@@ -35,6 +36,15 @@ public class ElectricTrap : MonoBehaviour
             new Vector2Int(1,1),
             new Vector2Int(1,-1),
         };
+        randomPlayer = GetComponent<RandomAudioPlayer>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if( collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+        {
+            randomPlayer.PlayRandomSound();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -55,6 +65,7 @@ public class ElectricTrap : MonoBehaviour
 
                 if (behaviour.dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
                 {
+                    
                     if(behaviour.GetFlash())
                     {
                         return;

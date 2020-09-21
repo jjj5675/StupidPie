@@ -106,6 +106,7 @@ public class SwitchPlatform : Platform
             {
                 m_SpriteRenderer.sprite = m_CurrentWhiteSprite;
                 m_IsPrevCollision = !m_IsPrevCollision;
+                transform.GetChild(0).GetComponents<AudioSource>()[m_IsPrevCollision? 0:1].Play();
             }
 
             if (switchChangeDuration + whiteSpriteExitTime <= m_CurrentChangeDuration)

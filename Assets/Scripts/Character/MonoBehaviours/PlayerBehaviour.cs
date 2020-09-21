@@ -37,6 +37,7 @@ public class PlayerBehaviour : MonoBehaviour
     public RandomAudioPlayer footstepAudioPlayer;
     public RandomAudioPlayer jumpAudioPlayer;
     public RandomAudioPlayer wallSlidingAudioPlayer;
+    public RandomAudioPlayer batteryAudioPlayer;
 
     private bool m_InPause = false;
 
@@ -83,6 +84,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Awake()
     {
+        //후에 인스펙터로 옮길 부분
+        batteryAudioPlayer = transform.GetChild(0).GetChild(3).GetComponent<RandomAudioPlayer>();
         dataBase.SetDate(transform, GetComponents<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>(), GetComponent<Scoreable>());
         //컴파일 시작시 초기화 구문. 컨트롤러 설정, 데미지 상호작용여부, 애니메이션, 컬라이더, 스코어링, 캐릭터컨트롤러(물리부) 초기화. 
         //함수 자체가 초기화 함수임. f12 참조바람

@@ -23,6 +23,8 @@ public class FallingPlatform : Platform
     protected float m_RaycastDistance;
     protected bool m_IsGrounded;
     protected float confinerBoundsMinY;
+    protected RandomAudioPlayer PlayerOn;
+    protected RandomAudioPlayer FallDown;
 
     protected override void Initialise()
     {
@@ -33,6 +35,9 @@ public class FallingPlatform : Platform
         m_GroundRaycastDistance = 0.00001f;
         m_RaycastDistance = m_Box.size.y * 0.5f + m_GroundRaycastDistance * 2f;
         m_RaycastSize = new Vector2(m_Box.size.x * 0.9f, m_RaycastDistance);
+
+        PlayerOn = transform.GetChild(0).GetChild(1).GetComponent<RandomAudioPlayer>();
+        FallDown = transform.GetChild(0).GetChild(0).GetComponent<RandomAudioPlayer>();
 
         if (platformCatcher == null)
         {
@@ -84,6 +89,7 @@ public class FallingPlatform : Platform
         if (0 < platformCatcher.CaughtObjectCount)
         {
             m_Rigidbody2D.isKinematic = true;
+            PlayerOn.PlayRandomSound();
         }
 
         if (m_Rigidbody2D.isKinematic)
@@ -113,6 +119,7 @@ public class FallingPlatform : Platform
             {
                 m_CanFall = false;
                 m_Velocity = Vector2.zero;
+                FallDown.PlayRandomSound();
             }
         }
     }
