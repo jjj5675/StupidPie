@@ -86,7 +86,7 @@ public class FallingPlatform : Platform
             return;
         }
 
-        if (0 < platformCatcher.CaughtObjectCount)
+        if (0 < platformCatcher.CaughtObjectCount && !m_Rigidbody2D.isKinematic)
         {
             m_Rigidbody2D.isKinematic = true;
             PlayerOn.PlayRandomSound();
