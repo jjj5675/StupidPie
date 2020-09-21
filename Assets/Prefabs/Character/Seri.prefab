@@ -537,7 +537,7 @@ MonoBehaviour:
   footstepAudioPlayer: {fileID: 6508672889826544097}
   jumpAudioPlayer: {fileID: 5984608767778701181}
   wallSlidingAudioPlayer: {fileID: 283536652486144795}
-  batteryAudio: {fileID: 0}
+  batteryAudioPlayer: {fileID: 0}
 --- !u!114 &4717500339395800551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,7 +614,7 @@ MonoBehaviour:
     key: 293
     m_Enabled: 1
   Pause:
-    key: 27
+    key: 0
     m_Enabled: 1
   Jump:
     key: 122

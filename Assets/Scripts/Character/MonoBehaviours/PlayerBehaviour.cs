@@ -480,8 +480,8 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 m_IsParabolaDash = false;
             }
-
-            if (inputNone)
+            
+            if (!inputNone)
                 break;
         }
     }
