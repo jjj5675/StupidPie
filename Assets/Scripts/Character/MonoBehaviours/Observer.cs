@@ -48,9 +48,10 @@ public class Observer
 
     }
 
-    public PlayerInput GetInput()
+    public PlayerInput[] GetInput()
     {
-        if(!m_PlayerInfo.playerInput)
+        foreach(PlayerInput inp in m_PlayerInfo.playerInput)
+        if(!inp)
         {
             Debug.LogError("Player Input is null");
             return null;

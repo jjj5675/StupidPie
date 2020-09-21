@@ -21,6 +21,7 @@ public class Scoreable : MonoBehaviour
     public void GainScore(int amount)
     {
         scoreData.newScore += amount;
+        GetComponent<PlayerBehaviour>().batteryAudioPlayer.PlayRandomSound();
         OnScoreSet.Invoke(this);
     }
 
