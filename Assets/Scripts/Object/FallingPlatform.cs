@@ -44,7 +44,7 @@ public class FallingPlatform : Platform
             platformCatcher = GetComponent<PlatformCatcher>();
         }
 
-        m_PlatformType = PlatformType.FALLING;
+        //m_PlatformType = PlatformType.FALLING;
         m_StartingPosition = transform.position;
 
         var rootObj = gameObject.scene.GetRootGameObjects();
