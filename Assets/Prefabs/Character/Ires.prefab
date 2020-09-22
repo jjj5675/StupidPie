@@ -290,6 +290,151 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 44cad2981aa0f7f4fabfa2be8e34aaf4, type: 3}
   randomizePitch: 1
   pitchRange: 0.3
+--- !u!1 &5220967428615388417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3808361938081744407}
+  - component: {fileID: 2536231258190825654}
+  - component: {fileID: 2927971067509005969}
+  m_Layer: 9
+  m_Name: ScoreSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3808361938081744407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5220967428615388417}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7210565070284985016}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2536231258190825654
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5220967428615388417}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -2390286433049512437, guid: 966b21285010a824983bf90f5c7f2e8d,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &2927971067509005969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5220967428615388417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2554e1c2f98a3374fab9328bb3662695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: b70618ba95b94b2428ec78db8c82da0a, type: 3}
+  randomizePitch: 0
+  pitchRange: 0.1
 --- !u!1 &6098756807666833710
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +465,7 @@ Transform:
   - {fileID: 1209636865076098465}
   - {fileID: 6580219713718294897}
   - {fileID: 7265122118266047216}
+  - {fileID: 3808361938081744407}
   m_Father: {fileID: 7666998537461105929}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -485,6 +631,7 @@ GameObject:
   - component: {fileID: 7666998537461106166}
   - component: {fileID: 7666998537461105928}
   - component: {fileID: 7666998537461105930}
+  - component: {fileID: 4218227827964400225}
   - component: {fileID: 1914034950512473281}
   - component: {fileID: 7666998537461106163}
   m_Layer: 9
@@ -680,6 +827,7 @@ MonoBehaviour:
   footstepAudioPlayer: {fileID: 4390803623780421388}
   jumpAudioPlayer: {fileID: 3445271315309722779}
   wallSlidingAudioPlayer: {fileID: 899752117669758973}
+  batteryAudio: {fileID: 0}
 --- !u!114 &7666998537461105928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,6 +877,39 @@ MonoBehaviour:
   Vertical:
     positive: 119
     negative: 115
+--- !u!114 &4218227827964400225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7666998537461105933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 230fecccba1204543ba980ae3f35a7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugMenuOpen:
+    key: 330
+    m_Enabled: 1
+  Pause:
+    key: 331
+    m_Enabled: 1
+  Jump:
+    key: 332
+    m_Enabled: 1
+  Dash:
+    key: 334
+    m_Enabled: 1
+  Interact:
+    key: 335
+    m_Enabled: 1
+  Horizontal:
+    positive: 336
+    negative: 337
+  Vertical:
+    positive: 338
+    negative: 339
 --- !u!114 &1914034950512473281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,7 +979,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9015212111655770977}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.75, z: 0}
+  m_LocalPosition: {x: 0, y: 0.75, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7666998537461105929}
@@ -816,7 +997,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.87611866, g: 1, b: 0.6179246, a: 1}
-  m_Intensity: 10
+  m_Intensity: 5
   m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

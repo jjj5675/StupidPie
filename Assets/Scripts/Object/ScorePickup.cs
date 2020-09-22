@@ -24,7 +24,9 @@ public class ScorePickup : MonoBehaviour
     {
         if(Publisher.Instance.TryGetObserver(collision, out Observer observer))
         {
+            Debug.Log("!!");
             pickupState = PickupState.GAIN;
+            
             observer.PlayerInfo.scoreable.GainScore(scoreAmount);
             onGivingScore.Invoke();
         }
