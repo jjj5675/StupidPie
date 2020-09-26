@@ -391,23 +391,24 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void AirborneHorizontalMovement()
     {
+        float desiredSpeed=0;
+
+        float acceleration=0;
         foreach (PlayerInput inp in dataBase.playerInput)
         {
-            if (!inp.Horizontal.ReceivingInput)
-                continue;
-            float desiredSpeed = inp.Horizontal.Value * moveSpeed;
+            
+            desiredSpeed = inp.Horizontal.Value * moveSpeed;
 
-            float acceleration;
 
             if (!inp.Horizontal.ReceivingInput)
                 acceleration = groundAcceleration * airborneAccelProportion;
             else
                 acceleration = groundDeceleration * airborneDecelProportion;
 
-            m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
-
             break;
         }
+
+        m_MoveVector.x = Mathf.MoveTowards(m_MoveVector.x, desiredSpeed, acceleration * Time.deltaTime);
         //if (m_CharacterController2D.collisionFlags.CheckForHorizontal())
         //{
         //    m_MoveVector.x = (m_CharacterController2D.sideRaycastDistance + m_Box.size.x * 0.5f) * PlayerInput.Instance.Horizontal.Value;
