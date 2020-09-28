@@ -121,13 +121,13 @@ public class ConductorTrigger2D : Platform
             {
                 m_DataBaseCache.Add(collision, collision.GetComponent<PlayerBehaviour>());
             }
-            if(collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
-            {
-                if (!m_TriggerEnabled)
-                    OnSound.Play();
-                else
-                    OffSound.Play();
-            }
+            //if(collision.GetComponent<PlayerBehaviour>().dataBase.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
+            //{
+            //    if (!m_TriggerEnabled)
+            //        OnSound.Play();
+            //    else
+            //        OffSound.Play();
+            //}
         }
     }
 
@@ -148,6 +148,10 @@ public class ConductorTrigger2D : Platform
                     if (inp.Interact.Down)
                     {
                         iterating = true;
+                        if (!m_TriggerEnabled && !OnSound.isPlaying && !OffSound.isPlaying)
+                            OnSound.Play();
+                        else if (m_TriggerEnabled && !OnSound.isPlaying && !OffSound.isPlaying)
+                            OffSound.Play();
                         break;
                     }
                 }
