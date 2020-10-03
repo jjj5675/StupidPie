@@ -20,11 +20,14 @@ public class SwitchPlatform : Platform
     protected SpriteRenderer m_SpriteRenderer;
     protected Sprite m_CurrentWhiteSprite;
     protected Sprite m_StartingSprite;
+    protected AudioSource[] switchAudio;
 
     void Awake()
     {
         m_Box = GetComponent<BoxCollider2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        if(transform.childCount!=0)
+        switchAudio = transform.GetChild(0).GetComponents<AudioSource>();
     }
 
     protected override void Initialise()
@@ -105,13 +108,17 @@ public class SwitchPlatform : Platform
             {
                 m_SpriteRenderer.sprite = m_CurrentWhiteSprite;
                 m_IsPrevCollision = !m_IsPrevCollision;
-                transform.GetChild(0).GetComponents<AudioSource>()[m_IsPrevCollision? 0:1].Play();
+                
+                if(switchAudio!=null)
+                   switchAudio[0].Play();
             }
 
             if (switchChangeDuration + whiteSpriteExitTime <= m_CurrentChangeDuration)
             {
                 m_CurrentChangeDuration = 0;
 
+                if (switchAudio != null)
+                    switchAudio[1].Play();
                 if (m_IsPrevCollision)
                 {
                     OnEabled.Invoke();

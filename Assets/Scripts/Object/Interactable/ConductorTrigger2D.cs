@@ -28,7 +28,8 @@ public class ConductorTrigger2D : Platform
 
     private void Awake()
     {
-        m_WireCollider = wireTilemap.GetComponent<CompositeCollider2D>();
+        if(wireTilemap!=null)
+          m_WireCollider = wireTilemap.GetComponent<CompositeCollider2D>();
         m_ContactFilter.useLayerMask = true;
         m_ContactFilter.useTriggers = true;
         m_ContactFilter.layerMask = 1 << LayerMask.NameToLayer("Platform");

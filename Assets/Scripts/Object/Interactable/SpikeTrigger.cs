@@ -117,13 +117,15 @@ public class SpikeTrigger : Platform
         }
     }
 
-    public void EnableOverlapDamagers(bool enableEvent, bool change = true, bool ignoreTrigger = false)
+    public void EnableOverlapDamagers(bool enableEvent, bool change = true, bool ignoreTrigger = false, bool isInitialize = false)
     {
         if (ChangeOnce)
         {
             return;
         }
-
+        
+        if(!isInitialize)
+          OnSound.Play();
         for (int i = 0; i < m_SpikeTriggers.Length; i++)
         {
             if (enableEvent)
@@ -151,13 +153,14 @@ public class SpikeTrigger : Platform
         }
     }
 
-    public void DisableOverlapDamagers(bool enableEvent, bool change = true, bool ignoreTrigger = false)
+    public void DisableOverlapDamagers(bool enableEvent, bool change = true, bool ignoreTrigger = false, bool isInitialize = false)
     {
         if (ChangeOnce)
         {
             return;
         }
-
+        if(!isInitialize)
+          OffSound.Play();
         for (int i = 0; i < m_SpikeTriggers.Length; i++)
         {
             if (enableEvent)
@@ -198,10 +201,11 @@ public class SpikeTrigger : Platform
             if (observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.INTERACTION))
             {
                 m_CurrentTriggerState = TriggerState.ENTER;
-                OffSound.Play();
+                
                 if (m_Started)
                 {
                     DisableOverlapDamagers(true);
+                    
                 }
                 else
                 {
@@ -228,7 +232,7 @@ public class SpikeTrigger : Platform
                 if (Resettable)
                 {
                     ChangeOnce = false;
-                    OnSound.Play();
+                    
                     if (m_Started)
                     {
                         EnableOverlapDamagers(false, false);
