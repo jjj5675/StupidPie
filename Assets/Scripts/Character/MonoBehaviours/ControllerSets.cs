@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ControllerSets : MonoBehaviour
+{
+    [Serializable]
+    public class KeySet
+    {
+        public InputComponent.InputButton debugMenuOpen= new InputComponent.InputButton(KeyCode.F12);
+        public InputComponent.InputButton pause = new InputComponent.InputButton(KeyCode.Escape);
+        public InputComponent.InputButton jump = new InputComponent.InputButton(KeyCode.Z);
+        public InputComponent.InputButton dash = new InputComponent.InputButton(KeyCode.X);
+        public InputComponent.InputButton interact = new InputComponent.InputButton(KeyCode.V);
+        public InputComponent.InputAxis horizontal = new InputComponent.InputAxis(KeyCode.RightArrow, KeyCode.LeftArrow);
+        public InputComponent.InputAxis vertical = new InputComponent.InputAxis(KeyCode.UpArrow,KeyCode.DownArrow);
+    }
+
+    public KeySet[] IresKeySettings;
+    public KeySet[] SeriKeySettings;
+    
+    public void SelectKeySetting(int key)
+    {
+        foreach(Observer obs in Publisher.Instance.Observers)
+        {
+            KeySet inputkeyset;
+            if(obs.GetInput()[0].Dash.Enabled)
+            {
+                inputkeyset = SeriKeySettings[key];
+            }
+            else
+            {
+                inputkeyset = IresKeySettings[key];
+            }
+
+            obs.GetInput()[0].DebugMenuOpen = inputkeyset.debugMenuOpen;
+            obs.GetInput()[0].Pause = inputkeyset.pause;
+            obs.GetInput()[0].Jump = inputkeyset.jump;
+            obs.GetInput()[0].Dash = inputkeyset.dash;
+            obs.GetInput()[0].Interact = inputkeyset.interact;
+            obs.GetInput()[0].Horizontal = inputkeyset.horizontal;
+            obs.GetInput()[0].Vertical = inputkeyset.vertical;
+
+            obs.GetInput()[0].GainControl();
+        }
+    }
+
+    //public void 
+}
