@@ -22,7 +22,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 2.416666666666664
+    m_Start: 2.6499999999999977
     m_ClipIn: 0
     m_Asset: {fileID: -7305136635132937089}
     m_Duration: 3.683333333333336
@@ -30,53 +30,17 @@ MonoBehaviour:
     m_ParentTrack: {fileID: -8584510955361144667}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.8166666666666695
-    m_BlendOutDuration: 0.13333333333333286
+    m_BlendInDuration: 0.8166666666666691
+    m_BlendOutDuration: 0.1333333333333373
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -91,7 +55,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: CMCutscene1Cam4
   - m_Version: 1
-    m_Start: 1.7666666666666666
+    m_Start: 2
     m_ClipIn: 0
     m_Asset: {fileID: 7677395478859521761}
     m_Duration: 1.4666666666666668
@@ -100,7 +64,7 @@ MonoBehaviour:
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 0.8166666666666695
+    m_BlendOutDuration: 0.8166666666666691
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -142,7 +106,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: CM vcam - Main
   - m_Version: 1
-    m_Start: 5.966666666666667
+    m_Start: 6.199999999999997
     m_ClipIn: 0
     m_Asset: {fileID: -5924821493913768157}
     m_Duration: 0.2666666666666666
@@ -150,7 +114,7 @@ MonoBehaviour:
     m_ParentTrack: {fileID: -8584510955361144667}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.13333333333333286
+    m_BlendInDuration: 0.1333333333333373
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -514,7 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
   m_Name: Signal Emitter
   m_EditorClassIdentifier: 
-  m_Time: 6.166666666666667
+  m_Time: 6.399999999999996
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 60f0c62484e73e546b5a6b4be76a3bb9, type: 2}
@@ -540,7 +504,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 1.7666666666666666
+    m_Start: 2
     m_ClipIn: 0
     m_Asset: {fileID: -1711000090678663389}
     m_Duration: 4.2
@@ -633,7 +597,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 3.6166666666666605
+    m_Start: 3.8499999999999948
     m_ClipIn: 0
     m_Asset: {fileID: 3179703784998924775}
     m_Duration: 0.16666666666666674
@@ -702,7 +666,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 3.949999999999995
+    m_Start: 4.183333333333329
     m_ClipIn: 0
     m_Asset: {fileID: 4089658700977434838}
     m_Duration: 0.18333333333333357
@@ -771,7 +735,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 4.2999999999999945
+    m_Start: 4.533333333333329
     m_ClipIn: 0
     m_Asset: {fileID: -5844382470985563393}
     m_Duration: 0.18333333333333357
@@ -840,7 +804,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 4.616666666666663
+    m_Start: 4.849999999999997
     m_ClipIn: 0
     m_Asset: {fileID: 2722173235659970924}
     m_Duration: 0.18333333333333313
@@ -909,7 +873,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 4.966666666666662
+    m_Start: 5.199999999999991
     m_ClipIn: 0
     m_Asset: {fileID: -5446803804279943258}
     m_Duration: 1.0000000000000044
@@ -978,7 +942,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: DialogueClip
   - m_Version: 1
-    m_Start: 2.1
+    m_Start: 2.333333333333333
     m_ClipIn: 0
     m_Asset: {fileID: -8495217646184408314}
     m_Duration: 1.1333333333333304

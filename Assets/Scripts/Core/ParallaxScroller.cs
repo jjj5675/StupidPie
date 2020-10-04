@@ -120,9 +120,10 @@ public class ParallaxScroller : MonoBehaviour
     {
         if (screenManager.autoCameraSetup.CellChanging)
         {
+            
             float delta = m_OldPosition - camera.transform.position.x;
             float factor = Math.Sign(delta);
-
+            
             for (int i = 0; i < parallaxLayers.Length; i++)
             {
                 Vector2 newPosition = parallaxLayers[i].layerTransform.position;
@@ -131,7 +132,7 @@ public class ParallaxScroller : MonoBehaviour
 
                 parallaxLayers[i].layerTransform.position = newPosition;
             }
-
+            Debug.Log(factor);
             SetLayerPostion(factor);
         }
         else
