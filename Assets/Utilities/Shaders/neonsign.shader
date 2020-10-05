@@ -29,9 +29,9 @@
 
         void surf (Input IN, inout SurfaceOutput o)
         {
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex);
-			fixed4 d = tex2D(_Signal, float2(0+_Time.y*_timesp, 0.5));
-			o.Albedo = lerp(c.rgb*0.3, c.rgb*3, d.r);
+            fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
+            fixed4 d = tex2D(_Signal, float2(0 + _Time.y * _timesp, 0.5));
+            o.Albedo = lerp(c.rgb * 0.3, c.rgb * 3, d.r);
             o.Alpha = c.a;
         }
         ENDCG
