@@ -38,6 +38,9 @@ public class SceneController : MonoBehaviour
     public ScreenManager screenManager;
     public ParallaxScroller parallaxScroller;
 
+    public AudioSource PauseOn;
+    public AudioSource PauseOff;
+
     private Scene m_CurrentZoneScene;
     private bool m_Transitioning;
 

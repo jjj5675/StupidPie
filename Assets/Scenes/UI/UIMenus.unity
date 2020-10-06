@@ -642,6 +642,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: dfabfcaaa841e47469a1e5c3dae0c244,
         type: 3}
+    - target: {fileID: 4787839286472739619, guid: a9e2118693dcaf2468fffa4323834f68,
+        type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[4].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4916185954281008756, guid: a9e2118693dcaf2468fffa4323834f68,
         type: 3}
       propertyPath: m_Name
@@ -1410,5 +1415,6 @@ PrefabInstance:
       propertyPath: m_margin.y
       value: 18.258392
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8907038485431025165, guid: a9e2118693dcaf2468fffa4323834f68, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a9e2118693dcaf2468fffa4323834f68, type: 3}

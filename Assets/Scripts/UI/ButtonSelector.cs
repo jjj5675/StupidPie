@@ -35,6 +35,10 @@ public class ButtonSelector : MonoBehaviour
     //캔버스 개수
     public List<Canvas> canvases;
 
+    
+    public AudioSource MoveSound;
+    public AudioSource SelectSound;
+
     //테이블 개수, 테이블의 이미지 갯수 (딕셔너리 키값)
     protected List<List<Image>> m_ButtonImages;
 
@@ -57,6 +61,7 @@ public class ButtonSelector : MonoBehaviour
     private void Awake()
     {
         m_ButtonImages = new List<List<Image>>(imageTable.Length);
+        
 
         //이미지 메모리 할당
         for (int i = 0; i < imageTable.Length; i++)
@@ -90,6 +95,7 @@ public class ButtonSelector : MonoBehaviour
             if (m_CurrentImage != 0)
             {
                 m_NextImage--;
+                MoveSound.Play();
             }
         }
         else if (Input.GetKeyUp(KeyCode.DownArrow))
@@ -98,11 +104,13 @@ public class ButtonSelector : MonoBehaviour
             if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
             {
                 m_NextImage++;
+                MoveSound.Play();
             }
         }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
             imageTable[m_CurrentCanvas].OnPressed[m_CurrentImage].Invoke();
+            SelectSound.Play();
         }
 
         if (m_CurrentImage != m_NextImage)

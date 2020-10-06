@@ -38,6 +38,9 @@ public class PlayerBehaviour : MonoBehaviour
     public RandomAudioPlayer jumpAudioPlayer;
     public RandomAudioPlayer wallSlidingAudioPlayer;
     public RandomAudioPlayer batteryAudioPlayer;
+    public RandomAudioPlayer dieAudioPlayer;
+    public RandomAudioPlayer landAudioPlayer;
+    
 
     private bool m_InPause = false;
 
@@ -58,6 +61,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Vector2 m_MoveVector;
     private Vector2 m_DashDirection;
     private bool m_IsParabolaDash = false;
+    private bool m_IsJumping = false;
     private WaitForSeconds m_WallLeapingEndWait;
     private Coroutine m_WallLeapCoroutine;
     private Coroutine m_JumpPadCoroutine;
@@ -86,6 +90,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         //후에 인스펙터로 옮길 부분
         batteryAudioPlayer = transform.GetChild(0).GetChild(3).GetComponent<RandomAudioPlayer>();
+        dieAudioPlayer = transform.GetChild(0).GetChild(5).GetComponent<RandomAudioPlayer>();
+        landAudioPlayer = transform.GetChild(0).GetChild(4).GetComponent<RandomAudioPlayer>(); ;
         dataBase.SetDate(transform, GetComponents<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>(), GetComponent<Scoreable>());
         //컴파일 시작시 초기화 구문. 컨트롤러 설정, 데미지 상호작용여부, 애니메이션, 컬라이더, 스코어링, 캐릭터컨트롤러(물리부) 초기화. 
         //함수 자체가 초기화 함수임. f12 참조바람
@@ -151,7 +157,7 @@ public class PlayerBehaviour : MonoBehaviour
                     {
                         return;
                     }
-
+                    SceneController.Instance.PauseOn.Play();
                     Publisher.Instance.GainOrReleaseControl(false);
                     Publisher.Instance.GainPause();
                     m_InPause = true;
@@ -361,7 +367,12 @@ public class PlayerBehaviour : MonoBehaviour
     public bool CheckForGrounded()
     {
         bool grounded = dataBase.character.collisionFlags.IsGrounded;
-
+        
+        if(grounded && grounded==m_IsJumping)
+        {
+            jumpAudioPlayer.PlayRandomSound();
+        }
+        m_IsJumping = !grounded;
         dataBase.animator.SetBool(m_HashGroundedPara, grounded);
 
         return grounded;
@@ -726,7 +737,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 return;
             }
-
+            dieAudioPlayer.PlayRandomSound();
             dataBase.animator.SetTrigger(m_HashDeadPara);
             StartCoroutine(DieRespawnCoroutine());
             break;

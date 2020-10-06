@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class Door : MonoBehaviour
 {
     public PressurePad[] pressurePads;
+    public AudioSource DoorOpen;
+    public AudioSource DoorClose;
 
     Collider2D m_DoorCollider;
     Animator m_Animator;

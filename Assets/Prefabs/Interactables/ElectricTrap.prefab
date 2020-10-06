@@ -197,6 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionDistance: 1.525
+  randomPlayer: {fileID: 0}
 --- !u!82 &5843336934179142987
 AudioSource:
   m_ObjectHideFlags: 0
@@ -307,8 +308,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: de1638dda53133c4da1a1a13ef7ec49f, type: 3}
-  - {fileID: 8300000, guid: 8871e1a649a1fda46b2b8b9679aa02fa, type: 3}
-  - {fileID: 8300000, guid: 48a05d4396012e84fbc864c0668ebc19, type: 3}
+  - {fileID: 8300000, guid: df187290e2b793d43802ac86d5764e8e, type: 3}
+  - {fileID: 8300000, guid: f5d2d1cef92d2b548b5c46e3ebb60e7d, type: 3}
+  - {fileID: 8300000, guid: 92ef6a0c4606e9a42b86d5c632c0acc5, type: 3}
   randomizePitch: 0
   pitchRange: 0.1

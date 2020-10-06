@@ -18,6 +18,7 @@ public class OptionUI : MonoBehaviour
     public void Resume()
     {
         SceneController.Instance.UnPause(true);
+        SceneController.Instance.PauseOff.Play();
     }
 
     public void Restage()
