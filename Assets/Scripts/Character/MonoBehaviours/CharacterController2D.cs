@@ -108,12 +108,12 @@ public abstract class CharacterController2D : MonoBehaviour
         Vector2 raycastDirection = Vector2.zero;
         Vector2 raycastStart;
         float raycastDistance = 0;
-
+        
         if (m_Box != null)
         {
             raycastStart = m_Rigidbody2D.position + m_Box.offset;
             raycastDistance = m_Box.size.x * 0.5f + groundedRaycastDistance * 2f;
-
+            
             if (bottom)
             {
                 raycastDirection = Vector2.down;
