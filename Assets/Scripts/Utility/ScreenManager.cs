@@ -29,6 +29,7 @@ public class ScreenManager : MonoBehaviour
     {
         characterMaximumDistance = maximumOrthoSize * 2f * Camera.main.aspect;
         m_SplitScreenConfiners = splitScreen.GetComponentsInChildren<CinemachineConfiner>();
+        
     }
 
     void OnEnable()

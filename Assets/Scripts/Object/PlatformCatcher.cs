@@ -284,6 +284,7 @@ public class PlatformCatcher : MonoBehaviour
 
         for (int i = 0, count = m_CaughtObjects.Count; i < count; i++)
         {
+            Debug.Log("!!");
             CaughtObject caughtObject = m_CaughtObjects[i];
             if(m_ParentCatcher != null && m_ParentCatcher.m_CaughtObjects.Find((CaughtObject A) => { return A.rigidbody == caughtObject.rigidbody; }) != null)
             {
@@ -293,6 +294,16 @@ public class PlatformCatcher : MonoBehaviour
             m_CaughtObjects[i].Move(velocity);
         }
 
+    }
+
+    public bool IsPlatformCeiling()
+    {
+        foreach(CaughtObject obj in m_CaughtObjects)
+        {
+            if (obj.character.collisionFlags.IsCeilinged)
+                return true;
+        }
+        return false;
     }
 
     //public bool CheckForCornerCollsionEnter2D(Vector2 point, Collider2D other, ContactPoint2D contactPoint2D)
