@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
@@ -12,7 +13,11 @@ public class DirectorTrigger : MonoBehaviour
     public UnityEvent OnDirectorPlay;
     public UnityEvent OnDirectorFinish;
 
+    public static DirectorTrigger instance=null;
+
     protected bool m_AlreadTriggered;
+
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,6 +32,7 @@ public class DirectorTrigger : MonoBehaviour
         }
 
         director.Play();
+        instance = this;
         m_AlreadTriggered = true;
         OnDirectorPlay.Invoke();
         Invoke("FinishInvoke", (float)director.duration);
@@ -34,6 +40,7 @@ public class DirectorTrigger : MonoBehaviour
 
     void FinishInvoke(float duration)
     {
+        instance = null;
         OnDirectorFinish.Invoke();
     }
 }

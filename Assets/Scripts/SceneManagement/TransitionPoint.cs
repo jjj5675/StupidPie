@@ -32,7 +32,8 @@ public class TransitionPoint : MonoBehaviour
         if(m_TransitioningPresent)
         {
             m_TransitioningPresent = false;
-            Publisher.Instance.GainOrReleaseControl(true);
+            if(DirectorTrigger.instance==null)
+              Publisher.Instance.GainOrReleaseControl(true);
         }
     }
 
