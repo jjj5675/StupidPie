@@ -7,7 +7,9 @@ public abstract class InputComponent : MonoBehaviour
     [Serializable]
     public class InputButton
     {
+        public bool isKeyPad;
         public KeyCode key;
+        public string keyName;
         public bool Down { get; protected set; }
         public bool Held { get; protected set; }
         public bool Up { get; protected set; }
@@ -47,29 +49,46 @@ public abstract class InputComponent : MonoBehaviour
 
             if (fixedUpdateHappened)
             {
-                Down = Input.GetKeyDown(key);
-                Held = Input.GetKey(key);
-                Up = Input.GetKeyUp(key);
-
+                if (!isKeyPad)
+                {
+                    Down = Input.GetKeyDown(key);
+                    Held = Input.GetKey(key);
+                    Up = Input.GetKeyUp(key);
+                }
+                else
+                {
+                    Down = Input.GetButtonDown(keyName);
+                    Held = Input.GetButton(keyName);
+                    Up = Input.GetButtonUp(keyName);
+                }
                 m_AfterFixedUpdateDown = Down;
                 m_AfterFixedUpdateHeld = Held;
                 m_AfterFixedUpdateUp = Up;
             }
             else
             {
-                Down = Input.GetKeyDown(key) || m_AfterFixedUpdateDown;
-                Held = Input.GetKey(key) || m_AfterFixedUpdateHeld;
-                Up = Input.GetKeyUp(key) || m_AfterFixedUpdateUp;
-
+                if (!isKeyPad)
+                {
+                    Down = Input.GetKeyDown(key) || m_AfterFixedUpdateDown;
+                    Held = Input.GetKey(key) || m_AfterFixedUpdateHeld;
+                    Up = Input.GetKeyUp(key) || m_AfterFixedUpdateUp;
+                }
+                else
+                {
+                    Down = Input.GetButtonDown(keyName) || m_AfterFixedUpdateDown;
+                    Held = Input.GetButton(keyName) || m_AfterFixedUpdateHeld;
+                    Up = Input.GetButtonUp(keyName) || m_AfterFixedUpdateUp;
+                }
                 m_AfterFixedUpdateDown |= Down;
                 m_AfterFixedUpdateHeld |= Held;
                 m_AfterFixedUpdateUp |= Up;
             }
         }
-
+        
         public void Enable()
         {
             m_Enabled = true;
+            
         }
 
         public void Disable()
@@ -111,8 +130,13 @@ public abstract class InputComponent : MonoBehaviour
     [Serializable]
     public class InputAxis
     {
+        public bool isKeyPad;
         public KeyCode positive;
         public KeyCode negative;
+
+        public string keyName;
+        
+
         public float Value { get; protected set; }
         public bool ReceivingInput { get; protected set; }
 
@@ -132,6 +156,9 @@ public abstract class InputComponent : MonoBehaviour
             this.negative = negative;
         }
 
+        
+
+
         public void Get()
         {
             if(!m_Enabled)
@@ -148,8 +175,8 @@ public abstract class InputComponent : MonoBehaviour
             bool positiveHeld = false;
             bool negativeHeld = false;
 
-            positiveHeld = Input.GetKey(positive);
-            negativeHeld = Input.GetKey(negative);
+            positiveHeld = !isKeyPad ? Input.GetKey(positive) : Input.GetAxis(keyName)>0 ;
+            negativeHeld = !isKeyPad ? Input.GetKey(negative) : Input.GetAxis(keyName)<0;
 
             if (positiveHeld == negativeHeld)
             {
