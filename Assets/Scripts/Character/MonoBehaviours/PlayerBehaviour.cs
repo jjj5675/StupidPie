@@ -123,6 +123,8 @@ public class PlayerBehaviour : MonoBehaviour
         m_DashVelocity = m_DashDeceleration * timeToDashPoint;
 
         m_WallLeapingEndWait = new WaitForSeconds(m_TimeToLeapHeight);
+
+        SceneController.Instance.gameObject.GetComponent<ControllerSets>().InitializeKeySet();
     }
 
     //업데이트 부에서는 픽스드 타임과 무관한 시스템 업데이트를 담당함.
