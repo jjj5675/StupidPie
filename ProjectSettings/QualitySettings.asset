@@ -4,11 +4,11 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 3
+  m_CurrentQuality: 5
   m_QualitySettings:
   - serializedVersion: 2
     name: Very Low
-    pixelLightCount: 0
+    pixelLightCount: 10
     shadows: 0
     shadowResolution: 0
     shadowProjection: 1
@@ -44,7 +44,7 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Low
-    pixelLightCount: 0
+    pixelLightCount: 15
     shadows: 0
     shadowResolution: 0
     shadowProjection: 1
@@ -80,7 +80,7 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Medium
-    pixelLightCount: 1
+    pixelLightCount: 20
     shadows: 0
     shadowResolution: 0
     shadowProjection: 1
@@ -152,7 +152,7 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Very High
-    pixelLightCount: 3
+    pixelLightCount: 40
     shadows: 0
     shadowResolution: 2
     shadowProjection: 1
@@ -188,7 +188,7 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Ultra
-    pixelLightCount: 4
+    pixelLightCount: 50
     shadows: 0
     shadowResolution: 0
     shadowProjection: 1
