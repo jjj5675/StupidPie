@@ -12,6 +12,9 @@ public class PlayerBehaviour : MonoBehaviour
     public Dashable dashable;
     public GameObject debugMenu;
 
+    public GameObject JumpDustPrefab;
+    public GameObject SlideDustPrefab;
+
     public float moveSpeed;
     public float groundAcceleration;
     public float groundDeceleration;
@@ -56,6 +59,7 @@ public class PlayerBehaviour : MonoBehaviour
     private float m_CurrentTimeToWaitSliding = 0f;
     private bool m_Slidingable = false;
     private float m_TimeToLeapHeight;
+    private float jumpTerm;
 
     private Observer m_Observer;
     private Vector2 m_MoveVector;
@@ -91,7 +95,11 @@ public class PlayerBehaviour : MonoBehaviour
         //후에 인스펙터로 옮길 부분
         batteryAudioPlayer = transform.GetChild(0).GetChild(3).GetComponent<RandomAudioPlayer>();
         dieAudioPlayer = transform.GetChild(0).GetChild(5).GetComponent<RandomAudioPlayer>();
-        landAudioPlayer = transform.GetChild(0).GetChild(4).GetComponent<RandomAudioPlayer>(); ;
+        landAudioPlayer = transform.GetChild(0).GetChild(4).GetComponent<RandomAudioPlayer>();
+
+        JumpDustPrefab = transform.GetChild(2).gameObject;
+        SlideDustPrefab = transform.GetChild(3).gameObject;
+
         dataBase.SetDate(transform, GetComponents<PlayerInput>(), GetComponent<Damageable>(), GetComponent<Animator>(), GetComponent<BoxCollider2D>(), GetComponent<CharacterController2D>(), GetComponent<Scoreable>());
         //컴파일 시작시 초기화 구문. 컨트롤러 설정, 데미지 상호작용여부, 애니메이션, 컬라이더, 스코어링, 캐릭터컨트롤러(물리부) 초기화. 
         //함수 자체가 초기화 함수임. f12 참조바람
@@ -177,12 +185,23 @@ public class PlayerBehaviour : MonoBehaviour
         {
             m_InPause = false;
         }
+
+        if(jumpTerm>0)
+        {
+            jumpTerm += Time.deltaTime;
+            if (jumpTerm >= 0.5f)
+                jumpTerm = 0;
+        }
+
+
+
     }
 
     //픽스드 업데이트. 인풋에 의한 움직임과, 속도값을 파라미터로 하는 애니메이션 컨트롤
     void FixedUpdate()
     {
         dataBase.character.Move(m_MoveVector * Time.deltaTime);
+       
         dataBase.animator.SetFloat(m_HashHorizontalPara, m_MoveVector.x);
         dataBase.animator.SetFloat(m_HashVerticalPara, m_MoveVector.y);
     }
@@ -371,14 +390,29 @@ public class PlayerBehaviour : MonoBehaviour
     {
         bool grounded = dataBase.character.collisionFlags.IsGrounded;
         
-        if(grounded && grounded==m_IsJumping)
-        {
-            jumpAudioPlayer.PlayRandomSound();
-        }
+        
         m_IsJumping = !grounded;
         dataBase.animator.SetBool(m_HashGroundedPara, grounded);
 
         return grounded;
+    }
+
+    public void JumpEnd()
+    {
+        landAudioPlayer.PlayRandomSound();
+        GameObject effect = Instantiate(JumpDustPrefab, transform);
+        effect.transform.localPosition = new Vector3(0, 0.05f, 0);
+        effect.SetActive(true);
+    }
+
+    public void SlideDust()
+    {
+        GameObject effect = Instantiate(SlideDustPrefab, transform);
+        if(!spriteRenderer.flipX)
+          effect.transform.localPosition = new Vector3(-0.23f, 1.52f, 0);
+        else
+            effect.transform.localPosition = new Vector3(0.2f, 1.52f, 0);
+        effect.SetActive(true);
     }
 
     public bool CheckForCurrentGravity()
@@ -400,6 +434,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void SetJumpingMovement()
     {
         m_MoveVector.y = m_JumpVelocity;
+
         jumpAudioPlayer.PlayRandomSound();
     }
 

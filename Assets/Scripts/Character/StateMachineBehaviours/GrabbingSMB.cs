@@ -2,10 +2,12 @@
 
 public class GrabbingSMB : SceneLinkedSMB<PlayerBehaviour>
 {
+    float slideTemp = 0;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         m_MonoBehaviour.TeleportToColliderSide();
+        slideTemp = 0;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -21,6 +23,14 @@ public class GrabbingSMB : SceneLinkedSMB<PlayerBehaviour>
             m_MonoBehaviour.WallLeapMovement();
         }
         m_MonoBehaviour.CheckForGrabbingWall();
+        if(slideTemp==0)
+        {
+            m_MonoBehaviour.SlideDust();
+        }
+
+        slideTemp += Time.deltaTime;
+        if (slideTemp >= 0.33f)
+            slideTemp = 0;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

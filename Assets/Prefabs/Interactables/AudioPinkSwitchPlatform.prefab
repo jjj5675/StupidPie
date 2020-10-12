@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2405512499810902133}
   - component: {fileID: 4098957145466972459}
   m_Layer: 8
-  m_Name: PinkSwitchPlatform 1
+  m_Name: AudioPinkSwitchPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 24c78f49e6af03e4088ff1f353c57e41, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.16
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -322,7 +322,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 91a3c7af12807554a8ab50067905370e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.16
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
