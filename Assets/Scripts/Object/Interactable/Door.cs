@@ -46,6 +46,7 @@ public class Door : MonoBehaviour
     {
         if (!m_EventFired)
         {
+            DoorOpen.Play();
             m_Animator.SetTrigger(m_HashOpenPara);
             m_EventFired = true;
         }
@@ -55,6 +56,7 @@ public class Door : MonoBehaviour
     {
         if (m_EventFired && ReleaseAllPads)
         {
+            DoorClose.Play();
             m_Animator.SetTrigger(m_HashClosePara);
             m_EventFired = false;
         }
