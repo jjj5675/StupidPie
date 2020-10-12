@@ -66,6 +66,8 @@ public class ControllerSets : MonoBehaviour
             if (obs.GetInput()[0].Dash.Enabled)
             {
                 inputkeyset = SeriKeySettings[(int)seriKeySet];
+                if (seriKeySet == KeySetTypes.Controller && iresKeySet == KeySetTypes.Controller)
+                    inputkeyset = SeriKeySettings[3];
             }
             else
             {

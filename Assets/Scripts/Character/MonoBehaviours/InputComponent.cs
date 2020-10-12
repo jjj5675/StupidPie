@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class InputComponent : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public abstract class InputComponent : MonoBehaviour
         public bool isKeyPad;
         public KeyCode key;
         public string keyName;
+        
+        
         public bool Down { get; protected set; }
         public bool Held { get; protected set; }
         public bool Up { get; protected set; }

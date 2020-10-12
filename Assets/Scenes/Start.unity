@@ -694,12 +694,12 @@ MonoBehaviour:
     pause:
       isKeyPad: 1
       key: 0
-      keyName: joystick button 6
+      keyName: Fire3
       m_Enabled: 1
     jump:
       isKeyPad: 1
       key: 44
-      keyName: joystick button 0
+      keyName: Fire1
       m_Enabled: 1
     dash:
       isKeyPad: 0
@@ -709,18 +709,18 @@ MonoBehaviour:
     interact:
       isKeyPad: 1
       key: 0
-      keyName: joystick button 1
+      keyName: Fire2
       m_Enabled: 1
     horizontal:
       isKeyPad: 1
       positive: 275
       negative: 276
-      keyName: X Axis
+      keyName: Horizontal
     vertical:
       isKeyPad: 1
       positive: 273
       negative: 274
-      keyName: Y Axis
+      keyName: Vertical
   SeriKeySettings:
   - debugMenuOpen:
       isKeyPad: 0
@@ -805,15 +805,15 @@ MonoBehaviour:
     jump:
       isKeyPad: 1
       key: 330
-      keyName: joystick button 0
+      keyName: Fire1
       m_Enabled: 1
     dash:
       isKeyPad: 1
       key: 331
-      keyName: joystick button 1
+      keyName: Fire2
       m_Enabled: 1
     interact:
-      isKeyPad: 1
+      isKeyPad: 0
       key: 0
       keyName: 
       m_Enabled: 1
@@ -821,12 +821,47 @@ MonoBehaviour:
       isKeyPad: 1
       positive: 120
       negative: 0
-      keyName: X Axis
+      keyName: Horizontal
     vertical:
       isKeyPad: 1
       positive: 0
       negative: 0
-      keyName: Y Axis
+      keyName: Vertical
+  - debugMenuOpen:
+      isKeyPad: 0
+      key: 0
+      keyName: 
+      m_Enabled: 0
+    pause:
+      isKeyPad: 0
+      key: 0
+      keyName: 
+      m_Enabled: 1
+    jump:
+      isKeyPad: 1
+      key: 330
+      keyName: Fire4
+      m_Enabled: 1
+    dash:
+      isKeyPad: 1
+      key: 331
+      keyName: Fire5
+      m_Enabled: 1
+    interact:
+      isKeyPad: 0
+      key: 0
+      keyName: 
+      m_Enabled: 1
+    horizontal:
+      isKeyPad: 1
+      positive: 120
+      negative: 0
+      keyName: Horizontal1
+    vertical:
+      isKeyPad: 1
+      positive: 0
+      negative: 0
+      keyName: Vertical2
   iresKeySet: 0
   seriKeySet: 0
 --- !u!223 &366185187 stripped

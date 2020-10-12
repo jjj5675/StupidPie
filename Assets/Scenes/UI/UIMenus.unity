@@ -647,6 +647,11 @@ PrefabInstance:
       propertyPath: imageTable.Array.data[0].OnPressed.Array.data[4].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4787839286472739619, guid: a9e2118693dcaf2468fffa4323834f68,
+        type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[3].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4916185954281008756, guid: a9e2118693dcaf2468fffa4323834f68,
         type: 3}
       propertyPath: m_Name
