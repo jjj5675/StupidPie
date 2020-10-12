@@ -35,6 +35,8 @@ public class ButtonSelector : MonoBehaviour
     //캔버스 개수
     public List<Canvas> canvases;
 
+    [SerializeField]
+    public bool isVertical;
     
     public AudioSource MoveSound;
     public AudioSource SelectSound;
@@ -89,25 +91,48 @@ public class ButtonSelector : MonoBehaviour
     private void Update()
     {
         //입력을 하거나 못하는 조건 추가
+        if (isVertical)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (m_CurrentImage != 0)
+                {
+                    m_NextImage--;
+                    MoveSound.Play();
+                }
+            }
+            else if (Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                //현재 테이블 버튼갯수만큼
+                if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
+                {
+                    m_NextImage++;
+                    MoveSound.Play();
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (m_CurrentImage != 0)
+                {
+                    m_NextImage--;
+                    MoveSound.Play();
+                }
+            }
+            else if (Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                //현재 테이블 버튼갯수만큼
+                if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
+                {
+                    m_NextImage++;
+                    MoveSound.Play();
+                }
+            }
+        }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (m_CurrentImage != 0)
-            {
-                m_NextImage--;
-                MoveSound.Play();
-            }
-        }
-        else if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            //현재 테이블 버튼갯수만큼
-            if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
-            {
-                m_NextImage++;
-                MoveSound.Play();
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             imageTable[m_CurrentCanvas].OnPressed[m_CurrentImage].Invoke();
             SelectSound.Play();
@@ -163,6 +188,10 @@ public class ButtonSelector : MonoBehaviour
         m_ButtonImages[m_CurrentCanvas][m_CurrentImage].sprite = valuese[index].sprite;
     }
 
+    public void SetVertical()
+    {
+        isVertical = !isVertical;
+    }
 
     public void Move(Canvas canvas)
     {
