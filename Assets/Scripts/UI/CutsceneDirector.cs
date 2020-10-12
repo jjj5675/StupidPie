@@ -57,7 +57,7 @@ public class CutsceneDirector : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Stop();
-                Ended.Invoke();
+                //Ended.Invoke();
             }
             else if (Input.anyKeyDown)  //다음 로그 이동
             {
@@ -142,9 +142,12 @@ public class CutsceneDirector : MonoBehaviour
     {
         if (m_WriteCoroutine != null)
         {
-            StopCoroutine(m_WriteCoroutine);
+           
+            //StopCoroutine(m_WriteCoroutine);
+            Ended.Invoke();
             m_WriteCoroutine = null;
             m_End = true;
+            
         }
     }
 

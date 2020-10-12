@@ -99,6 +99,7 @@ public class PlayerBehaviour : MonoBehaviour
         var publisher = FindObjectOfType<Publisher>();
         //옵저버 클래스를 하나 생성해서 초기화 해 주고, 현 씬 내의 퍼블리셔를 넣어줌.
         m_Observer.Subscribe(publisher);
+
     }
 
     // Start is called before the first frame update
@@ -123,8 +124,8 @@ public class PlayerBehaviour : MonoBehaviour
         m_DashVelocity = m_DashDeceleration * timeToDashPoint;
 
         m_WallLeapingEndWait = new WaitForSeconds(m_TimeToLeapHeight);
-
         SceneController.Instance.gameObject.GetComponent<ControllerSets>().InitializeKeySet();
+
     }
 
     //업데이트 부에서는 픽스드 타임과 무관한 시스템 업데이트를 담당함.

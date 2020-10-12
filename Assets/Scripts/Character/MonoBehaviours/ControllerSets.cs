@@ -82,7 +82,7 @@ public class ControllerSets : MonoBehaviour
             obs.GetInput()[0].Horizontal = inputkeyset.horizontal;
             obs.GetInput()[0].Vertical = inputkeyset.vertical;
 
-            obs.GetInput()[0].GainControl();
+           // obs.GetInput()[0].GainControl();
         }
     }
 

@@ -26,7 +26,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
-  m_Name: Signal Emitter
+  m_Name: Act
   m_EditorClassIdentifier: 
   m_Time: 11.149999999999991
   m_Retroactive: 0
@@ -339,6 +339,22 @@ MonoBehaviour:
     phraseKey: Tutorial A-1
     textIndex: 8
     pause: 1
+--- !u!114 &-4794787896609416477
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
+  m_Name: Signal Emitter
+  m_EditorClassIdentifier: 
+  m_Time: 3.533333333333333
+  m_Retroactive: 0
+  m_EmitOnce: 0
+  m_Asset: {fileID: 11400000, guid: bbf4139bbf8a22748a1206803f239fda, type: 2}
 --- !u!114 &-4335631544329720884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2032,7 +2048,7 @@ MonoBehaviour:
   m_Markers:
     m_Objects:
     - {fileID: -7826996653000320915}
-    - {fileID: 7471606439271573096}
+    - {fileID: -4794787896609416477}
 --- !u!114 &4676871037351761039
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2234,22 +2250,6 @@ MonoBehaviour:
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_ApplyOffsets: 0
---- !u!114 &7471606439271573096
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
-  m_Name: Signal Emitter
-  m_EditorClassIdentifier: 
-  m_Time: 3.7333333333333307
-  m_Retroactive: 0
-  m_EmitOnce: 0
-  m_Asset: {fileID: 11400000, guid: 60f0c62484e73e546b5a6b4be76a3bb9, type: 2}
 --- !u!114 &7982721073017937047
 MonoBehaviour:
   m_ObjectHideFlags: 1
