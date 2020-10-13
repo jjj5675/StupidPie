@@ -97,7 +97,7 @@ public class SceneController : MonoBehaviour
     public void Restage()
     {
         UIManager.Instance.TimerUI.StopTimer();
-        UIManager.instance.TimerUI.ResetTimer();
+        
         Publisher.Instance.SetAnimState(false, true);
         StartCoroutine(InTransition(true, false, cellController.LastEnteringDestination));
     }
@@ -105,6 +105,7 @@ public class SceneController : MonoBehaviour
     public void Regame()
     {
         UIManager.Instance.TimerUI.StopTimer();
+        UIManager.instance.TimerUI.ResetTimer();
         Publisher.Instance.SetAnimState(false, true);
         rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
         StartCoroutine(InTransition(true, true, cellTransitionDestination, true));

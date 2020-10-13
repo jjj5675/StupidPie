@@ -37,6 +37,7 @@ public class ButtonSelector : MonoBehaviour
 
     [SerializeField]
     public bool isVertical;
+    public float term=0;
     
     public AudioSource MoveSound;
     public AudioSource SelectSound;
@@ -90,43 +91,57 @@ public class ButtonSelector : MonoBehaviour
 
     private void Update()
     {
+        
         //입력을 하거나 못하는 조건 추가
+        if(term >0)
+        {
+            term += 0.016f;
+            if (term >= 0.2f)
+                term = 0;
+
+            
+        }
+
         if (isVertical)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxis("Vertical")>0)
+            if (Input.GetKeyDown(KeyCode.UpArrow) || (Input.GetAxis("Vertical")==1 && term==0))
             {
                 if (m_CurrentImage != 0)
                 {
                     m_NextImage--;
+                    term += 0.016f;
                     MoveSound.Play();
                 }
             }
-            else if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetAxis("Vertical") < 0)
+            else if (Input.GetKeyUp(KeyCode.DownArrow) || (Input.GetAxis("Vertical") == -1 && term==0))
             {
                 //현재 테이블 버튼갯수만큼
                 if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
                 {
                     m_NextImage++;
+                    term += 0.016f;
                     MoveSound.Play();
                 }
             }
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") > 0)
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || (Input.GetAxis("Horizontal") == -1 && term==0))
             {
                 if (m_CurrentImage != 0)
                 {
                     m_NextImage--;
+                    term += 0.016f;
                     MoveSound.Play();
                 }
             }
-            else if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetAxis("Horizontal") < 0)
+            else if (Input.GetKeyUp(KeyCode.RightArrow) || (Input.GetAxis("Horizontal") == 1 && term ==0))
             {
                 //현재 테이블 버튼갯수만큼
                 if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
                 {
                     m_NextImage++;
+                    term += 0.016f;
                     MoveSound.Play();
                 }
             }

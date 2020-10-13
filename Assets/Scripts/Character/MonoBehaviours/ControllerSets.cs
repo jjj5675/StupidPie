@@ -76,6 +76,13 @@ public class ControllerSets : MonoBehaviour
                     inputkeyset = SeriKeySettings[4];
                 else if (seriKeySet == KeySetTypes.Controller && iresKeySet == KeySetTypes.Controller)
                     inputkeyset = SeriKeySettings[3];
+
+                if(seriKeySet !=KeySetTypes.Controller && iresKeySet !=KeySetTypes.Controller)
+                {
+                    inputkeyset.restage.Disable();
+                    inputkeyset.manualOpen.Disable();
+                    inputkeyset.pause.Disable();
+                }
             }
             else
             {

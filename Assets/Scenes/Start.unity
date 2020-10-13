@@ -796,15 +796,15 @@ MonoBehaviour:
       isKeyPad: 0
       key: 286
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     manualOpen:
       isKeyPad: 0
       key: 9
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     pause:
       isKeyPad: 0
-      key: 0
+      key: 27
       keyName: 
       m_Enabled: 1
     jump:
@@ -821,7 +821,7 @@ MonoBehaviour:
       isKeyPad: 0
       key: 0
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     horizontal:
       isKeyPad: 0
       positive: 275
@@ -840,25 +840,25 @@ MonoBehaviour:
     restage:
       isKeyPad: 0
       key: 286
-      keyName: 
-      m_Enabled: 0
+      keyName: Restart1
+      m_Enabled: 1
     manualOpen:
-      isKeyPad: 0
+      isKeyPad: 1
       key: 9
-      keyName: 
-      m_Enabled: 0
+      keyName: Manual1
+      m_Enabled: 1
     pause:
-      isKeyPad: 0
+      isKeyPad: 1
       key: 0
-      keyName: 
-      m_Enabled: 0
+      keyName: Fire3
+      m_Enabled: 1
     jump:
       isKeyPad: 1
       key: 0
       keyName: Fire1
       m_Enabled: 1
     dash:
-      isKeyPad: 0
+      isKeyPad: 1
       key: 46
       keyName: Fire2
       m_Enabled: 1
@@ -886,17 +886,17 @@ MonoBehaviour:
       isKeyPad: 0
       key: 286
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     manualOpen:
       isKeyPad: 0
       key: 9
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     pause:
       isKeyPad: 0
       key: 0
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     jump:
       isKeyPad: 0
       key: 44
@@ -928,20 +928,20 @@ MonoBehaviour:
       keyName: 
       m_Enabled: 0
     restage:
-      isKeyPad: 0
+      isKeyPad: 1
       key: 286
-      keyName: 
-      m_Enabled: 0
+      keyName: Restart2
+      m_Enabled: 1
     manualOpen:
-      isKeyPad: 0
+      isKeyPad: 1
       key: 9
-      keyName: 
-      m_Enabled: 0
+      keyName: Manual2
+      m_Enabled: 1
     pause:
-      isKeyPad: 0
+      isKeyPad: 1
       key: 0
-      keyName: 
-      m_Enabled: 0
+      keyName: Fire6
+      m_Enabled: 1
     jump:
       isKeyPad: 1
       key: 330
@@ -956,7 +956,7 @@ MonoBehaviour:
       isKeyPad: 0
       key: 0
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     horizontal:
       isKeyPad: 1
       positive: 120
@@ -976,17 +976,17 @@ MonoBehaviour:
       isKeyPad: 0
       key: 286
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     manualOpen:
       isKeyPad: 0
       key: 9
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     pause:
       isKeyPad: 0
-      key: 0
+      key: 27
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     jump:
       isKeyPad: 0
       key: 122
@@ -2554,6 +2554,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1193488068437906642, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1425277288039800531, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
       propertyPath: Ended.m_PersistentCalls.m_Calls.Array.data[0].m_Target

@@ -74,6 +74,7 @@ public class LiftPlatform : Platform
 
     public override void ResetPlatform()
     {
+        OnDisabled.Invoke();
         transform.position = m_WorldNode[0];
         m_WaitTime = waitTimes[0];
         m_Current = 0;
