@@ -81,6 +81,8 @@ public class LiftPlatform : Platform
         m_Next = localNodes.Length > 1 ? 1 : 0;
         m_EventFired = false;
         m_PreviousWasPressed = false;
+        if (GetComponent<AudioSource>().isPlaying)
+            GetComponent<AudioSource>().Stop();
         m_ActivationFrameCount = 0;
     }
 

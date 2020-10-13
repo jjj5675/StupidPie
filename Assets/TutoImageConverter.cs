@@ -10,13 +10,26 @@ public class TutoImageConverter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(isIres)
+        if (isIres)
         {
+            int ires = (int)SceneController.Instance.gameObject.GetComponent<ControllerSets>().iresKeySet;
+            if (SceneController.Instance.gameObject.GetComponent<ControllerSets>().iresKeySet != ControllerSets.KeySetTypes.Controller
+                && SceneController.Instance.gameObject.GetComponent<ControllerSets>().seriKeySet == ControllerSets.KeySetTypes.Controller)
+                ires = 2;
 
-            GetComponent<SpriteRenderer>().sprite = transform.GetChild((int)SceneController.Instance.gameObject.GetComponent<ControllerSets>().iresKeySet).GetComponent<SpriteRenderer>().sprite;
+            GetComponent<SpriteRenderer>().sprite
+                = transform.GetChild(ires).GetComponent<SpriteRenderer>().sprite;
+
         }
         else
-            GetComponent<SpriteRenderer>().sprite = transform.GetChild((int)SceneController.Instance.gameObject.GetComponent<ControllerSets>().seriKeySet).GetComponent<SpriteRenderer>().sprite;
+        {
+            int seri = (int)SceneController.Instance.gameObject.GetComponent<ControllerSets>().seriKeySet;
+            if (SceneController.Instance.gameObject.GetComponent<ControllerSets>().seriKeySet != ControllerSets.KeySetTypes.Controller
+                && SceneController.Instance.gameObject.GetComponent<ControllerSets>().iresKeySet == ControllerSets.KeySetTypes.Controller)
+                seri = 4;
+            GetComponent<SpriteRenderer>().sprite
+                = transform.GetChild(seri).GetComponent<SpriteRenderer>().sprite;
+        }
     }
 
     // Update is called once per frame

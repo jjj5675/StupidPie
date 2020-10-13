@@ -98,6 +98,11 @@ public class PlatformCatcher : MonoBehaviour
         }
     }
 
+    public void ClearCaughtObjects()
+    {
+        m_CaughtObjects.Clear();
+    }
+
     void Awake()
     {
         if (platformRigidbody == null)
@@ -153,6 +158,8 @@ public class PlatformCatcher : MonoBehaviour
             caughtObject.inContact = false;
             caughtObject.checkedThisFrame = false;
         }
+
+        
 
         CheckRigidbodyContacts(platformRigidbody);
 
@@ -253,6 +260,7 @@ public class PlatformCatcher : MonoBehaviour
 
                         if (dot > 0.8f)
                         {
+                            Debug.Log(contactRigidbody.gameObject);
                             CaughtObject newCaughtObject = new CaughtObject
                             {
                                 rigidbody = contactRigidbody,

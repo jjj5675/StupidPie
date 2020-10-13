@@ -9,6 +9,7 @@ public class Damager : MonoBehaviour
     public Vector2 size;
     public LayerMask hitLayerMask;
 
+    
     protected bool m_CanDamage = true;
     protected ContactFilter2D m_HitContactFilter;
     protected Collider2D[] m_HitOverlapResults = new Collider2D[10];

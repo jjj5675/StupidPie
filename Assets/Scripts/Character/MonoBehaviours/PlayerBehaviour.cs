@@ -199,6 +199,7 @@ public class PlayerBehaviour : MonoBehaviour
                         return;
 
                     UIManager.Instance.ManualOpen();
+                    UIManager.instance.ToggleHUDCanvas(false);
                     Publisher.Instance.GainOrReleaseControl(false);
                     break;
                 }

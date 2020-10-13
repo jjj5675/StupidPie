@@ -35,7 +35,8 @@ public class AirborneSMB : SceneLinkedSMB<PlayerBehaviour>
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        m_MonoBehaviour.JumpEnd();
+        if(m_MonoBehaviour.dataBase.character.collisionFlags.IsGrounded)
+           m_MonoBehaviour.JumpEnd();
 
     }
 

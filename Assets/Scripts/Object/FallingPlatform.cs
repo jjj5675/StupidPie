@@ -42,6 +42,7 @@ public class FallingPlatform : Platform
         if (platformCatcher == null)
         {
             platformCatcher = GetComponent<PlatformCatcher>();
+            
         }
 
         //m_PlatformType = PlatformType.FALLING;
@@ -75,6 +76,7 @@ public class FallingPlatform : Platform
         m_Rigidbody2D.bodyType = RigidbodyType2D.Static;
         m_Velocity = Vector2.zero;
         m_CurrentDuration = 0;
+        platformCatcher.ClearCaughtObjects();
         m_CanFall = true;
     }
 

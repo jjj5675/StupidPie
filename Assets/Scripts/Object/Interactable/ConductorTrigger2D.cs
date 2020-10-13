@@ -149,10 +149,7 @@ public class ConductorTrigger2D : Platform
                     if (inp.Interact.Down)
                     {
                         iterating = true;
-                        if (!m_TriggerEnabled && !OnSound.isPlaying && !OffSound.isPlaying)
-                            OnSound.Play();
-                        else if (m_TriggerEnabled && !OnSound.isPlaying && !OffSound.isPlaying)
-                            OffSound.Play();
+                        
                         break;
                     }
                 }
@@ -167,7 +164,10 @@ public class ConductorTrigger2D : Platform
                     {
                         return;
                     }
-
+                    if (!m_TriggerEnabled && !OnSound.isPlaying && !OffSound.isPlaying)
+                        OnSound.Play();
+                    else if (m_TriggerEnabled && !OnSound.isPlaying && !OffSound.isPlaying)
+                        OffSound.Play();
                     Vector2 displecement;
                     bool facingLeft;
 

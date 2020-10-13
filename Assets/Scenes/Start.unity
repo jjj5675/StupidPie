@@ -741,6 +741,51 @@ MonoBehaviour:
       positive: 273
       negative: 274
       keyName: Vertical
+  - debugMenuOpen:
+      isKeyPad: 0
+      key: 293
+      keyName: 
+      m_Enabled: 1
+    restage:
+      isKeyPad: 0
+      key: 286
+      keyName: 
+      m_Enabled: 1
+    manualOpen:
+      isKeyPad: 0
+      key: 9
+      keyName: 
+      m_Enabled: 1
+    pause:
+      isKeyPad: 0
+      key: 27
+      keyName: 
+      m_Enabled: 1
+    jump:
+      isKeyPad: 0
+      key: 122
+      keyName: 
+      m_Enabled: 1
+    dash:
+      isKeyPad: 0
+      key: 46
+      keyName: 
+      m_Enabled: 0
+    interact:
+      isKeyPad: 0
+      key: 120
+      keyName: 
+      m_Enabled: 1
+    horizontal:
+      isKeyPad: 0
+      positive: 275
+      negative: 276
+      keyName: 
+    vertical:
+      isKeyPad: 0
+      positive: 273
+      negative: 274
+      keyName: 
   SeriKeySettings:
   - debugMenuOpen:
       isKeyPad: 0
@@ -806,32 +851,32 @@ MonoBehaviour:
       isKeyPad: 0
       key: 0
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     jump:
-      isKeyPad: 0
-      key: 44
-      keyName: 
+      isKeyPad: 1
+      key: 0
+      keyName: Fire1
       m_Enabled: 1
     dash:
       isKeyPad: 0
       key: 46
-      keyName: 
+      keyName: Fire2
       m_Enabled: 1
     interact:
       isKeyPad: 0
       key: 0
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     horizontal:
-      isKeyPad: 0
+      isKeyPad: 1
       positive: 275
       negative: 276
-      keyName: 
+      keyName: Horizontal
     vertical:
-      isKeyPad: 0
+      isKeyPad: 1
       positive: 273
       negative: 274
-      keyName: 
+      keyName: Vertical
   - debugMenuOpen:
       isKeyPad: 0
       key: 0
@@ -853,30 +898,30 @@ MonoBehaviour:
       keyName: 
       m_Enabled: 0
     jump:
-      isKeyPad: 1
-      key: 330
-      keyName: Fire1
+      isKeyPad: 0
+      key: 44
+      keyName: 
       m_Enabled: 1
     dash:
-      isKeyPad: 1
-      key: 331
-      keyName: Fire2
+      isKeyPad: 0
+      key: 46
+      keyName: 
       m_Enabled: 1
     interact:
       isKeyPad: 0
       key: 0
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     horizontal:
-      isKeyPad: 1
-      positive: 120
-      negative: 0
-      keyName: Horizontal
+      isKeyPad: 0
+      positive: 275
+      negative: 276
+      keyName: 
     vertical:
-      isKeyPad: 1
-      positive: 0
-      negative: 0
-      keyName: Vertical
+      isKeyPad: 0
+      positive: 273
+      negative: 274
+      keyName: 
   - debugMenuOpen:
       isKeyPad: 0
       key: 0
@@ -922,6 +967,51 @@ MonoBehaviour:
       positive: 0
       negative: 0
       keyName: Vertical2
+  - debugMenuOpen:
+      isKeyPad: 0
+      key: 0
+      keyName: 
+      m_Enabled: 0
+    restage:
+      isKeyPad: 0
+      key: 286
+      keyName: 
+      m_Enabled: 0
+    manualOpen:
+      isKeyPad: 0
+      key: 9
+      keyName: 
+      m_Enabled: 0
+    pause:
+      isKeyPad: 0
+      key: 0
+      keyName: 
+      m_Enabled: 0
+    jump:
+      isKeyPad: 0
+      key: 122
+      keyName: 
+      m_Enabled: 1
+    dash:
+      isKeyPad: 0
+      key: 120
+      keyName: 
+      m_Enabled: 1
+    interact:
+      isKeyPad: 0
+      key: 0
+      keyName: 
+      m_Enabled: 0
+    horizontal:
+      isKeyPad: 0
+      positive: 275
+      negative: 276
+      keyName: 
+    vertical:
+      isKeyPad: 0
+      positive: 273
+      negative: 274
+      keyName: 
   iresKeySet: 0
   seriKeySet: 0
 --- !u!223 &366185187 stripped
@@ -2637,7 +2727,7 @@ PrefabInstance:
     - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
       propertyPath: imageTable.Array.data[2].OnPressed.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
@@ -2993,6 +3083,11 @@ PrefabInstance:
         type: 3}
       propertyPath: imageTable.Array.data[2].OnPressed.Array.data[2].m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: imageTable.Array.data[2].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6106450150609753401, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}

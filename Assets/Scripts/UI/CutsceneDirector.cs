@@ -44,6 +44,7 @@ public class CutsceneDirector : MonoBehaviour
     protected bool m_IsTurning = false;
     protected int m_DelayTextCount = 5;
 
+    private bool canPass = false;
     private void Awake()
     {
         Play();
@@ -56,7 +57,8 @@ public class CutsceneDirector : MonoBehaviour
             // 로그 종료
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Stop();
+                if(canPass)
+                  Stop();
                 //Ended.Invoke();
             }
             else if (Input.anyKeyDown)  //다음 로그 이동
@@ -143,7 +145,7 @@ public class CutsceneDirector : MonoBehaviour
         if (m_WriteCoroutine != null)
         {
            
-            //StopCoroutine(m_WriteCoroutine);
+            StopCoroutine(m_WriteCoroutine);
             Ended.Invoke();
             m_WriteCoroutine = null;
             m_End = true;
@@ -167,6 +169,7 @@ public class CutsceneDirector : MonoBehaviour
             yield return ScreenFader.FadeSceneIn();
         }
 
+        canPass = true;
         //Output Text를 클리어하고 Text의 길이를 저장한다.
         writeText.text = "";
         m_CharacterCount = clipTable.readTexts[textIndex].text.Length;

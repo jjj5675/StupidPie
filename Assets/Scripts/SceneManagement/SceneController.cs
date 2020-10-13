@@ -97,6 +97,7 @@ public class SceneController : MonoBehaviour
     public void Restage()
     {
         UIManager.Instance.TimerUI.StopTimer();
+        UIManager.instance.TimerUI.ResetTimer();
         Publisher.Instance.SetAnimState(false, true);
         StartCoroutine(InTransition(true, false, cellController.LastEnteringDestination));
     }
@@ -167,7 +168,7 @@ public class SceneController : MonoBehaviour
             parallaxScroller.Initialize();
         }
 
-        UIManager.Instance.TimerUI.ResetTimer();
+        //UIManager.Instance.TimerUI.ResetTimer();
 
         if (fade)
         {

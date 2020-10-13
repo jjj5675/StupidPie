@@ -30,8 +30,10 @@ public class ControllerSets : MonoBehaviour
     public enum KeySetTypes
     {
         KeyBoard=0,
+        
         Controller,
         TenKeyLess
+
     }
     
     public void SelectKeySetting(int key)
@@ -70,12 +72,16 @@ public class ControllerSets : MonoBehaviour
             if (obs.GetInput()[0].Dash.Enabled)
             {
                 inputkeyset = SeriKeySettings[(int)seriKeySet];
-                if (seriKeySet == KeySetTypes.Controller && iresKeySet == KeySetTypes.Controller)
+                if (seriKeySet != KeySetTypes.Controller && iresKeySet == KeySetTypes.Controller)
+                    inputkeyset = SeriKeySettings[4];
+                else if (seriKeySet == KeySetTypes.Controller && iresKeySet == KeySetTypes.Controller)
                     inputkeyset = SeriKeySettings[3];
             }
             else
             {
                 inputkeyset = IresKeySettings[(int)iresKeySet];
+                if (iresKeySet != KeySetTypes.Controller && seriKeySet == KeySetTypes.Controller)
+                    inputkeyset = IresKeySettings[2];
             }
 
             obs.GetInput()[0].DebugMenuOpen = inputkeyset.debugMenuOpen;
