@@ -9,6 +9,8 @@ public class ControllerSets : MonoBehaviour
     public class KeySet
     {
         public InputComponent.InputButton debugMenuOpen= new InputComponent.InputButton(KeyCode.F12);
+        public InputComponent.InputButton restage = new InputComponent.InputButton(KeyCode.F5);
+        public InputComponent.InputButton manualOpen = new InputComponent.InputButton(KeyCode.Tab);
         public InputComponent.InputButton pause = new InputComponent.InputButton(KeyCode.Escape);
         public InputComponent.InputButton jump = new InputComponent.InputButton(KeyCode.Z);
         public InputComponent.InputButton dash = new InputComponent.InputButton(KeyCode.X);
@@ -47,6 +49,8 @@ public class ControllerSets : MonoBehaviour
             }
 
             obs.GetInput()[0].DebugMenuOpen = inputkeyset.debugMenuOpen;
+            obs.GetInput()[0].Restage = inputkeyset.restage;
+            obs.GetInput()[0].ManualOpen = inputkeyset.manualOpen;
             obs.GetInput()[0].Pause = inputkeyset.pause;
             obs.GetInput()[0].Jump = inputkeyset.jump;
             obs.GetInput()[0].Dash = inputkeyset.dash;
@@ -75,6 +79,8 @@ public class ControllerSets : MonoBehaviour
             }
 
             obs.GetInput()[0].DebugMenuOpen = inputkeyset.debugMenuOpen;
+            obs.GetInput()[0].Restage = inputkeyset.restage;
+            obs.GetInput()[0].ManualOpen = inputkeyset.manualOpen;
             obs.GetInput()[0].Pause = inputkeyset.pause;
             obs.GetInput()[0].Jump = inputkeyset.jump;
             obs.GetInput()[0].Dash = inputkeyset.dash;

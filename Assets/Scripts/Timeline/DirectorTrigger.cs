@@ -38,7 +38,7 @@ public class DirectorTrigger : MonoBehaviour
         Invoke("FinishInvoke", (float)director.duration);
     }
 
-    void FinishInvoke(float duration)
+    void FinishInvoke()
     {
         instance = null;
         OnDirectorFinish.Invoke();

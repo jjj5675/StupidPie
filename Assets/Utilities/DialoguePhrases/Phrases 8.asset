@@ -66,7 +66,7 @@ MonoBehaviour:
   - name: "\uC544\uC774\uB808\uC2A4"
     portrait: Thinking3
     value: "\uADF8\uB7F4\uB9AC\uAC00\uC694 \uC9C0\uAE08\uAE4C\uC9C0 51\uD68C \uC815\uB3C4
-      \uC6C3\uC5C8\uB294\uB370"
+      \uC6C3\uC5C8\uB294\uB370."
   - name: "\uC11C\uB9AC"
     portrait: Surprised2
     value: "\uADFC\uB370 \uC65C \uB09C \uBAB0\uB790\uC9C0\u2026?"

@@ -284,7 +284,7 @@ public class PlatformCatcher : MonoBehaviour
 
         for (int i = 0, count = m_CaughtObjects.Count; i < count; i++)
         {
-            Debug.Log("!!");
+
             CaughtObject caughtObject = m_CaughtObjects[i];
             if(m_ParentCatcher != null && m_ParentCatcher.m_CaughtObjects.Find((CaughtObject A) => { return A.rigidbody == caughtObject.rigidbody; }) != null)
             {

@@ -132,7 +132,7 @@ public class ParallaxScroller : MonoBehaviour
 
                 parallaxLayers[i].layerTransform.position = newPosition;
             }
-            Debug.Log(factor);
+
             SetLayerPostion(factor);
         }
         else

@@ -61,6 +61,7 @@ public class Publisher : MonoBehaviour
 
     public void GainOrReleaseControl(bool gain)
     {
+
         foreach(var observer in m_Observers)
         {
             PlayerInput[] inp;

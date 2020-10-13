@@ -93,7 +93,7 @@ public class ButtonSelector : MonoBehaviour
         //입력을 하거나 못하는 조건 추가
         if (isVertical)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxis("Vertical")>0)
             {
                 if (m_CurrentImage != 0)
                 {
@@ -101,7 +101,7 @@ public class ButtonSelector : MonoBehaviour
                     MoveSound.Play();
                 }
             }
-            else if (Input.GetKeyUp(KeyCode.DownArrow))
+            else if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetAxis("Vertical") < 0)
             {
                 //현재 테이블 버튼갯수만큼
                 if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
@@ -113,7 +113,7 @@ public class ButtonSelector : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") > 0)
             {
                 if (m_CurrentImage != 0)
                 {
@@ -121,7 +121,7 @@ public class ButtonSelector : MonoBehaviour
                     MoveSound.Play();
                 }
             }
-            else if (Input.GetKeyUp(KeyCode.RightArrow))
+            else if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetAxis("Horizontal") < 0)
             {
                 //현재 테이블 버튼갯수만큼
                 if (m_CurrentImage < imageTable[m_CurrentCanvas].buttonImages.Length - 1)
@@ -132,7 +132,7 @@ public class ButtonSelector : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Fire1"))
         {
             imageTable[m_CurrentCanvas].OnPressed[m_CurrentImage].Invoke();
             SelectSound.Play();

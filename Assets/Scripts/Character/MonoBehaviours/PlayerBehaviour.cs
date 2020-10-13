@@ -59,7 +59,7 @@ public class PlayerBehaviour : MonoBehaviour
     private float m_CurrentTimeToWaitSliding = 0f;
     private bool m_Slidingable = false;
     private float m_TimeToLeapHeight;
-    private float jumpTerm;
+    
 
     private Observer m_Observer;
     private Vector2 m_MoveVector;
@@ -141,7 +141,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         foreach (PlayerInput inp in dataBase.playerInput)
         {
-            if (!inp.Pause.Down && !inp.DebugMenuOpen.Down)
+            if (!inp.Pause.Down && !inp.DebugMenuOpen.Down && !inp.Restage.Down && !inp.ManualOpen.Down)
                 continue;
             //f12 디버그 메뉴 활성화 코드. 
             if (inp.DebugMenuOpen.Down)
@@ -178,22 +178,43 @@ public class PlayerBehaviour : MonoBehaviour
                     UIManager.Instance.ToggleHUDCanvas(false);
                 }
             }
+
+            if(inp.Restage.Down)
+            {
+                if(!m_InPause)
+                {
+                    if (ScreenFader.IsFading)
+                        return;
+
+                    SceneController.Instance.Restage();
+                    break;
+                }
+            }
+
+            if(inp.ManualOpen.Down)
+            {
+                if (!m_InPause)
+                {
+                    if (ScreenFader.IsFading)
+                        return;
+
+                    UIManager.Instance.ManualOpen();
+                    Publisher.Instance.GainOrReleaseControl(false);
+                    break;
+                }
+            }
+
             break;
         }
+        
+
         //퍼즈를 끝냈을 때 다시 움직이도록 함.
         if (m_InPause && Time.timeScale == 1)
         {
             m_InPause = false;
         }
 
-        if(jumpTerm>0)
-        {
-            jumpTerm += Time.deltaTime;
-            if (jumpTerm >= 0.5f)
-                jumpTerm = 0;
-        }
-
-
+        
 
     }
 

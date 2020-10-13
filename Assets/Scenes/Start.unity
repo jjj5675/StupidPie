@@ -656,6 +656,16 @@ MonoBehaviour:
       key: 293
       keyName: 
       m_Enabled: 1
+    restage:
+      isKeyPad: 0
+      key: 286
+      keyName: 
+      m_Enabled: 1
+    manualOpen:
+      isKeyPad: 0
+      key: 9
+      keyName: 
+      m_Enabled: 1
     pause:
       isKeyPad: 0
       key: 27
@@ -690,6 +700,16 @@ MonoBehaviour:
       isKeyPad: 0
       key: 293
       keyName: 
+      m_Enabled: 1
+    restage:
+      isKeyPad: 1
+      key: 0
+      keyName: Restart1
+      m_Enabled: 1
+    manualOpen:
+      isKeyPad: 1
+      key: 0
+      keyName: Manual1
       m_Enabled: 1
     pause:
       isKeyPad: 1
@@ -727,6 +747,16 @@ MonoBehaviour:
       key: 0
       keyName: 
       m_Enabled: 0
+    restage:
+      isKeyPad: 0
+      key: 286
+      keyName: 
+      m_Enabled: 0
+    manualOpen:
+      isKeyPad: 0
+      key: 9
+      keyName: 
+      m_Enabled: 0
     pause:
       isKeyPad: 0
       key: 0
@@ -760,6 +790,16 @@ MonoBehaviour:
   - debugMenuOpen:
       isKeyPad: 0
       key: 0
+      keyName: 
+      m_Enabled: 0
+    restage:
+      isKeyPad: 0
+      key: 286
+      keyName: 
+      m_Enabled: 0
+    manualOpen:
+      isKeyPad: 0
+      key: 9
       keyName: 
       m_Enabled: 0
     pause:
@@ -797,11 +837,21 @@ MonoBehaviour:
       key: 0
       keyName: 
       m_Enabled: 0
+    restage:
+      isKeyPad: 0
+      key: 286
+      keyName: 
+      m_Enabled: 0
+    manualOpen:
+      isKeyPad: 0
+      key: 9
+      keyName: 
+      m_Enabled: 0
     pause:
       isKeyPad: 0
       key: 0
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     jump:
       isKeyPad: 1
       key: 330
@@ -832,11 +882,21 @@ MonoBehaviour:
       key: 0
       keyName: 
       m_Enabled: 0
+    restage:
+      isKeyPad: 0
+      key: 286
+      keyName: 
+      m_Enabled: 0
+    manualOpen:
+      isKeyPad: 0
+      key: 9
+      keyName: 
+      m_Enabled: 0
     pause:
       isKeyPad: 0
       key: 0
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     jump:
       isKeyPad: 1
       key: 330

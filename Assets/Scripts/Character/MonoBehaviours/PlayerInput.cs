@@ -3,6 +3,8 @@
 public class PlayerInput : InputComponent
 {
     public InputButton DebugMenuOpen = new InputButton(KeyCode.F12);
+    public InputButton Restage = new InputButton(KeyCode.F5);
+    public InputButton ManualOpen = new InputButton(KeyCode.Tab);
     public InputButton Pause = new InputButton(KeyCode.Escape);
     public InputButton Jump = new InputButton(KeyCode.Z);
     public InputButton Dash = new InputButton(KeyCode.X);
@@ -17,12 +19,13 @@ public class PlayerInput : InputComponent
     protected override void GetInputs(bool fixedUpdateHappened)
     {
         Pause.Get(fixedUpdateHappened);
+        ManualOpen.Get(fixedUpdateHappened);
         Jump.Get(fixedUpdateHappened);
         Dash.Get(fixedUpdateHappened);
         Interact.Get(fixedUpdateHappened);
         Horizontal.Get();
         Vertical.Get();
-
+        Restage.Get(fixedUpdateHappened);
         DebugMenuOpen.Get(fixedUpdateHappened);
     }
 
@@ -31,6 +34,8 @@ public class PlayerInput : InputComponent
         m_HaveControl = true;
 
         GainControl(Pause);
+        GainControl(Restage);
+        GainControl(ManualOpen);
         GainControl(Jump);
         GainControl(Dash);
         GainControl(Interact);
@@ -45,6 +50,8 @@ public class PlayerInput : InputComponent
         m_HaveControl = false;
 
         ReleaseControl(Pause, resetValuse);
+        ReleaseControl(Restage, resetValuse);
+        ReleaseControl(ManualOpen, resetValuse);
         ReleaseControl(Jump, resetValuse);
         ReleaseControl(Dash, resetValuse);
         ReleaseControl(Interact, resetValuse);

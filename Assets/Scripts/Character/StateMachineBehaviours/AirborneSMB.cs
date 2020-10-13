@@ -36,7 +36,7 @@ public class AirborneSMB : SceneLinkedSMB<PlayerBehaviour>
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         m_MonoBehaviour.JumpEnd();
-        Debug.Log("End");
+
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
