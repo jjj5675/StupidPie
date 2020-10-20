@@ -136,7 +136,7 @@ public class FallingPlatform : Platform
 
             for (int i = 0; i < count; i++)
             {
-                if (m_FoundHits[i].collider != null)
+                if (m_FoundHits[i].collider != null && m_FoundHits[i].collider.gameObject.layer!=4096)
                 {
                     float middleHitHeight = m_FoundHits[i].point.y;
                     float colliderHeight = m_Rigidbody2D.position.y + m_Box.offset.y - m_Box.size.y * 0.5f;
