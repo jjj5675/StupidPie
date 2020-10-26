@@ -24,7 +24,7 @@
         void surf (Input IN, inout SurfaceOutput o)
         {
             float4 c = tex2D (_MainTex, IN.uv_MainTex + float2(_Time.y*_CloudSpeed,0));
-            o.Emission = c.rgb;
+            o.Albedo = c.rgb;
             o.Alpha = c.a;
         }
 
