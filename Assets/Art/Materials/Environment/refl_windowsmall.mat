@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ReflTex:
-        m_Texture: {fileID: 2800000, guid: 18d7602534f568e4582da66478a3549c, type: 3}
+        m_Texture: {fileID: 2800000, guid: dbf3cf40e7f964c4284674c80623f7b6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -81,12 +81,12 @@ Material:
     - _Reflepw: 1.2
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Spepw: 1.05
+    - _Spepw: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _Zoom: 1.4
+    - _Zoom: -3
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Imagesize: {r: 960, g: 540, b: 28, a: 30}
+    - _Imagesize: {r: 1040, g: 540, b: 28, a: 30}
