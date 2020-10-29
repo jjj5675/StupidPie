@@ -604,6 +604,11 @@ PrefabInstance:
       propertyPath: tabOff.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4361796544044291095, guid: a9e2118693dcaf2468fffa4323834f68,
+        type: 3}
+      propertyPath: f5On.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Restage
+      objectReference: {fileID: 0}
     - target: {fileID: 4787839286472739619, guid: a9e2118693dcaf2468fffa4323834f68,
         type: 3}
       propertyPath: imageTable.Array.data[0].OnPressed.Array.data[2].m_PersistentCalls.m_Calls.Array.size
