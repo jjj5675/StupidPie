@@ -419,6 +419,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1063801454092059087, guid: a9e2118693dcaf2468fffa4323834f68,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908812713476161755, guid: a9e2118693dcaf2468fffa4323834f68,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4361796544044291095, guid: a9e2118693dcaf2468fffa4323834f68,
         type: 3}
       propertyPath: tabOn.m_PersistentCalls.m_Calls.Array.size
