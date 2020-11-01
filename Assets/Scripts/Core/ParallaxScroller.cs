@@ -62,7 +62,7 @@ public class ParallaxScroller : MonoBehaviour
                 //그래서 로컬은 -200정도에 월드포지션은 0이 나온다.
                 //따라서 position이아니라 localPosition을 확실히 지정해서 변경해야한다.
                 //c.transform.position = new Vector3(spriteWidth * k, parallaxLayers[i].layerTransform.position.y, parallaxLayers[i].layerTransform.position.z);
-                c.transform.localPosition = new Vector3(spriteWidth * k, 0, 0.2f);
+                c.transform.localPosition = new Vector3(spriteWidth * k, 0, 0.21f);
                 c.name = parallaxLayers[i].layerTransform.name + k;
             }
 
@@ -110,7 +110,7 @@ public class ParallaxScroller : MonoBehaviour
             for (int k = 0; k < 2; k++)
             {
                 parallaxLayers[i].layerTransform.GetChild(k).transform.localPosition =
-                    new Vector3(parallaxLayers[i].halfSpriteWidth * 2 * k, 0, 0);
+                    new Vector3(parallaxLayers[i].halfSpriteWidth * 2 * k, 0, 0.21f);
             }
         }
     }
