@@ -655,7 +655,7 @@ MonoBehaviour:
       isKeyPad: 0
       key: 293
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     restage:
       isKeyPad: 0
       key: 286
@@ -700,7 +700,7 @@ MonoBehaviour:
       isKeyPad: 0
       key: 293
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     restage:
       isKeyPad: 1
       key: 0
@@ -745,7 +745,7 @@ MonoBehaviour:
       isKeyPad: 0
       key: 293
       keyName: 
-      m_Enabled: 0
+      m_Enabled: 1
     restage:
       isKeyPad: 0
       key: 286
