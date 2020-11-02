@@ -65,6 +65,17 @@ public class CellController : MonoBehaviour
         cell = null;
     }
 
+    public void SettleRootCell(int num)
+    {
+        foreach(var item in m_CellCache)
+        {
+            if (item.cellNum == num)
+                item.cellType = Cell.CellType.ROOT;
+            else
+                item.cellType = Cell.CellType.NONE;
+        }
+    }
+
     public void DisablePreviousCell()
     {
         if (m_PreviousCell != null)

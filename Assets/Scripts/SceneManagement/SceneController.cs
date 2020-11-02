@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -116,7 +117,13 @@ public class SceneController : MonoBehaviour
         StartCoroutine(Transition(transitionPoint.newSceneName, CellTransitionDestination.DestinationTag.A));
     }
 
-    private IEnumerator Transition(string newSceneName, CellTransitionDestination.DestinationTag destinationTag, TransitionPoint.TransitionType transitionType = TransitionPoint.TransitionType.DifferentZone)
+    public void TransitionToLoadedData(TransitionPoint transitionPoint)
+    {
+        if(File.Exists(Path.Combine(Application.dataPath, "SaveData.json")))
+          StartCoroutine(Transition(transitionPoint.newSceneName, CellTransitionDestination.DestinationTag.A,default,true));
+    }
+
+    private IEnumerator Transition(string newSceneName, CellTransitionDestination.DestinationTag destinationTag, TransitionPoint.TransitionType transitionType = TransitionPoint.TransitionType.DifferentZone, bool isLoadData=false)
     {
         m_Transitioning = true;
 
@@ -128,6 +135,19 @@ public class SceneController : MonoBehaviour
         parallaxScroller = FindObjectOfType<ParallaxScroller>();
         var publisher = FindObjectOfType<Publisher>();
 
+        if(isLoadData)
+        {
+            SaveData loadData;
+            string path = Path.Combine(Application.dataPath, "SaveData.json");
+            string jsonData = File.ReadAllText(path);
+            loadData = JsonUtility.FromJson<SaveData>(jsonData);
+
+            cellController.SettleRootCell(loadData.rootCell);
+            GetComponent<ControllerSets>().iresKeySet = (ControllerSets.KeySetTypes)loadData.iresKeySet;
+            GetComponent<ControllerSets>().seriKeySet = (ControllerSets.KeySetTypes)loadData.SeriKeySet;
+            GetComponent<ControllerSets>().InitializeKeySet();
+        }
+
         publisher.GainOrReleaseControl(false);
         cellController.GetRootCell(out rootCell);
         cellController.SetCell(rootCell, destinationTag);
@@ -136,7 +156,8 @@ public class SceneController : MonoBehaviour
 
         yield return StartCoroutine(ScreenFader.FadeSceneIn());
 
-        publisher.GainOrReleaseControl(true);
+        if(DirectorTrigger.instance==null)
+          publisher.GainOrReleaseControl(true);
         m_Transitioning = false;
     }
 

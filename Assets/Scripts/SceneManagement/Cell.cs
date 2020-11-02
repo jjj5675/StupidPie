@@ -11,6 +11,7 @@ public class Cell : MonoBehaviour
     public CellTransitionDestination[] cellTransitionDestinations = new CellTransitionDestination[7];
     public CompositeCollider2D confinerCollider;
     public CellType cellType;
+    public int cellNum;
 
     protected Platform[] m_PlatformCache;
     protected ScorePickup[] m_ScorePickups;

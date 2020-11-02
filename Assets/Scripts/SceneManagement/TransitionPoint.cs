@@ -46,6 +46,7 @@ public class TransitionPoint : MonoBehaviour
 
         if(Publisher.Instance.Observers.Count <= m_TransitioningPresentCount && transitionWhen == TransitionWhen.OnTriggerEnter)
         {
+            GetComponent<DataSaver>().AutoSaver();
             cellController.SetCell(transitionCell, transitionDestinationTag);
             screenManager.autoCameraSetup.SwapVCam(cellController.CurrentCell.confinerCollider);
             Publisher.Instance.GainOrReleaseControl(false);

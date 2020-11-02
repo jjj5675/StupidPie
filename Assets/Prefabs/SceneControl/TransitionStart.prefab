@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7796949771813041599}
   - component: {fileID: 7796949771813041593}
   - component: {fileID: 7796949771813041592}
+  - component: {fileID: 5636902428280262619}
   m_Layer: 0
   m_Name: TransitionStart
   m_TagString: Untagged
@@ -78,3 +79,15 @@ MonoBehaviour:
   resetInputValueOnTransition: 1
   cellController: {fileID: 0}
   screenManager: {fileID: 0}
+--- !u!114 &5636902428280262619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7796949771813041598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d3aedea91b0034b8677f22e27c3b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

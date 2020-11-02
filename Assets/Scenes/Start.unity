@@ -2702,6 +2702,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
       propertyPath: imageTable.Array.data[1].OnPressed.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 289439122}
@@ -3150,6 +3155,36 @@ PrefabInstance:
       propertyPath: imageTable.Array.data[2].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 289439120}
+    - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TransitionToLoadedData
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: TransitionPoint, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5270285905980263201, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: imageTable.Array.data[0].OnPressed.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1667640813}
     - target: {fileID: 5270285906357923794, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
       propertyPath: m_SizeDelta.x
