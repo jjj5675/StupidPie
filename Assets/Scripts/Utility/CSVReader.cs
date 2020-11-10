@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 public class CSVReader
 {
     static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
-    static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
+    static string LINE_SPLIT_RE = @"\n";
     static char[] TRIM_CHARS = { '\"' };
 
     public static bool Read(ref List<Phrases> phrases, string file)
@@ -35,7 +35,7 @@ public class CSVReader
         {
             Array.Resize(ref header, phrases.Count * 3);
         }
-
+        
         //1행(헤더)를 제외한 나머지 행들의 갯수 만큼 반복
         for (int i = 1; i < lines.Length; i++)
         {
@@ -64,7 +64,8 @@ public class CSVReader
                 }
 
                 string value = valuse[k];
-                value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
+
+                //value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
 
                 if (phrases[objectIndex].key == header[k])
                 {

@@ -47,6 +47,7 @@ public class DialogueBehaviour : PlayableBehaviour
         if (!m_IsClipPlayed && 0 < info.weight)
         {
             m_DialogueCanvas.Next(phraseKey, textIndex);
+            m_DialogueCanvas.SetLine();
 
             if (Application.isPlaying)
             {

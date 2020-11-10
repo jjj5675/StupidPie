@@ -73,6 +73,9 @@ public class DialogueCanvasController : MonoBehaviour
         nameText.text = phrase.name;
         mainText.text = phrase.value;
 
+        string[] devide = phrase.value.Split('\n');
+        Debug.Log(devide[0]);
+
         foreach (var portraitAnimator in portraitAnimators)
         {
             if (portraitAnimator.name == nameText.text)
@@ -83,6 +86,20 @@ public class DialogueCanvasController : MonoBehaviour
         }
 
         //canvasAnimator.SetBool(m_HashActivePara, true);
+    }
+    IEnumerator OnOffText()
+    {
+        yield return new WaitForFixedUpdate();
+        mainText.fontStyle = FontStyles.Bold;
+        
+        yield return new WaitForFixedUpdate();
+        mainText.enabled = true; ;
+
+        yield break;
+    }
+    public void SetLine()
+    {
+        StartCoroutine(OnOffText());
     }
 
     public void SendResumeAction(Action action)
