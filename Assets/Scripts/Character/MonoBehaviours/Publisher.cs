@@ -124,6 +124,8 @@ public class Publisher : MonoBehaviour
                 observer.PlayerInfo.transform.position = entrances[observerCount].transform.position;
                 observer.PlayerInfo.transform.rotation = entrances[observerCount].transform.rotation;
             }
+            if (observer.PlayerInfo.abilityTypes.Contains(PlayerDataBase.AbilityType.DASH))
+                observer.PlayerInfo.animator.SetBool("Dashing", false);
 
             observerCount++;
         }

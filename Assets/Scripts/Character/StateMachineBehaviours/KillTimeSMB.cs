@@ -13,6 +13,11 @@ public class KillTimeSMB : SceneLinkedSMB<PlayerBehaviour>
     {
         m_MonoBehaviour.CheckForBoring();
         m_MonoBehaviour.CheckForGrounded();
+        if (m_MonoBehaviour.CheckForJumpInput() && m_MonoBehaviour.CheckForCurrentGravity())
+        {
+            //m_MonoBehaviour.SetVerticalMovement(m_MonoBehaviour.JumpVelocity);
+            m_MonoBehaviour.SetJumpingMovement();
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

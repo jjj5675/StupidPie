@@ -173,6 +173,7 @@ public class SceneController : MonoBehaviour
 
         Publisher.Instance.SetAnimState(true, false);
         Publisher.Instance.SetObservers(true, true, entrance.locations);
+        
         cellController.CurrentCell.ResetCell(false);
 
         if (cameraSetting)

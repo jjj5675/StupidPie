@@ -53,7 +53,7 @@ public class FallingPlatform : Platform
         {
             if (go.name.Equals("CellController"))
             {
-                confinerBoundsMinY = go.GetComponent<CellController>().CurrentCell.ConfinerBounds.min.y;
+                confinerBoundsMinY = go.GetComponent<CellController>().CurrentCell.ConfinerBounds.min.y-5.0f;
                 break;
             }
         }
@@ -120,8 +120,9 @@ public class FallingPlatform : Platform
             if (transform.position.y < confinerBoundsMinY)
             {
                 m_CanFall = false;
+                
                 m_Velocity = Vector2.zero;
-                FallDown.PlayRandomSound();
+                
             }
         }
     }
@@ -136,7 +137,7 @@ public class FallingPlatform : Platform
 
             for (int i = 0; i < count; i++)
             {
-                if (m_FoundHits[i].collider != null && m_FoundHits[i].collider.gameObject.layer!=4096)
+                if (m_FoundHits[i].collider != null && m_FoundHits[i].collider.gameObject.layer!=12)
                 {
                     float middleHitHeight = m_FoundHits[i].point.y;
                     float colliderHeight = m_Rigidbody2D.position.y + m_Box.offset.y - m_Box.size.y * 0.5f;
@@ -159,7 +160,7 @@ public class FallingPlatform : Platform
                             m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + (Vector2.down * diffY));
 
                             groundHitAudioPlayer.PlayRandomSound();
-
+                            
                             m_CanFall = false;
                             return;
                         }
