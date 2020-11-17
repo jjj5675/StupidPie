@@ -72,11 +72,14 @@ public class ScreenFader : MonoBehaviour
         m_IsFading = false;
         canvasGroup.alpha = finalAlpha;
         canvasGroup.blocksRaycasts = false;
+        Debug.Log(canvasGroup.alpha);
     }
 
     public static IEnumerator FadeSceneIn()
     {
+        
         CanvasGroup canvasGroup = Instance.blackCanvasGroup;
+        canvasGroup.gameObject.SetActive(true);
         yield return Instance.StartCoroutine(Instance.Fade(0f, canvasGroup));
         canvasGroup.gameObject.SetActive(false);
     }

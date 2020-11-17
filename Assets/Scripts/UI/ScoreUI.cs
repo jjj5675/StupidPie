@@ -18,6 +18,6 @@ public class ScoreUI : MonoBehaviour
 
     public void TakeScore(SettleUI settle)
     {
-        settle.scoreText.text += scoreText.text.Substring(2, 2);
+        settle.scoreText.text += scoreText.text.Substring(2, 1);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.Playables;
+using System.Text.RegularExpressions;
 
 public class DialogueCanvasController : MonoBehaviour
 {
@@ -73,8 +74,16 @@ public class DialogueCanvasController : MonoBehaviour
         nameText.text = phrase.name;
         mainText.text = phrase.value;
 
-        string[] devide = phrase.value.Split('\n');
-        Debug.Log(devide[0]);
+        var devide = Regex.Split(mainText.text, "<>");
+        string added;
+        if (devide.Length > 1)
+        {
+            added = devide[0] + "\n" + devide[1];
+            mainText.text = added;
+        }
+        
+
+        
 
         foreach (var portraitAnimator in portraitAnimators)
         {
