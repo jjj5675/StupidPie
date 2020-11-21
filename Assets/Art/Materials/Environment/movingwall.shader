@@ -5,6 +5,12 @@
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Dark("밝기", Float) = 0.3
         _Lpw("빛의 세기", Float) = 5
+        _UpSpd("상하 속도", Float) = 1
+        _UpDis("상하 거리억제", Float) = 15
+        _UpTim("상하 타이밍", Range(0,1)) = 0
+        _LRSpd("좌우 속도", Float) = 0
+        _LRDis("좌우 거리억제", Float) = 15
+        _LRTim("좌우 타이밍", Range(0,1)) = 0
 
     }
     SubShader
@@ -25,10 +31,16 @@
         float _Dark;
         float _Lpw;
 
+        float _UpSpd;
+        float _UpDis;
+        float _UpTim;
+        float _LRSpd;
+        float _LRDis;
+        float _LRTim;
 
         void surf (Input IN, inout SurfaceOutput o)
         {
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex+float2(0,cos(_Time.y)/15));
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex+float2(cos((_Time.y + _LRTim) * _LRSpd) / _LRDis,cos((_Time.y+_UpTim)* _UpSpd)/_UpDis));
             c.rgb = c.rgb * _Dark;
             o.Albedo = c.rgb;
             o.Alpha = c.a;
