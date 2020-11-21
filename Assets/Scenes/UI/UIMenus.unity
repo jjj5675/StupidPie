@@ -429,6 +429,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2505223730142286163, guid: a9e2118693dcaf2468fffa4323834f68,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 399ec38fc0494574ba2f3dbe0483674f, type: 3}
     - target: {fileID: 4361796544044291095, guid: a9e2118693dcaf2468fffa4323834f68,
         type: 3}
       propertyPath: tabOn.m_PersistentCalls.m_Calls.Array.size
@@ -619,6 +624,11 @@ PrefabInstance:
       propertyPath: f5On.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Restage
       objectReference: {fileID: 0}
+    - target: {fileID: 4474838070902427846, guid: a9e2118693dcaf2468fffa4323834f68,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a089de8a5e15af643ad55f2d9386a206, type: 3}
     - target: {fileID: 4787839286472739619, guid: a9e2118693dcaf2468fffa4323834f68,
         type: 3}
       propertyPath: imageTable.Array.data[0].OnPressed.Array.data[2].m_PersistentCalls.m_Calls.Array.size
