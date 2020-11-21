@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     phraseKey: Tutorial B-2
-    textIndex: 2
+    textIndex: 5
     pause: 1
 --- !u!114 &-4437012945612013553
 MonoBehaviour:
@@ -832,7 +832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     phraseKey: Tutorial B-2
-    textIndex: 2
+    textIndex: 3
     pause: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -1046,7 +1046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     phraseKey: Tutorial B-2
-    textIndex: 2
+    textIndex: 4
     pause: 1
 --- !u!114 &3072628373133672343
 MonoBehaviour:
@@ -1101,8 +1101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     phraseKey: Tutorial B-2
-    textIndex: 2
-    pause: 1
+    textIndex: 6
+    pause: 0
 --- !u!114 &4335685146008166732
 MonoBehaviour:
   m_ObjectHideFlags: 1
