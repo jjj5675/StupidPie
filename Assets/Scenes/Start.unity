@@ -630,6 +630,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneController
       objectReference: {fileID: 0}
+    - target: {fileID: 1904551167835384168, guid: 1f4527b546515264f87f361024264dc0,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c31861f717f831140835456dfe296279, type: 3}
+    - target: {fileID: 3409742398828931942, guid: 1f4527b546515264f87f361024264dc0,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: feeedbac39c81f54d9025c8df1104a91, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f4527b546515264f87f361024264dc0, type: 3}
 --- !u!114 &289439120 stripped
@@ -2592,6 +2602,11 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1193488068437906642, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 399ec38fc0494574ba2f3dbe0483674f, type: 3}
     - target: {fileID: 1425277288039800531, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
       propertyPath: Ended.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2620,6 +2635,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 5cf4f17620b55bf4a99bd05abf71afb9,
         type: 3}
+    - target: {fileID: 4772382296974267977, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a089de8a5e15af643ad55f2d9386a206, type: 3}
     - target: {fileID: 5270285905190524298, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
       propertyPath: m_IsActive
