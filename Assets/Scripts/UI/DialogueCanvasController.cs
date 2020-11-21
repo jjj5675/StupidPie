@@ -27,6 +27,7 @@ public class DialogueCanvasController : MonoBehaviour
 
     private Coroutine m_DeactiveCoroutine;
     private Action Resume;
+    private Action EndAct;
 
     private void Update()
     {
@@ -35,6 +36,14 @@ public class DialogueCanvasController : MonoBehaviour
             if (Resume != null)
             {
                 Resume.Invoke();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (EndAct != null)
+            {
+                EndAct.Invoke();
+                DirectorTrigger.instance.OnDirectorFinish.Invoke();
             }
         }
     }
@@ -114,5 +123,9 @@ public class DialogueCanvasController : MonoBehaviour
     public void SendResumeAction(Action action)
     {
         Resume = action;
+    }
+    public void SendEndAction(Action action)
+    {
+        EndAct = action;
     }
 }

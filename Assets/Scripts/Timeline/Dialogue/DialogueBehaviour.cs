@@ -26,7 +26,7 @@ public class DialogueBehaviour : PlayableBehaviour
     public override void OnPlayableCreate(Playable playable)
     {
         m_Director = (playable.GetGraph().GetResolver() as PlayableDirector);
-
+        
         TimelineAsset timelineAsset = m_Director.playableAsset as TimelineAsset;
         var trackAssets = timelineAsset.GetOutputTracks();
 
@@ -40,6 +40,7 @@ public class DialogueBehaviour : PlayableBehaviour
                 break;
             }
         }
+        m_DialogueCanvas.SendEndAction(EndTimeLine);
     }
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
@@ -88,5 +89,14 @@ public class DialogueBehaviour : PlayableBehaviour
     void ResumeTimeline()
     {
         m_Director.playableGraph.GetRootPlayable(0).SetSpeed(1d);
+
+    }
+    void EndTimeLine()
+    {
+        m_Director.time = m_TrackAsset.end+0.2f;
+        if(!m_IsClipPlayed)
+          m_Director.playableGraph.GetRootPlayable(0).SetSpeed(1d);
+
+
     }
 }
