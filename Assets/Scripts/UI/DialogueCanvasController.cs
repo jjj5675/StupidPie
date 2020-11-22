@@ -28,6 +28,7 @@ public class DialogueCanvasController : MonoBehaviour
     private Coroutine m_DeactiveCoroutine;
     private Action Resume;
     private Action EndAct;
+    private bool canSkip=false;
 
     private void Update()
     {
@@ -36,14 +37,16 @@ public class DialogueCanvasController : MonoBehaviour
             if (Resume != null)
             {
                 Resume.Invoke();
+                
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && canSkip)
         {
             if (EndAct != null)
             {
                 EndAct.Invoke();
                 DirectorTrigger.instance.OnDirectorFinish.Invoke();
+                canSkip = false;
             }
         }
     }
@@ -123,6 +126,7 @@ public class DialogueCanvasController : MonoBehaviour
     public void SendResumeAction(Action action)
     {
         Resume = action;
+        canSkip = true;
     }
     public void SendEndAction(Action action)
     {
