@@ -13,7 +13,9 @@ public class BGMSelecter : MonoBehaviour
     }
     public void Switch(bool num)
     {
-        sources[0].volume = num ? 0.6f : 0.1f;
-        sources[1].volume = num ? 0.1f : 0.6f;
+        if(num)
+          Debug.Log("!!");
+        sources[0].volume = num ? 1.0f : 0.1f;
+        sources[1].volume = num ? 0.1f : 1.0f;
     }
 }

@@ -35,7 +35,7 @@ public class DirectorTrigger : MonoBehaviour
         instance = this;
         m_AlreadTriggered = true;
         OnDirectorPlay.Invoke();
-        Invoke("FinishInvoke", (float)director.duration+3.0f);
+        Invoke("FinishInvoke", (float)director.duration+5.0f);
     }
 
     void FinishInvoke()
