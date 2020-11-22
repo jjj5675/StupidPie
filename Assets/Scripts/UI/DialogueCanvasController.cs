@@ -132,4 +132,8 @@ public class DialogueCanvasController : MonoBehaviour
     {
         EndAct = action;
     }
+    public void DirectorSetNull()
+    {
+        DirectorTrigger.instance = null;
+    }
 }
