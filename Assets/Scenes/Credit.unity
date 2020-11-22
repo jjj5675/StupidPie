@@ -1365,14 +1365,14 @@ MonoBehaviour:
   RemainTime: 2
   texts:
   - {fileID: 21300000, guid: 57aba911ed3678844b929bd1f4de27d7, type: 3}
-  - {fileID: 21300000, guid: e8ce52b9e23b739458ad8f19c3499946, type: 3}
   - {fileID: 21300000, guid: 1c7d79803384ac64abe5352063bb82ab, type: 3}
   - {fileID: 21300000, guid: 59e28209ba1b2374f83841b78d624d24, type: 3}
+  - {fileID: 21300000, guid: e8ce52b9e23b739458ad8f19c3499946, type: 3}
   - {fileID: 21300000, guid: 87fdc9d71125a7f41ba74ac81f9aed7d, type: 3}
   - {fileID: 21300000, guid: 96562d3af97952a42bda18a54f8d8906, type: 3}
   - {fileID: 21300000, guid: f5122edc49e32b0408cecf16e101c0c3, type: 3}
-  - {fileID: 21300000, guid: 8fbd99799a5fedc40b60803c5d826927, type: 3}
   - {fileID: 21300000, guid: a7c92378585ca90418f90ec96b6b22d7, type: 3}
+  - {fileID: 21300000, guid: 8fbd99799a5fedc40b60803c5d826927, type: 3}
   - {fileID: 21300000, guid: 28ed8c6cfb5b14346b90f5ff188a670d, type: 3}
   - {fileID: 21300000, guid: 9a29001a27899d840b796fe7e8fbc15d, type: 3}
   - {fileID: 21300000, guid: 0989151e7f3ca7f41aab7da703a7f616, type: 3}
