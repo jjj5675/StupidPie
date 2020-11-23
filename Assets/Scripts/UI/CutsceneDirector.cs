@@ -172,28 +172,30 @@ public class CutsceneDirector : MonoBehaviour
         canPass = true;
         //Output Text를 클리어하고 Text의 길이를 저장한다.
         writeText.text = "";
-        m_CharacterCount = clipTable.readTexts[textIndex].text.Length;
+        //m_CharacterCount = clipTable.readTexts[textIndex].text.Length;
 
-        if (m_CharacterCount == 0)
-        {
-            m_CharacterCount = clipTable.readTexts[textIndex].text.Length;
-        }
+        //if (m_CharacterCount == 0)
+        //{
+        //    m_CharacterCount = clipTable.readTexts[textIndex].text.Length;
+        //}
 
-        //딜레이 카운트
-        for (int i = 0; i < m_DelayTextCount; i++)
-        {
-            writeText.text += clipTable.readTexts[textIndex].text.Substring(i, 1);
-            yield return new WaitForSeconds(writeDelay);
-        }
+        ////딜레이 카운트
+        //for (int i = 0; i < m_DelayTextCount; i++)
+        //{
+        //    writeText.text += clipTable.readTexts[textIndex].text.Substring(i, 1);
+        //    yield return new WaitForSeconds(writeDelay);
+        //}
 
+        //m_IsTurning = false;
+
+        ////텍스트 개수만큼 반복해서 지연시켜가며 한글자씩 출력한다.
+        //for (int i = m_DelayTextCount; i < m_CharacterCount; i++)
+        //{
+        //    writeText.text += clipTable.readTexts[textIndex].text.Substring(i, 1);
+        //    yield return new WaitForSeconds(writeDelay);
+        //}
+        writeText.text = clipTable.readTexts[textIndex].text;
+        yield return new WaitForSeconds(writeDelay);
         m_IsTurning = false;
-
-        //텍스트 개수만큼 반복해서 지연시켜가며 한글자씩 출력한다.
-        for (int i = m_DelayTextCount; i < m_CharacterCount; i++)
-        {
-            writeText.text += clipTable.readTexts[textIndex].text.Substring(i, 1);
-            yield return new WaitForSeconds(writeDelay);
-        }
-
     }
 }
