@@ -465,7 +465,11 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    textRangeOfClip: 03000000020000000300000003000000
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    textRangeOfClip: 05000000010000000400000005000000
   writeText: {fileID: 1436901120}
   fadeAtStart: 1
   writeDelay: 0.1
