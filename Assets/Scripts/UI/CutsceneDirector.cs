@@ -16,7 +16,7 @@ public class CutsceneDirector : MonoBehaviour
         [Tooltip("읽어올 텍스트입니다")]
         public TextMeshProUGUI[] readTexts;
         [Tooltip("재생할 클립의 텍스트 수입니다")]
-        [Range(0, 10)]
+        [Range(0, 20)]
         public int[] textRangeOfClip;
     }
 
