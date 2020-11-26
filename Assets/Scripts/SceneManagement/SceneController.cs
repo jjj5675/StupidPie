@@ -115,11 +115,12 @@ public class SceneController : MonoBehaviour
 
     public void Regame()
     {
-        UIManager.Instance.TimerUI.StopTimer();
-        UIManager.instance.TimerUI.ResetTimer();
-        Publisher.Instance.SetAnimState(false, true);
-        rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
-        StartCoroutine(InTransition(true, true, cellTransitionDestination, true));
+        //UIManager.Instance.TimerUI.StopTimer();
+        //UIManager.instance.TimerUI.ResetTimer();
+        //Publisher.Instance.SetAnimState(false, true);
+        //rootCell.GetCellDestination(initalCellTransitionDestinationTag, out CellTransitionDestination cellTransitionDestination);
+        //StartCoroutine(InTransition(true, true, cellTransitionDestination, true));
+        TransitionForReset();
     }
 
     public void TransitionToScene(TransitionPoint transitionPoint)
@@ -137,16 +138,23 @@ public class SceneController : MonoBehaviour
     {
         StartCoroutine(Transition(newScene, CellTransitionDestination.DestinationTag.A, default, false, false));
     }
+    
+    public void TransitionForReset()
+    {
+        StartCoroutine(Transition("Zone1", CellTransitionDestination.DestinationTag.A));
+    }
 
     private IEnumerator Transition(string newSceneName, CellTransitionDestination.DestinationTag destinationTag, TransitionPoint.TransitionType transitionType = TransitionPoint.TransitionType.DifferentZone, bool isLoadData=false, bool isMainGame=true)
     {
         m_Transitioning = true;
-
+        
         yield return StartCoroutine(ScreenFader.FadeSceneOut(ScreenFader.FadeType.Black));
         yield return SceneManager.LoadSceneAsync(newSceneName);
 
         if (isMainGame)
         {
+            
+            
             cellController = FindObjectOfType<CellController>();
             screenManager = FindObjectOfType<ScreenManager>();
             parallaxScroller = FindObjectOfType<ParallaxScroller>();
