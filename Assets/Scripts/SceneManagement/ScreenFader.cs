@@ -59,6 +59,7 @@ public class ScreenFader : MonoBehaviour
 
     IEnumerator Fade(float finalAlpha, CanvasGroup canvasGroup)
     {
+        Debug.Log("Fade");
         m_IsFading = true;
         canvasGroup.blocksRaycasts = true;
         float fadeSpeed = Mathf.Abs(canvasGroup.alpha - finalAlpha) / fadeDuration;

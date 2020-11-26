@@ -49,8 +49,18 @@ public class SceneController : MonoBehaviour
     {
         if (Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            if (SceneManager.sceneCountInBuildSettings == 0)
+            {
+                Destroy(instance.gameObject);
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+                return;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
 
         DontDestroyOnLoad(gameObject);
@@ -123,41 +133,51 @@ public class SceneController : MonoBehaviour
           StartCoroutine(Transition(transitionPoint.newSceneName, CellTransitionDestination.DestinationTag.A,default,true));
     }
 
-    private IEnumerator Transition(string newSceneName, CellTransitionDestination.DestinationTag destinationTag, TransitionPoint.TransitionType transitionType = TransitionPoint.TransitionType.DifferentZone, bool isLoadData=false)
+    public void TransitionToUIScenes(string newScene)
+    {
+        StartCoroutine(Transition(newScene, CellTransitionDestination.DestinationTag.A, default, false, false));
+    }
+
+    private IEnumerator Transition(string newSceneName, CellTransitionDestination.DestinationTag destinationTag, TransitionPoint.TransitionType transitionType = TransitionPoint.TransitionType.DifferentZone, bool isLoadData=false, bool isMainGame=true)
     {
         m_Transitioning = true;
 
         yield return StartCoroutine(ScreenFader.FadeSceneOut(ScreenFader.FadeType.Black));
         yield return SceneManager.LoadSceneAsync(newSceneName);
 
-        cellController = FindObjectOfType<CellController>();
-        screenManager = FindObjectOfType<ScreenManager>();
-        parallaxScroller = FindObjectOfType<ParallaxScroller>();
-        var publisher = FindObjectOfType<Publisher>();
-
-        if(isLoadData)
+        if (isMainGame)
         {
-            SaveData loadData;
-            string path = Path.Combine(Application.dataPath, "SaveData.json");
-            string jsonData = File.ReadAllText(path);
-            loadData = JsonUtility.FromJson<SaveData>(jsonData);
+            cellController = FindObjectOfType<CellController>();
+            screenManager = FindObjectOfType<ScreenManager>();
+            parallaxScroller = FindObjectOfType<ParallaxScroller>();
+            var publisher = FindObjectOfType<Publisher>();
 
-            cellController.SettleRootCell(loadData.rootCell);
-            GetComponent<ControllerSets>().iresKeySet = (ControllerSets.KeySetTypes)loadData.iresKeySet;
-            GetComponent<ControllerSets>().seriKeySet = (ControllerSets.KeySetTypes)loadData.SeriKeySet;
-            GetComponent<ControllerSets>().InitializeKeySet();
+            if (isLoadData)
+            {
+                SaveData loadData;
+                string path = Path.Combine(Application.dataPath, "SaveData.json");
+                string jsonData = File.ReadAllText(path);
+                loadData = JsonUtility.FromJson<SaveData>(jsonData);
+
+                cellController.SettleRootCell(loadData.rootCell);
+                GetComponent<ControllerSets>().iresKeySet = (ControllerSets.KeySetTypes)loadData.iresKeySet;
+                GetComponent<ControllerSets>().seriKeySet = (ControllerSets.KeySetTypes)loadData.SeriKeySet;
+                GetComponent<ControllerSets>().InitializeKeySet();
+            }
+
+            publisher.GainOrReleaseControl(false);
+            cellController.GetRootCell(out rootCell);
+            cellController.SetCell(rootCell, destinationTag);
+            publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
+            screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
+
+            if (DirectorTrigger.instance == null)
+                publisher.GainOrReleaseControl(true);
         }
-
-        publisher.GainOrReleaseControl(false);
-        cellController.GetRootCell(out rootCell);
-        cellController.SetCell(rootCell, destinationTag);
-        publisher.SetObservers(false, true, cellController.LastEnteringDestination.locations);
-        screenManager.autoCameraSetup.SetMainConfinerBound(rootCell.confinerCollider);
 
         yield return StartCoroutine(ScreenFader.FadeSceneIn());
 
-        if(DirectorTrigger.instance==null)
-          publisher.GainOrReleaseControl(true);
+        
         m_Transitioning = false;
     }
 

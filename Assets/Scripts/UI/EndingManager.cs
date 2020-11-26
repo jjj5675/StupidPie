@@ -7,6 +7,6 @@ public class EndingManager : MonoBehaviour
    void Start()
     {
 
-        StartCoroutine(ScreenFader.FadeSceneIn());
+        
     }
 }

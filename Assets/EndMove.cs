@@ -13,19 +13,12 @@ public class EndMove : MonoBehaviour
     {
         if(canMove && Input.anyKeyDown)
         {
-            StartCoroutine(Load());
+            SceneController.Instance.TransitionToUIScenes("Credit");
         }
     }
     public void Ended()
     {
         canMove = true;
     }
-    IEnumerator Load()
-    {
-        yield return StartCoroutine(ScreenFader.FadeSceneOut());
-        SceneManager.LoadSceneAsync("Credit");
-        StartCoroutine(ScreenFader.FadeSceneIn());
-
-        yield return null;
-    }
+    
 }

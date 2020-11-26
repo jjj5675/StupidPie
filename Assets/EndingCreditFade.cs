@@ -22,6 +22,7 @@ public class EndingCreditFade : MonoBehaviour
         
         canvasGroup.alpha = 0;
         EndingScene();
+        
     }
 
     // Update is called once per frame
@@ -53,12 +54,8 @@ public class EndingCreditFade : MonoBehaviour
                 yield return null;
             }
         }
-        
-        StartCoroutine(ScreenFader.FadeSceneOut());
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadSceneAsync("Start");
-        StartCoroutine(ScreenFader.FadeSceneIn());
 
-        yield return null;
+        SceneController.Instance.TransitionToUIScenes("Start");
+        
     }
 }

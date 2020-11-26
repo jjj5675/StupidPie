@@ -677,7 +677,7 @@ MonoBehaviour:
       isKeyPad: 0
       key: 293
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     restage:
       isKeyPad: 0
       key: 286
@@ -722,7 +722,7 @@ MonoBehaviour:
       isKeyPad: 0
       key: 293
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     restage:
       isKeyPad: 1
       key: 0
@@ -767,7 +767,7 @@ MonoBehaviour:
       isKeyPad: 0
       key: 293
       keyName: 
-      m_Enabled: 1
+      m_Enabled: 0
     restage:
       isKeyPad: 0
       key: 286
@@ -2323,8 +2323,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1778118764}
+  - component: {fileID: 1778118765}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Invoker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2344,6 +2345,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1778118765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778118763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f618dcc750a1c34a869a9bea87a4d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  point: {fileID: 1667640813}
 --- !u!1 &1810064844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2635,14 +2649,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1425277288039800531, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
+      propertyPath: Ended.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1425277288039800531, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
       propertyPath: Ended.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 289439120}
+      objectReference: {fileID: 1778118765}
     - target: {fileID: 1425277288039800531, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
       propertyPath: Ended.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1667640813}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1425277288039800531, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: Ended.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Invoker
+      objectReference: {fileID: 0}
+    - target: {fileID: 1425277288039800531, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: Ended.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1425277288039800531, guid: 79ec0927af549c34bb0c0fca771fb06a,
+        type: 3}
+      propertyPath: Ended.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2307428486626134557, guid: 79ec0927af549c34bb0c0fca771fb06a,
         type: 3}
       propertyPath: m_Sprite
