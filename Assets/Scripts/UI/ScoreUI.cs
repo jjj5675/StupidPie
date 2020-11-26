@@ -13,11 +13,11 @@ public class ScoreUI : MonoBehaviour
 
     public void ChangeScoreText(Scoreable scoreable)
     {
-        scoreText.text = "X " + scoreable.scoreData.newScore.ToString();
+        scoreText.text = "X " + scoreable.scoreData.newScore.ToString() + " ";
     }
 
     public void TakeScore(SettleUI settle)
     {
-        settle.scoreText.text += scoreText.text.Substring(2, 1);
+        settle.scoreText.text += scoreText.text.Substring(2, 2);
     }
 }

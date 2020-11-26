@@ -109,7 +109,7 @@ public class SwitchPlatform : Platform
                 m_SpriteRenderer.sprite = m_CurrentWhiteSprite;
                 m_IsPrevCollision = !m_IsPrevCollision;
                 
-                if(switchAudio!=null)
+                if(switchAudio!=null && switchAudio[0].gameObject.activeInHierarchy)
                    switchAudio[0].Play();
             }
 
@@ -117,7 +117,7 @@ public class SwitchPlatform : Platform
             {
                 m_CurrentChangeDuration = 0;
 
-                if (switchAudio != null)
+                if (switchAudio != null && switchAudio[1].gameObject.activeInHierarchy)
                     switchAudio[1].Play();
                 if (m_IsPrevCollision)
                 {

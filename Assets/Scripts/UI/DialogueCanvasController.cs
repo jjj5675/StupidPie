@@ -37,7 +37,7 @@ public class DialogueCanvasController : MonoBehaviour
             if (Resume != null)
             {
                 Resume.Invoke();
-                
+                canSkip = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.Escape) && canSkip)
@@ -46,6 +46,7 @@ public class DialogueCanvasController : MonoBehaviour
             {
                 EndAct.Invoke();
                 DirectorTrigger.instance.OnDirectorFinish.Invoke();
+                StartCoroutine(Delay());
                 canSkip = false;
             }
         }
@@ -102,6 +103,7 @@ public class DialogueCanvasController : MonoBehaviour
             if (portraitAnimator.name == nameText.text)
             {
                 faceAnimator.runtimeAnimatorController = portraitAnimator.runtimeAnimator;
+                Debug.Log(faceAnimator.runtimeAnimatorController);
                 faceAnimator.SetTrigger(phrase.portrait);
             }
         }
@@ -135,5 +137,11 @@ public class DialogueCanvasController : MonoBehaviour
     public void DirectorSetNull()
     {
         DirectorTrigger.instance = null;
+    }
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        EndAct.Invoke();
+        canSkip = false;
     }
 }

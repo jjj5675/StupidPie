@@ -89,14 +89,24 @@ public class DialogueBehaviour : PlayableBehaviour
     void ResumeTimeline()
     {
         m_Director.playableGraph.GetRootPlayable(0).SetSpeed(1d);
-
+        
     }
     void EndTimeLine()
     {
+        
         m_Director.time = m_TrackAsset.end+0.2f;
-        if(!m_IsClipPlayed)
-          m_Director.playableGraph.GetRootPlayable(0).SetSpeed(1d);
 
+        if (!m_IsClipPlayed)
+        {
+            m_Director.playableGraph.GetRootPlayable(0).SetSpeed(1d);
+            
+        }
+        
 
+    }
+    IEnumerator DelayPlayer()
+    {
+        yield return new WaitForSeconds(0.1f);
+        m_Director.playableGraph.GetRootPlayable(0).SetSpeed(1d);
     }
 }
